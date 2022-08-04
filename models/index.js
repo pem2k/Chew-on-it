@@ -3,8 +3,13 @@ const Review = require("./review")
 
 const Profile = require("./profile")
 const Message = require("./message")
+const Follower = require("./follower")
 
 User.hasMany(Review, {
+    foreignKey: "user_id"
+})
+
+User.hasMany(Follower, {
     foreignKey: "user_id"
 })
 
