@@ -1,6 +1,5 @@
 const User = require("./user");
 const Review = require("./review")
-
 const Profile = require("./profile")
 const Message = require("./message")
 const Follower = require("./follower")
@@ -44,4 +43,5 @@ module.exports = {
     Review,
     Profile,
     Message,
+    Follower
 }
