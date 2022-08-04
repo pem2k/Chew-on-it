@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Message extends Model { }
+class Rest extends Model { }
 
-Message.init(
+Rest.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,26 +11,22 @@ Message.init(
         primaryKey: true,
         autoIncrement: true,
       },
-<<<<<<< HEAD
-       rest_review: {
+      rest_name: {
         type: DataTypes.STRING,
         allowNull: false,
-=======
-
-      message_contents:{
-        type: DataTypes.TEXT,
       },
-
-      user_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "user",
-            key: "id"
-        },
-        onDelete: "cascade"
->>>>>>> dev
+      rest_location: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      rest_review: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      rest_details: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       }
-
     },
     {
       sequelize,
@@ -38,4 +34,4 @@ Message.init(
     }
 )
 
-module.exports = Message
+module.exports = Model
