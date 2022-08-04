@@ -11,24 +11,8 @@ Message.init(
         primaryKey: true,
         autoIncrement: true,
       },
-       rest_name: {
+       rest_review: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      user_review: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      friend_review: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      review_score: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      dm_message: {
-        type: DataTypes.TEXT,
         allowNull: false,
       }
 

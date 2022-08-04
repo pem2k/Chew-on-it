@@ -20,7 +20,7 @@ Rest.init(
         allowNull: false,
       },
       rest_review: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       rest_details: {
