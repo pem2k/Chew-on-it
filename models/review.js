@@ -1,15 +1,37 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Profile extends Model { }
+class Review extends Model { }
 
-Profile.init(
+Review.init(
     {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
+      },
+
+      review_title:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+
+      review_restaraunt:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+
+      review_contents:{
+        type: DataTypes.TEXT,
+      },
+
+      review_score:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            isNumeric: true
+        }
       },
 
       user_id: {
@@ -20,7 +42,7 @@ Profile.init(
         },
         onDelete: "cascade"
       }
-
+      
     },
     {
       sequelize,
@@ -28,4 +50,4 @@ Profile.init(
     }
 )
 
-module.exports = Profile
+module.exports = Review

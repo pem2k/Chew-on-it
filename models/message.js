@@ -11,9 +11,24 @@ Message.init(
         primaryKey: true,
         autoIncrement: true,
       },
+<<<<<<< HEAD
        rest_review: {
         type: DataTypes.STRING,
         allowNull: false,
+=======
+
+      message_contents:{
+        type: DataTypes.TEXT,
+      },
+
+      user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "user",
+            key: "id"
+        },
+        onDelete: "cascade"
+>>>>>>> dev
       }
 
     },

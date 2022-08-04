@@ -1,18 +1,42 @@
-const Post = require ("./post")
 const User = require("./user");
+const Review = require("./review")
+
 const Profile = require("./profile")
 const Message = require("./message")
 
-User.hasMany(Post, {
-    onDelete:"CASCADE"
+User.hasMany(Review, {
+    foreignKey: "user_id"
 })
 
-Post.belongsTo(User)
+Review.belongsTo(User, {
+    foreignKey: "user_id"
+})
 
 
-User.hasOne(Profile)
-Profile.belongsTo(User)
+User.hasOne(Profile,
+    {
+        foreignKey: "user_id"
+})
+
+Profile.belongsTo(User,
+    {
+        foreignKey: "user_id"
+})
 
 
-User.hasMany(Message)
-Message.belongsTo(User)
+User.hasMany(Message,
+    {
+        foreignKey: "user_id"
+})
+
+Message.belongsTo(User,
+    {
+        foreignKey: "user_id"
+})
+
+module.exports = {
+    User,
+    Review,
+    Profile,
+    Message,
+}
