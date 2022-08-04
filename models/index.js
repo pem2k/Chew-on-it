@@ -1,5 +1,6 @@
-const Review = require("./review")
 const User = require("./user");
+const Review = require("./review")
+
 const Profile = require("./profile")
 const Message = require("./message")
 
