@@ -1,14 +1,13 @@
 const express = require('express');
-const { beforeDefine } = require('../config/connection');
 const router = express.Router();
 const {Message, Post, Profile, Rest} = require('../models');
 
 router.get("/",async (req,res)=>{
     try {
-        const business = await Rest.findAll({
-            include:[Message,Profile,Post],
+        const reviews = await Message.findAll({
+            include:[Rest,Profile,Post],
         })
-        res.status(200).json(business)
+        res.status(200).json(reviews)
     } catch (err) {
         res.status(500).json({
             msg:"internal server error!",
@@ -19,14 +18,11 @@ router.get("/",async (req,res)=>{
 
 router.post("/",async (req,res)=>{
     try{
-        const newBusiness = await Message.create({
+        const newReview = await Message.create({
             rest_name:req.body.rest_name,
-            rest_location:body.rest_location,
-            rest_review:body.rest_review,
-            rest_details:body.rest_details,
             id:req.body.id
         })
-        res.status(201).json(newBusiness)
+        res.status(201).json(newReview)
     }catch(err){
         console.log(err)
         res.status(500).json({
@@ -38,11 +34,11 @@ router.post("/",async (req,res)=>{
 
 
 router.get("/:id",(req,res)=>{
-    Rest.findByPk(req.params.id).then(business=>{
-        if(!business){
-            return res.status(404).json({msg:"No Such Restaurant exists in the Database!"})
+    Message.findByPk(req.params.id).then(review=>{
+        if(!review){
+            return res.status(404).json({msg:"No Such Review exists in the Database!"})
         }
-        res.json(business)
+        res.json(review)
     }).catch(err=>{
         res.status(500).json({
             msg:"internal server error",
@@ -51,22 +47,19 @@ router.get("/:id",(req,res)=>{
     })
 })
 router.put("/:id",(req,res)=>{
-    Rest.update({
-        rest_name:req.body.rest_name,
-        rest_location:body.rest_location,
-        rest_review:body.rest_review,
-        rest_details:body.rest_details,
-        id:req.body.id
+    Message.update({
+        rest_review:req.body.rest_review,
+        id:req.body.id,
     },
         {
         where:{
             id:req.params.id
         }
-        }).then(business=>{
-            if(!business[0]){
-                return res.status(404).json({msg:"No such Restaurants Exists in the Database or the Change was Not Made!"})
+        }).then(review=>{
+            if(!review[0]){
+                return res.status(404).json({msg:"No such Review Exists or the Change was Not Made!"})
             }
-        res.json(business)
+        res.json(review)
     }).catch(err=>{
         res.status(500).json({
             msg:"internal server error",
@@ -75,15 +68,15 @@ router.put("/:id",(req,res)=>{
     })
 })
 router.delete("/:id",(req,res)=>{
-    Rest.destroy({
+    Message.destroy({
         where:{
             id:req.params.id
         }
-        }).then(business=>{
-            if(!business){
-                return res.status(404).json({msg:"No such Restaurants Exists in the Database"})
+        }).then(review=>{
+            if(!review){
+                return res.status(404).json({msg:"No such Review Exists"})
             }
-        res.json(busines)
+        res.json(review)
     }).catch(err=>{
         res.status(500).json({
             msg:"internal server error",
