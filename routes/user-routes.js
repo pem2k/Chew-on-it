@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require('../models');
 
+//signup
 router.post("/", async (req, res) => {
     try {
         const res = await User.create({
@@ -22,6 +23,7 @@ router.post("/", async (req, res) => {
        
 })
 
+//login
 router.post("/login", async (req,res) => {
   const foundUser = await User.findOne({
         where:{
@@ -47,6 +49,7 @@ router.post("/login", async (req,res) => {
     //res.render homepage/feed
 })
 
+//logout
 router.delete("/logout",(req,res)=>{
     req.session.destroy();
     res.json({msg:"logged out!"})

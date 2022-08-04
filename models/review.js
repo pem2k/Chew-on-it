@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Message extends Model { }
+class Review extends Model { }
 
-Message.init(
+Review.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,8 +12,26 @@ Message.init(
         autoIncrement: true,
       },
 
-      message_contents:{
+      review_title:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+
+      review_restaraunt:{
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+
+      review_contents:{
         type: DataTypes.TEXT,
+      },
+
+      review_score:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            isNumeric: true
+        }
       },
 
       user_id: {
@@ -24,7 +42,7 @@ Message.init(
         },
         onDelete: "cascade"
       }
-
+      
     },
     {
       sequelize,
@@ -32,4 +50,4 @@ Message.init(
     }
 )
 
-module.exports = Message
+module.exports = Review
