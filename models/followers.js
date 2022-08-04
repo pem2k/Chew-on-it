@@ -1,19 +1,15 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Message extends Model { }
+class Follower extends Model { }
 
-Message.init(
+Follower.init(
     {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
-      },
-
-      message_contents:{
-        type: DataTypes.TEXT,
       },
 
       user_id: {
@@ -24,7 +20,6 @@ Message.init(
         },
         onDelete: "cascade"
       }
-
     },
     {
       sequelize,
