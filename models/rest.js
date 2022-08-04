@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Message extends Model { }
+class Rest extends Model { }
 
-Message.init(
+Rest.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,27 +11,22 @@ Message.init(
         primaryKey: true,
         autoIncrement: true,
       },
-       rest_name: {
+      rest_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      user_review: {
+      rest_location: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      friend_review: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      review_score: {
+      rest_review: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      dm_message: {
+      rest_details: {
         type: DataTypes.TEXT,
         allowNull: false,
       }
-
     },
     {
       sequelize,
@@ -39,4 +34,4 @@ Message.init(
     }
 )
 
-module.exports = Message
+module.exports = Model
