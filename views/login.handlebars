@@ -1,29 +1,28 @@
 <div class="jumbotron jumbotron-fluid hero">
-	<div class="row">
+	<div class="row mx-0">
 		<div class="col-4 offset-2">
 			<h1 class="display-4">Share Your World</h1>
 			<p>Inspirational message.</p>
 		</div>
 		<div class="offset-0 col-5 offset-lg-2 col-xl-3">
-			<div class="card">
-				<div>
-					<!-- Tabs Titles -->
+			<div class="card text-dark">
+				<div class="card-header">
 					<h3>Login</h3>
-
-					<!-- Login Form -->
+				</div>
+				<div class="card-body">
 					<form id="login">
-					<input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-					<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-					<input type="submit" class="fadeIn fourth" value="Log In">
+					<input type="text" id="loginUser" name="login" placeholder="login">
+					<input type="password" id="loginPassword" name="login" placeholder="password">
+					<input type="submit" id="loginSubmit" value="Log In">
 					</form>
-
-					<!-- Remind Passowrd -->
+				</div>
+				<div class="card-footer text-center">
 					<div id="formFooter">
 						<a class="underlineHover" href="#">Forgot Password?</a>
 					</div>
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="/scr/login.js"></script>
