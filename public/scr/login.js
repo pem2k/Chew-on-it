@@ -1,9 +1,22 @@
-const submitButton = document.querySelector("button[type=\"submit\"]");
+const submitButton = document.querySelector("#loginSubmit");
 
 submitButton.addEventListener("click", login);
 
-function login(event) {
+async function login(event) {
 	event.preventDefault();
 
-	console.log("WHoohoo");
+	const loginEmail = document.querySelector("#loginUser").value;
+	const loginPassword = document.querySelector("#loginPassword").value;
+
+	const rawResponse = await fetch("/user/login", {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({email: loginEmail, password: loginPassword})
+	});
+
+	// TODO:
+	//	Check for errors/display message.
 }
