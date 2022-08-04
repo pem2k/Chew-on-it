@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const User = require('../../models');
+const User = require('../models');
 
 router.post("/", async (req, res) => {
     try {
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
        
 })
 
-router.post("/login", (req,res) => {
+router.post("/login", async (req,res) => {
   const foundUser = await User.findOne({
         where:{
             email: req.body.email
