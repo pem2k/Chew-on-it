@@ -34,4 +34,4 @@ Rest.init(
     }
 )
 
-module.exports = Model
+module.exports = Rest

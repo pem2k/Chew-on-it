@@ -27,4 +27,4 @@ Follower.init(
     }
 )
 
-module.exports = Message
+module.exports = Follower

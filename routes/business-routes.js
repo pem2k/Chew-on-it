@@ -1,12 +1,12 @@
 const express = require('express');
 const { beforeDefine } = require('../config/connection');
 const router = express.Router();
-const {Message, Post, Profile, Rest} = require('../models');
+const {Message, Follower, Profile, Rest, Review} = require('../models');
 
 router.get("/",async (req,res)=>{
     try {
         const business = await Rest.findAll({
-            include:[Message,Profile,Post],
+            include:[Message,Profile,Follower, Review, Rest],
         })
         res.status(200).json(business)
     } catch (err) {
@@ -19,7 +19,7 @@ router.get("/",async (req,res)=>{
 
 router.post("/",async (req,res)=>{
     try{
-        const newBusiness = await Message.create({
+        const newBusiness = await Rest.create({
             rest_name:req.body.rest_name,
             rest_location:body.rest_location,
             rest_review:body.rest_review,
@@ -83,7 +83,7 @@ router.delete("/:id",(req,res)=>{
             if(!business){
                 return res.status(404).json({msg:"No such Restaurants Exists in the Database"})
             }
-        res.json(busines)
+        res.json(business)
     }).catch(err=>{
         res.status(500).json({
             msg:"internal server error",
