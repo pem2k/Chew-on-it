@@ -33,3 +33,10 @@ Message.belongsTo(User,
     {
         foreignKey: "user_id"
 })
+
+module.exports = {
+    User,
+    Review,
+    Profile,
+    Message,
+}
