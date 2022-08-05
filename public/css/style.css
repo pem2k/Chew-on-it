@@ -17,7 +17,7 @@
 	margin-bottom: 0px;
 }
 .fill-view {
-	height: calc(100vh - 56px);
+	min-height: calc(100vh - 56px);
 }
 .bg-highlight {
 	background: var(--highlight);
@@ -33,6 +33,14 @@
 .bg-background {
 	background: var(--background);
 
+}
+.profile {
+	width: 200px;
+	border-radius: 50%;
+}
+.profile-thumb {
+	width: 100%;
+	border-radius: 50%;
 }
 
 #login input {
