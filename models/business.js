@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Rest extends Model { }
+class Business extends Model { }
 
 Rest.init(
     {
@@ -34,4 +34,4 @@ Rest.init(
     }
 )
 
-module.exports = Rest
+module.exports = Business
