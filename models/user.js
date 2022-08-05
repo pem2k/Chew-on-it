@@ -34,7 +34,8 @@ User.init({
         unique: true,
         vaalidate: {
             isemail:true
-    },
+    }
+},
 
     password: {
         type: DataTypes.STRING,

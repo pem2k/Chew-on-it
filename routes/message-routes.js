@@ -7,7 +7,6 @@ const path = require("path");
 router.get('/', async (req, res) => {
     if(!req.session.user){
       res.redirect("user/login")
-      return res.status(403).json({msg:"Must login before viewing messages"})
   }
     res.render('messages', req.session.user)
   });
