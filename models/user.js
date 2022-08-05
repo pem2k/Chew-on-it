@@ -34,6 +34,7 @@ User.init({
         unique: true,
         vaalidate: {
             isemail:true
+		}
     },
 
     password: {
