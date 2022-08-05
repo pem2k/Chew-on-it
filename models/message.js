@@ -14,9 +14,19 @@ Message.init(
 
       message_contents:{
         type: DataTypes.TEXT,
+        allowNull:false
       },
 
-      user_id: {
+      chatter1_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "user",
+            key: "id"
+        },
+        onDelete: "cascade"
+      },
+      
+      chatter2_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "user",

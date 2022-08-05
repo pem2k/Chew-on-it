@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Rest extends Model { }
+class Business extends Model { }
 
-Rest.init(
+Business.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,20 +11,16 @@ Rest.init(
         primaryKey: true,
         autoIncrement: true,
       },
-      rest_name: {
+      business_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      rest_location: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      rest_review: {
+      location: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      rest_details: {
-        type: DataTypes.TEXT,
+      phone_number: {
+        type: DataTypes.BIGINT,
         allowNull: false,
       }
     },
@@ -34,4 +30,4 @@ Rest.init(
     }
 )
 
-module.exports = Rest
+module.exports = Business

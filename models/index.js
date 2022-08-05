@@ -1,37 +1,34 @@
 const User = require("./user");
 const Review = require("./review")
-const Profile = require("./profile")
+const Business = require("./business")
 const Message = require("./message")
-const Follower = require("./follower")
+const Follow = require("./follower")
 
 User.hasMany(Review, {
     foreignKey: "user_id"
 })
 
-User.hasMany(Follower, {
+User.hasMany(Message,
+    {
+        foreignKey: "user_id"
+})
+
+User.hasMany(Follow, {
     foreignKey: "user_id"
 })
 
+Follow.hasMany(User, {
+    foreignKey: "user_id"
+})
+
+Business.hasMany(Review)
 Review.belongsTo(User, {
     foreignKey: "user_id"
 })
 
 
-User.hasOne(Profile,
-    {
-        foreignKey: "user_id"
-})
-
-Profile.belongsTo(User,
-    {
-        foreignKey: "user_id"
-})
 
 
-User.hasMany(Message,
-    {
-        foreignKey: "user_id"
-})
 
 Message.belongsTo(User,
     {
@@ -41,7 +38,7 @@ Message.belongsTo(User,
 module.exports = {
     User,
     Review,
-    Profile,
+    Business,
     Message,
-    Follower
+    Follow
 }
