@@ -1,12 +1,12 @@
 const express = require('express');
 const { beforeDefine } = require('../config/connection');
 const router = express.Router();
-const {Message, Follower, Profile, Rest, Review} = require('../models');
+const {Message, Follower, Profile, Business, Review} = require('../models');
 
 router.get("/",async (req,res)=>{
     try {
-        const business = await Rest.findAll({
-            include:[Message,Profile,Follower, Review, Rest],
+        const business = await Business.findAll({
+            include:[Message,Profile,Follower, Review, Business],
         })
         res.status(200).json(business)
     } catch (err) {
@@ -19,7 +19,7 @@ router.get("/",async (req,res)=>{
 
 router.post("/",async (req,res)=>{
     try{
-        const newBusiness = await Rest.create({
+        const newBusiness = await Business.create({
             rest_name:req.body.rest_name,
             rest_location:body.rest_location,
             rest_review:body.rest_review,
