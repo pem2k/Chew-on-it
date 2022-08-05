@@ -5,49 +5,19 @@
 				<div class="mx-auto d-block position-relative">
 					<img src="/img/default_profile.jpg" class="profile">
 					<span class="position-relative position-absolute fixed-bottom" style="left: 188px; bottom: 4px;">
-						<a href="#" class=""><img src="/img/icn/icon_edit.png"></a>
+						<a href="#" id="edit-profile"><img src="/img/icn/icon_edit.png"></a>
 					</span>
 				</div>
-				<h2 class="card-title">First_name Last_name</h2>
+				<h2 class="card-title">{{first_name}} {{last_name}}</h2>
 			</div>
 			<div class="card-body bg-highlight">
 				<div class="row">
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
+					{{#each friend}}
+					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="/user/{{friend.id}}">
 						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
+						<p class="card-subtitle">{{friend.first_name}}</p>
 					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
-					<a class="col-6 col-md-4 col-lg-3 ml-0 text-center card-link" href="#">
-						<img src="/img/default_profile.jpg" class="mx-auto py-3 profile-thumb">
-						<p class="card-subtitle">Bobby</p>
-					</a>
+					{{/each}}
 				</div>
 			</div>
 		</div>
