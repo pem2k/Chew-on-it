@@ -3,6 +3,7 @@
 	--recessed: #C8D5B9;
 	--shadow: #8FC0A9;
 	--background: #68B0AB;
+	--float: #00000077;
 	--primary-text: #efefef;
 	--secondary-text: #555;
 }
@@ -16,11 +17,15 @@
 	color: white;
 	margin-bottom: 0px;
 }
+.about-splash {
+	background-image: url("/img/splash-about.jpg");
+}
 .fill-view {
 	min-height: calc(100vh - 56px);
 }
 .bg-highlight {
 	background: var(--highlight);
+	color: var(--secondary-text);
 }
 .bg-recessed {
 	background: var(--recessed);
@@ -33,6 +38,9 @@
 .bg-background {
 	background: var(--background);
 
+}
+.bg-float {
+	background: var(--float);
 }
 .profile {
 	width: 200px;
