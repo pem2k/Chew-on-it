@@ -1,12 +1,40 @@
+:root {
+	--highlight: #FAF3DD;
+	--recessed: #C8D5B9;
+	--shadow: #8FC0A9;
+	--background: #68B0AB;
+	--primary-text: #efefef;
+	--secondary-text: #555;
+}
+
 .hero {
 	background-image: url("/img/login-splash.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: calc(100vh - 56px);
+	background-color: inherit;
 	color: white;
 	margin-bottom: 0px;
 }
+.fill-view {
+	height: calc(100vh - 56px);
+}
+.bg-highlight {
+	background: var(--highlight);
+}
+.bg-recessed {
+	background: var(--recessed);
+	color: var(--secondary-text);
+}
+.bg-shadow {
+	background: var(--shadow);
+	color: var(--primary-text);
+}
+.bg-background {
+	background: var(--background);
+
+}
+
 #login input {
 	width: 90%;
 	margin: 4px 5%;

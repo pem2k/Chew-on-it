@@ -16,7 +16,7 @@ async function login(event) {
 		},
 		body: JSON.stringify({email: loginEmail, password: loginPassword})
 	});
-
+	location.reload();
 	// TODO:
 	//	Check for errors/display message.
 }
