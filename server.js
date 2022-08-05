@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router()
+
 const exphbs = require('express-handlebars');
 
 const routes = require('./routes');
@@ -12,8 +13,6 @@ const hbs = exphbs.create({});
 
 const path = require("path");
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -37,8 +36,6 @@ app.use(session(sess));
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
-app.get('/login', (req, res) => res.render('login'));
 
 app.use("/", routes);
 
