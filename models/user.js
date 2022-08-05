@@ -23,11 +23,6 @@ User.init({
         allowNull: false,
     },
 
-    birthday: {
-        type: DataTypes.DATEONLY,
-        allowNull: false
-    },
-
     email: {
         type: DataTypes.STRING,
         allowNull: false,
