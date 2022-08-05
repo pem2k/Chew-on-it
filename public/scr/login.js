@@ -16,7 +16,11 @@ async function login(event) {
 		},
 		body: JSON.stringify({email: loginEmail, password: loginPassword})
 	});
-	location.reload();
-	// TODO:
-	//	Check for errors/display message.
+
+	if (rawResponse.status == 200)
+		location.reload();
+	else
+		// TODO:
+		//	Check for errors/display message.
+		alert(rawResponse.status);
 }
