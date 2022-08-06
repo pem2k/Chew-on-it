@@ -2,7 +2,7 @@ const router = require('express').Router();
 const businessRoutes = require('./business-routes.js');
 const reviewRoutes = require('./posting-routes');
 const msgRoutes = require('./message-routes')
-
+const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
 const { User, Review, Follower } = require('../models');
@@ -13,6 +13,8 @@ router.use('/users', userRoutes);
 router.use('/businesses', businessRoutes);
 router.use('/reviews', reviewRoutes);
 router.use('/messages', msgRoutes);
+
+
 
 router.get('/signup', async (req, res) => res.render('signup'));
 router.post("/signup", async (req, res) => {
@@ -32,7 +34,7 @@ router.post("/signup", async (req, res) => {
         }
 
        return res.redirect("profile")
-        
+
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
@@ -40,14 +42,10 @@ router.post("/signup", async (req, res) => {
     }
 
 })
-
 //login
-//render routes
-
-
 router.post("/login", async (req, res) => {
     if(req.session.user){
-       return res.render("profile", req.session.user)
+       return res.redirect("profile")
     }
     const foundUser = await User.findOne({
         where: {
@@ -72,16 +70,6 @@ router.post("/login", async (req, res) => {
     //res.render homepage/feed
 })
 
-
-//logout
-router.delete("/logout", (req, res) => {
-    if (!req.session.user) {
-       return res.redirect("/")
-    }
-    req.session.destroy();
-    res.json({ msg: "logged out!" })
-})
-
 //profile routes
 
 //self profile
@@ -99,7 +87,7 @@ router.get('/profile', async (req, res) => {
           if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
           }
-      
+
           res.render('profile', req.session.user)
     } catch (err) {
         if (err) {
@@ -107,11 +95,11 @@ router.get('/profile', async (req, res) => {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    
+
 });
 
 //other user profiles
-router.get('/:id', async (req, res) => {
+router.get('/profile/:id', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/")
     }
@@ -132,6 +120,14 @@ router.get('/:id', async (req, res) => {
     res.render('profile', req.session.user)
 });
 
+router.get("/about", (req, res) => {
+    if(!req.session.user){
+       return res.render("about")
+    }
+
+    res.render('about', req.session.user)
+});
+
 router.get('/feed', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
@@ -149,4 +145,3 @@ router.get('/feed', async (req, res) => {
 
 module.exports = router;
 
-module.exports = router;
