@@ -14,10 +14,45 @@
 					<input type="text" id="loginUser" name="login" placeholder="login">
 					<input type="password" id="loginPassword" name="login" placeholder="password">
 					<input type="submit" id="loginSubmit" class="btn bg-shadow" value="Log In">
+					<span id="loginError" class="card-subtitle text-error"></span>
 					</form>
 				</div>
-				<div class="card-footer text-center bg-recessed">
-					<a class="bg-recessed" href="#">No account? Sign up here!</a>
+				<div class="card-footer d-flex justify-content-center">
+					<button type="button" class="btn bg-shadow" data-toggle="modal" data-target="#myModal">Create new account</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal bg-float" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content bg-highlight">
+
+					<form>
+					<div class="card-header bg-recessed">
+						<h2>Sign Up</h2>
+						<p>We don't send newsletter emails!</p>
+					</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
+							<div class="col"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" name="email" placeholder="Email" required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="password" placeholder="Password" required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+					</div>
+					<span id="signupError" class="text-error"></span>
+					</form>
+				</div>
+				<div class="card-footer">
+					<button type="submit" id="signupSubmit" class="btn bg-shadow btn-lg">Sign Up</button>
 				</div>
 			</div>
 		</div>
