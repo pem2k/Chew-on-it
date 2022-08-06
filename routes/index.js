@@ -5,9 +5,9 @@ const reviewRoutes = require('./posting-routes');
 const msgRoutes = require('./message-routes')
 
 
-router.use('/user', userRoutes);
-router.use('/business', businessRoutes);
-router.use('/review', reviewRoutes);
+router.use('/users', userRoutes);
+router.use('/businesses', businessRoutes);
+router.use('/reviews', reviewRoutes);
 router.use('/messages', msgRoutes);
 
 module.exports = router;

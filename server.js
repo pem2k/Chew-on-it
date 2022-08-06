@@ -39,7 +39,39 @@ app.set('view engine', 'handlebars');
 
 app.use("/", routes);
 
-app.get('/', async (req, res) => res.render('login'));
+// Root page goes to login since that's the first thing a user will need to see.
+// Redirects user to feed page if they are already logged in however.
+// All pages need to pass req.session.user at a minimum.
+app.get('/', (req, res) => (!req.session.user)
+	? res.render('login', req.session.user)
+	: res.redirect("/feed"));
+
+// Feed acts as the landing point for logged-in users.
+router.get('/feed', async (req, res) => {
+	// Make new users log in first.
+	if(!req.session.user)
+		return res.redirect("login", req.session.user);
+
+	try {
+		// TODO: grab friend data and pass it with the session user.
+		res.render('feed', req.session.user);
+	} catch(err) {
+		// Error handling. Defaults to a catch-all for now.
+		if(err) {
+			res.status(500).json({msg:"ERROR",err})
+		}
+	}
+});
+
+// Profile redirects you to your user page if logged in. Otherwise to login.
+router.get("/profile", (res, req) => (req.session.user)
+	? res.redirect("/users/" + req.session.user.id)
+	: res.redirect("/")
+);
+
+// Static about page. Not much to be said; justs gives credits the team.
+router.get("/about", (res, req) => res.render('about', req.session.user));
+
 // sync sequelize models to the database, then turn on the server
 sequelize.sync({force:false}).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
