@@ -2,7 +2,7 @@ const router = require('express').Router();
 const businessRoutes = require('./business-routes.js');
 const reviewRoutes = require('./posting-routes');
 const msgRoutes = require('./message-routes')
-
+const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
 const { User, Review, Follower } = require('../models');
@@ -32,7 +32,7 @@ router.post("/signup", async (req, res) => {
         }
 
        return res.redirect("profile")
-        
+
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
@@ -40,47 +40,8 @@ router.post("/signup", async (req, res) => {
     }
 
 })
-
 //login
-//render routes
 
-
-router.post("/login", async (req, res) => {
-    if(req.session.user){
-       return res.render("profile", req.session.user)
-    }
-    const foundUser = await User.findOne({
-        where: {
-            email: req.body.email
-        }
-    }
-    )
-    if (!foundUser) {
-        return res.status(401).json({ msg: "invalid login credentials" })
-
-    }
-    if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
-        return res.status(401).json({ msg: "invalid login credentials" })
-    }
-    req.session.user = {
-        id: foundUser.id,
-        first_name: foundUser.first_name,
-        last_name: foundUser.last_name,
-        email: foundUser.email
-    }
-    return res.status(200).json(foundUser)
-    //res.render homepage/feed
-})
-
-
-//logout
-router.delete("/logout", (req, res) => {
-    if (!req.session.user) {
-       return res.redirect("/")
-    }
-    req.session.destroy();
-    res.json({ msg: "logged out!" })
-})
 
 //profile routes
 
@@ -99,7 +60,7 @@ router.get('/profile', async (req, res) => {
           if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
           }
-      
+
           res.render('profile', req.session.user)
     } catch (err) {
         if (err) {
@@ -107,7 +68,7 @@ router.get('/profile', async (req, res) => {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    
+
 });
 
 //other user profiles
@@ -132,6 +93,7 @@ router.get('/:id', async (req, res) => {
     res.render('profile', req.session.user)
 });
 
+
 router.get('/feed', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
@@ -149,4 +111,3 @@ router.get('/feed', async (req, res) => {
 
 module.exports = router;
 
-module.exports = router;
