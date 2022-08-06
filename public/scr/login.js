@@ -14,7 +14,7 @@ function login(event) {
 
 	loginButton.disabled = true;
 
-	fetch("/users/login", {
+	fetch("users/login", {
 		method: 'POST',
 		headers: {
 			"Accept": "application/json",
@@ -43,10 +43,11 @@ function signup(event) {
 
 	if (signupPassword != signupConfirm) {
 		signupError.textContent = "ERROR: Passwords must match.";
+		signupButton.disabled = false;
 		return;
 	}
 
-	fetch("/users/", {
+	fetch("/signup", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
