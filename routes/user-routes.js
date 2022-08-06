@@ -34,7 +34,7 @@ router.post("/signup", async (req, res) => {
 
 //login
 //render routes
-router.get('/login', async (req, res) => res.render('login'));
+
 
 router.post("/login", async (req, res) => {
     if(req.session.user){
@@ -95,7 +95,7 @@ router.get('/profile', async (req, res) => {
           res.render('profile', userProfile)
     } catch (err) {
         if (err) {
-            console.log("here 3")
+
             res.status(500).json({ msg: "ERROR", err })
         }
     }
