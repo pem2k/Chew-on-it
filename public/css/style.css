@@ -42,6 +42,12 @@
 .bg-float {
 	background: var(--float);
 }
+.text-error {
+	color: #c00;
+	font-size: 0.9em;
+	font-style: oblique;
+	font-weight: bolder;
+}
 .profile {
 	width: 200px;
 	border-radius: 50%;
