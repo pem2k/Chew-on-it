@@ -14,6 +14,8 @@ router.use('/businesses', businessRoutes);
 router.use('/reviews', reviewRoutes);
 router.use('/messages', msgRoutes);
 
+
+
 router.get('/signup', async (req, res) => res.render('signup'));
 router.post("/signup", async (req, res) => {
     try {
@@ -41,7 +43,32 @@ router.post("/signup", async (req, res) => {
 
 })
 //login
+router.post("/login", async (req, res) => {
+    if(req.session.user){
+       return res.redirect("profile")
+    }
+    const foundUser = await User.findOne({
+        where: {
+            email: req.body.email
+        }
+    }
+    )
+    if (!foundUser) {
+        return res.status(401).json({ msg: "invalid login credentials" })
 
+    }
+    if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
+        return res.status(401).json({ msg: "invalid login credentials" })
+    }
+    req.session.user = {
+        id: foundUser.id,
+        first_name: foundUser.first_name,
+        last_name: foundUser.last_name,
+        email: foundUser.email
+    }
+    return res.status(200).json(foundUser)
+    //res.render homepage/feed
+})
 
 //profile routes
 
@@ -72,7 +99,7 @@ router.get('/profile', async (req, res) => {
 });
 
 //other user profiles
-router.get('/:id', async (req, res) => {
+router.get('/profile/:id', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/")
     }
@@ -93,6 +120,13 @@ router.get('/:id', async (req, res) => {
     res.render('profile', req.session.user)
 });
 
+router.get("/about", (req, res) => {
+    if(!req.session.user){
+       return res.render("about")
+    }
+
+    res.render('about', req.session.user)
+});
 
 router.get('/feed', async (req, res) => {
     if(!req.session.user){

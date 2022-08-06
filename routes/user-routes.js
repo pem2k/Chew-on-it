@@ -54,26 +54,7 @@ router.delete("/logout", (req, res) => {
 
 //other user profiles
 //other user profiles
-router.get('/:id', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("/")
-    }
-    try {
-        const userProfile = await User.findByPk(req.params.id, {
-            include: [Review]
-          })
-          if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
-          }
-      
-          res.render('profile', userProfile)
-    } catch (err) {
-        if (err) {
-            res.status(500).json({ msg: "ERROR", err })
-        }
-    }
-    res.render('profile', req.session.user)
-});
+
 
 router.get('/feed', async (req, res) => {
     if(!req.session.user){
