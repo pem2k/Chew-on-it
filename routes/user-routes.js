@@ -4,9 +4,20 @@ const bcrypt = require("bcrypt");
 const { User, Review, Follower } = require('../models');
 const path = require("path");
 
+/*
+	REST:
+		GET: users directory (for friending), individual users page.
+		POST: creating new user ("signup").
+		PUT: editing user data (occurs on their profile page).
+		DELETE: removing user.
+
+		Additionally,
+			/login creates a session with an existing user.
+			/logout deltes a session with an existing user.
+ */
+
 //signup
-router.get('/signup', async (req, res) => res.render('signup'));
-router.post("/signup", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         const newUser = await User.create({
             first_name: req.body.first_name,
@@ -21,9 +32,6 @@ router.post("/signup", async (req, res) => {
             last_name: newUser.last_name,
             email: newUser.email
         }
-
-       return res.redirect("profile")
-        
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
@@ -32,20 +40,12 @@ router.post("/signup", async (req, res) => {
 
 })
 
-//login
-//render routes
-router.get('/login', async (req, res) => res.render('login'));
-
 router.post("/login", async (req, res) => {
-    if(req.session.user){
-       return res.redirect("profile")
-    }
     const foundUser = await User.findOne({
         where: {
             email: req.body.email
         }
-    }
-    )
+    })
     if (!foundUser) {
         return res.status(401).json({ msg: "invalid login credentials" })
 
@@ -74,39 +74,7 @@ router.delete("/logout", (req, res) => {
 })
 
 //profile routes
-
-//self profile
-router.get('/profile', async (req, res) => {
-    if (!req.session.user) {
-        console.log("here 1")
-        return res.redirect('login')
-    }
-
-    try {
-        console.log("here 2")
-        const userProfile = await User.findByPk(req.session.user.id, {
-            include: [Review]
-          })
-
-          if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
-          }
-      
-          res.render('profile', userProfile)
-    } catch (err) {
-        if (err) {
-            console.log("here 3")
-            res.status(500).json({ msg: "ERROR", err })
-        }
-    }
-    
-});
-
-//other user profiles
 router.get('/:id', async (req, res) => {
-    if (!req.session.user) {
-        return res.redirect("login")
-    }
     try {
         const userProfile = await User.findByPk(req.params.id, {
             include: [Review]
@@ -114,29 +82,17 @@ router.get('/:id', async (req, res) => {
           if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
           }
-      
-          res.render('profile', userProfile)
+
+		// If someone is viewing his/her own user page, return that info.
+		if (req.session.user.id === req.params.id) {
+			userProfile.ownProfile = true;
+		}
+        res.render('profile', userProfile)
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    res.render('profile', req.session.user)
 });
-
-router.get('/feed', async (req, res) => {
-    if(!req.session.user){
-      return res.redirect("login")
-      
-  }
-    try{
-  
-    }catch(err){
-      if(err){
-        res.status(500).json({msg:"ERROR",err})
-      }
-    }
-    res.render('feed', req.session.user)
-  });
 
 module.exports = router;
