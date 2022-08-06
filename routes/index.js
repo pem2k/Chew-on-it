@@ -2,6 +2,7 @@ const router = require('express').Router();
 const businessRoutes = require('./business-routes.js');
 const reviewRoutes = require('./posting-routes');
 const msgRoutes = require('./message-routes')
+const userRoutes = require('./user-routes')
 
 const express = require('express');
 const bcrypt = require("bcrypt");

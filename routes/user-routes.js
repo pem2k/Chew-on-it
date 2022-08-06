@@ -40,13 +40,10 @@ router.post("/", async (req, res) => {
 
 })
 
-<<<<<<< HEAD
 //login
 //render routes
 
 
-=======
->>>>>>> dev
 router.post("/login", async (req, res) => {
     const foundUser = await User.findOne({
         where: {
@@ -81,7 +78,6 @@ router.delete("/logout", (req, res) => {
 })
 
 //profile routes
-<<<<<<< HEAD
 
 //self profile
 router.get('/profile', async (req, res) => {
@@ -111,8 +107,7 @@ router.get('/profile', async (req, res) => {
 });
 
 //other user profiles
-=======
->>>>>>> dev
+
 router.get('/:id', async (req, res) => {
     try {
         const userProfile = await User.findByPk(req.params.id, {
