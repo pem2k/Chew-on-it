@@ -5,7 +5,7 @@ const {Review,Follow,Message,Business,User} = require('../models');
 router.get("/",async (req,res)=>{
     try {
         const reviews = await Review.findAll({
-            include:[User,Business],
+            include:[User,Business,Follow, Message],
         })
         res.status(200).json(reviews)
     } catch (err) {
