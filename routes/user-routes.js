@@ -40,6 +40,13 @@ router.post("/", async (req, res) => {
 
 })
 
+<<<<<<< HEAD
+//login
+//render routes
+
+
+=======
+>>>>>>> dev
 router.post("/login", async (req, res) => {
     const foundUser = await User.findOne({
         where: {
@@ -74,6 +81,38 @@ router.delete("/logout", (req, res) => {
 })
 
 //profile routes
+<<<<<<< HEAD
+
+//self profile
+router.get('/profile', async (req, res) => {
+    if (!req.session.user) {
+        console.log("here 1")
+        return res.redirect('login')
+    }
+
+    try {
+        console.log("here 2")
+        const userProfile = await User.findByPk(req.session.user.id, {
+            include: [Review]
+          })
+
+          if (!userProfile) {
+            return res.status(404).json({ msg: "User not found" })
+          }
+      
+          res.render('profile', userProfile)
+    } catch (err) {
+        if (err) {
+
+            res.status(500).json({ msg: "ERROR", err })
+        }
+    }
+    
+});
+
+//other user profiles
+=======
+>>>>>>> dev
 router.get('/:id', async (req, res) => {
     try {
         const userProfile = await User.findByPk(req.params.id, {
