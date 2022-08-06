@@ -35,12 +35,29 @@ function login(event) {
 function signup(event) {
 	signupButton.disabled = true;
 
+	const signupFirst = document.querySelector("#signupFirst").value;
+	const signupLast = document.querySelector("#signupLast").value;
+	const signupEmail = document.querySelector("#signupEmail").value;
+	const signupPassword = document.querySelector("#signupPassword").value;
+	const signupConfirm = document.querySelector("#signupPasswordConfirm").value;
+
+	if (signupPassword != signupConfirm) {
+		signupError.textContent = "ERROR: Passwords must match.";
+		return;
+	}
+
 	fetch("/user/signup", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
-		body: JSON.stringify({Poop: "Poop"})
+		body: JSON.stringify({
+			first_name: signupFirst,
+			last_name: signupLast,
+			email: signupEmail,
+			password: signupPassword,
+			birthday: 0
+		})
 	}).then(res => {
 		signupButton.disabled = false;
 
