@@ -14,7 +14,7 @@ function login(event) {
 
 	loginButton.disabled = true;
 
-	fetch("users/login", {
+	fetch("/login", {
 		method: 'POST',
 		headers: {
 			"Accept": "application/json",
