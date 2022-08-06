@@ -14,7 +14,7 @@ function login(event) {
 
 	loginButton.disabled = true;
 
-	fetch("/user/login", {
+	fetch("/users/login", {
 		method: 'POST',
 		headers: {
 			"Accept": "application/json",
@@ -46,7 +46,7 @@ function signup(event) {
 		return;
 	}
 
-	fetch("/user/signup", {
+	fetch("/users/", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
