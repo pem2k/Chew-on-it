@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {Message, Post, Profile, Rest} = require('../models');
+const {Review,Follow,Message,Business,User} = require('../models');
 
 router.get("/",async (req,res)=>{
     try {
-        const reviews = await Message.findAll({
-            include:[Rest,Profile,Post],
+        const reviews = await Review.findAll({
+            include:[User,Business],
         })
         res.status(200).json(reviews)
     } catch (err) {
@@ -18,9 +18,11 @@ router.get("/",async (req,res)=>{
 
 router.post("/",async (req,res)=>{
     try{
-        const newReview = await Message.create({
-            rest_name:req.body.rest_name,
-            id:req.body.id
+        const newReview = await Review.create({
+            id:req.body.id,
+            content:req.body.content,
+            business_id:req.body.business_id,
+            user_id:req.body.user_id,
         })
         res.status(201).json(newReview)
     }catch(err){
@@ -34,7 +36,7 @@ router.post("/",async (req,res)=>{
 
 
 router.get("/:id",(req,res)=>{
-    Message.findByPk(req.params.id).then(review=>{
+    Review.findByPk(req.params.id).then(review=>{
         if(!review){
             return res.status(404).json({msg:"No Such Review exists in the Database!"})
         }
@@ -46,29 +48,34 @@ router.get("/:id",(req,res)=>{
         })
     })
 })
-router.put("/:id",(req,res)=>{
-    Message.update({
-        rest_review:req.body.rest_review,
-        id:req.body.id,
-    },
-        {
-        where:{
-            id:req.params.id
-        }
-        }).then(review=>{
-            if(!review[0]){
-                return res.status(404).json({msg:"No such Review Exists or the Change was Not Made!"})
-            }
-        res.json(review)
-    }).catch(err=>{
-        res.status(500).json({
-            msg:"internal server error",
-            err
-        })
-    })
-})
+    // router.put("/:id", (req, res) => {
+    //     try {
+    //         const updateReview = await Review.update({
+    //             id: req.body.id,
+    //             content: req.body.content,
+    //             business_id: req.body.business_id,
+    //             user_id: req.body.user_id,
+    //         }, {
+    //             where: {
+    //                 id: req.params.id
+    //             }
+    //         }).then(updateReview) => {
+    //             if (!updateReview[0]) {
+    //                 return res.status(404).json({
+    //                     msg: "No such Review Exists or the Change was Not Made!"
+    //                 })
+    //             }
+    //             res.json(updateReview)
+    //         }
+    //     } catch (err) => {
+    //         res.status(500).json({
+    //             msg: "internal server error",
+    //             err
+    //         })
+    //     }
+// try-catch needs to be setup correctly
 router.delete("/:id",(req,res)=>{
-    Message.destroy({
+    Review.destroy({
         where:{
             id:req.params.id
         }

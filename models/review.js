@@ -14,6 +14,7 @@ Review.init(
 
       content:{
         type: DataTypes.TEXT,
+
       },
 
       business_id: {
@@ -22,7 +23,7 @@ Review.init(
             model: "business",
             key: "id"
         },
-        onDelete: "cascade"
+        // onDelete: "cascade"
       },
       
       user_id: {
@@ -31,7 +32,7 @@ Review.init(
             model: "user",
             key: "id"
         },
-        onDelete: "cascade"
+        // onDelete: "cascade"
       }
       
     },

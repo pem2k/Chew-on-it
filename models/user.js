@@ -27,11 +27,10 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
-        vaalidate: {
+        validate: {
             isemail:true
-    }
-},
-
+        }
+    },
     password: {
         type: DataTypes.STRING,
         allowNull: false,
