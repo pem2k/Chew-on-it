@@ -9,8 +9,9 @@ const { User, Review, Follower } = require('../models');
 const path = require("path");
 
 
-router.use('/business', businessRoutes);
-router.use('/review', reviewRoutes);
+router.use('/users', userRoutes);
+router.use('/businesses', businessRoutes);
+router.use('/reviews', reviewRoutes);
 router.use('/messages', msgRoutes);
 
 router.get('/signup', async (req, res) => res.render('signup'));
