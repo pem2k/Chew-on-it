@@ -93,18 +93,18 @@ const review = [
 // const message = [
 //     {
 //         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2,
+//         commenter_id:"1",
+//         review_id:"2",
 //     },
 //     {
-//         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2",
+//         message_contents:"Saying Stuff thats important",
+//         commenter_id:"3",
+//         review_id:"4",
 //     },
 //     {
-//         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2",
+//         message_contents:"Cool Cool Cool",
+//         commenter_id:"5",
+//         review_id:"6",
 //     },
 // ]
 
