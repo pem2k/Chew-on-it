@@ -6,16 +6,6 @@ const path = require("path");
 const sequelize = require('../config/connection');
 //const { Sequelize } = require('sequelize/types');
 
-//signup
-
-
-
-//login
-//render routes
-
-
-
-
 
 //logout
 router.delete("/logout", (req, res) => {
@@ -88,6 +78,28 @@ router.get('/feed', async (req, res) => {
 	}
 	res.render('feed', req.session.user)
 });
+
+router.put('/profilePic', async (req, res) => {
+    if (!req.session.user) {
+		return res.redirect("login")
+	}
+    try {
+
+        const foundUser = await User.findOne({
+            where: {
+                id:req.session.user.id
+            }
+        })
+        const newPic = await foundUser.update({
+            profile_pic_url: req.body.profile_pic_url
+        })
+        return res.status(200).json(newPic)
+	} catch (err) {
+		if (err) {
+			res.status(500).json({ msg: "ERROR", err })
+		}
+	}
+})
 
 module.exports = router;
 //other user profiles

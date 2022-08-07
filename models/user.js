@@ -13,6 +13,12 @@ User.init({
 
     },
 
+    profile_pic_url:{
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+
     first_name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -28,7 +34,7 @@ User.init({
         allowNull: false,
         unique: true,
         validate: {
-            isemail:true
+            isEmail:true
         }
     },
     password: {
