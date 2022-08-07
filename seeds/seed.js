@@ -94,7 +94,7 @@ const message = [
     {
         message_contents:"Wordsarehere",
         commenter_id:"1",
-        review_id:"2",
+        review_id:"1",
     },
     {
         message_contents:"Saying Stuff thats important",
@@ -103,15 +103,15 @@ const message = [
     },
     {
         message_contents:"Cool Cool Cool",
-        commenter_id:"5",
-        review_id:"6",
+        commenter_id:"2",
+        review_id:"5",
     },
 ]
 
 const follow = [
     {
-        follower_id:"2",
-        followed_id:"3",
+        follower_id:"3",
+        followed_id:"2",
     },
     {
         follower_id:"3",
@@ -128,7 +128,7 @@ const seedMe = async ()=>{
     await User.bulkCreate(users,{individualHooks:true})
     await Business.bulkCreate(business)
     await Follow.bulkCreate(follow)
-    // await Message.bulkCreate(message)
+    await Message.bulkCreate(message)
     await Review.bulkCreate(review)
     process.exit(0)
 }
