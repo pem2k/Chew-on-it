@@ -17,7 +17,7 @@ Message.init(
         allowNull:false
       },
 
-      chatter1_id: {
+      commenter_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "user",
@@ -26,10 +26,10 @@ Message.init(
         onDelete: "cascade"
       },
       
-      chatter2_id: {
+      review_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "user",
+            model: "review",
             key: "id"
         },
         onDelete: "cascade"

@@ -90,28 +90,28 @@ const review = [
     },
 ]
 
-// const message = [
-//     {
-//         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2,
-//     },
-//     {
-//         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2",
-//     },
-//     {
-//         message_contents:"Wordsarehere",
-//         chatter1_id:"1",
-//         chatter2_id:"2",
-//     },
-// ]
+const message = [
+    {
+        message_contents:"Wordsarehere",
+        commenter_id:"1",
+        review_id:"1",
+    },
+    {
+        message_contents:"Saying Stuff thats important",
+        commenter_id:"3",
+        review_id:"4",
+    },
+    {
+        message_contents:"Cool Cool Cool",
+        commenter_id:"2",
+        review_id:"5",
+    },
+]
 
 const follow = [
     {
-        follower_id:"2",
-        followed_id:"3",
+        follower_id:"3",
+        followed_id:"2",
     },
     {
         follower_id:"3",
@@ -128,7 +128,7 @@ const seedMe = async ()=>{
     await User.bulkCreate(users,{individualHooks:true})
     await Business.bulkCreate(business)
     await Follow.bulkCreate(follow)
-    // await Message.bulkCreate(message)
+    await Message.bulkCreate(message)
     await Review.bulkCreate(review)
     process.exit(0)
 }

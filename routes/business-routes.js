@@ -1,7 +1,7 @@
 const express = require('express');
-const { beforeDefine } = require('../config/connection');
 const router = express.Router();
-const {Message, Follow, Business, Review, User} = require('../models');
+const {Message, Follow, User, Business, Review} = require('../models');
+
 
 router.get("/",async (req,res)=>{
     try {
