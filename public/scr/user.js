@@ -8,6 +8,6 @@ document.querySelector("#logout").addEventListener("click", () => {
 		if (res.status == 200)
 			location.reload();
 		else
-			alert(`(${res.status}): POOP${res.statusText}`);
+			alert(`(${res.status}): ${res.statusText}`);
 	});
 });
