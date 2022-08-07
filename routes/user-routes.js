@@ -47,6 +47,46 @@ router.get("/directory", (req, res) => {
 	});
 });
 
+//follow route
+router.post('/follow', async (req, res) => {
+    if(!req.session.user){
+      return res.redirect("/")
+      
+  }
+    try{
+        const addFollow = await Follow.create({
+			follower_id: req.session.user.id,
+			followed_id: req.body.followed_id
+		})
+        
+       res.status(200).json(addFollow)
+
+    }catch(err){
+      if(err){
+        res.status(500).json({msg:"ERROR",err})
+      }
+    }
+    //res.render('feed', req.session.user)
+  });
+
+//unfollow route
+router.delete("unfollow", async (req, res) => {
+	try{
+		const unfollowedUser = Follow.destroy({where:{
+		follower_id: req.session.id,
+		followed_id: req.body.followed_id
+	}
+})
+
+	res.status(200).json(unfollowedUser)
+
+}catch(err){
+		if(err){
+			res.status(500).json({msg:"ERROR",err})
+		}
+	}
+})
+
 //profile routes
 router.get('/', async (req, res) => {
 	if (!req.session.user) {
@@ -65,19 +105,6 @@ router.get('/', async (req, res) => {
 
 });
 
-router.get('/feed', async (req, res) => {
-	if (!req.session.user) {
-		return res.redirect("login")
-	}
-	try {
-
-	} catch (err) {
-		if (err) {
-			res.status(500).json({ msg: "ERROR", err })
-		}
-	}
-	res.render('feed', req.session.user)
-});
 
 router.put('/profilePic', async (req, res) => {
     if (!req.session.user) {

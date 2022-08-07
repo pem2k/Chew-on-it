@@ -110,16 +110,12 @@ const review = [
 
 const follow = [
     {
-        follower_id:"3",
-        followed_id:"2",
+        follower_id:3,
+        followed_id:4,
     },
     {
-        follower_id:"3",
-        followed_id:"4",
-    },
-    {
-        follower_id:"3",
-        followed_id:"1",
+        follower_id:3,
+        followed_id:1,
     },
 ]
 

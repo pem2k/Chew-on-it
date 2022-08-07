@@ -8,18 +8,17 @@ User.hasMany(Review, {
     foreignKey: "user_id"
 })
 
-User.hasMany(Message, {
+Review.belongsTo(User, {
     foreignKey: "user_id"
 })
 
-User.belongsToMany(User, { as: "friend", through: "friends" });
-User.hasMany(Follow, {
-    foreignKey: "user_id"
-})
+// User.hasMany(Message, {
+//     foreignKey: "user_id"
+// })
+//Message.belongsTo(User, {
+//     foreignKey: "user_id"
+// })
 
-Follow.hasMany(User, {
-    foreignKey: "user_id"
-})
 
 Business.hasMany(Review, {
     foreignKey: "business_id",
@@ -28,6 +27,9 @@ Business.hasMany(Review, {
 Review.hasMany(Message), {
     foreignKey: "user_id"
 }
+
+User.belongsToMany(User, { as: 'follower', foreignKey: 'follower_id', through: 'Follow' });
+User.belongsToMany(User, { as: 'followed', foreignKey: 'followed_id', through: 'Follow' });
 
 module.exports = {
     User,

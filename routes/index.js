@@ -5,7 +5,7 @@ const msgRoutes = require('./message-routes')
 const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
-const { User, Review, Follower } = require('../models');
+const { User, Review, Follow, } = require('../models');
 const path = require("path");
 
 
@@ -66,6 +66,7 @@ router.post("/login", async (req, res) => {
         last_name: foundUser.last_name,
         email: foundUser.email
     }
+    
     return res.status(200).json(foundUser)
     //res.render homepage/feed
 })
@@ -128,20 +129,29 @@ router.get("/about", (req, res) => {
     res.render('about', req.session.user)
 });
 
+//all reviews from following
 router.get('/feed', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
       
   }
     try{
-  
+        const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
+            id: req.session.user.id,}
+       }, {model: Review}]
+    })
+        
+       res.status(200).json(allFollowed)
+
     }catch(err){
       if(err){
         res.status(500).json({msg:"ERROR",err})
       }
     }
-    res.render('feed', req.session.user)
+    //res.render('feed', req.session.user)
   });
+
+//
 
 module.exports = router;
 
