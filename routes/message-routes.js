@@ -3,7 +3,7 @@ const router = express.Router();
 const {Message, User, Follow, Review, Business} = require('../models');
 
 
-router.get('/', (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const messages = await Message.findAll({
         include:[User, Review],
@@ -15,32 +15,30 @@ router.get('/', (req, res) => {
         err
     })
 }
-})
-  //   if(!req.session.user){
-  //     return res.redirect("login")
-  // }
-  //   res.render('messages')
-  // });
+    if(!req.session.user){
+      return res.redirect("login")
+  }
+    res.render('messages')
+  });
   
 
-  router.get('/:id', (req, res) => {
-    Message.findByPk(req.params.id).then(message=>{
+  router.get('/:id', async (req, res) => {
+    Message.findByPk(req.params.id).then(messages  =>{
      if(!messages){
       return res.status(404).json({msg: "No such Message exits!"})
      }
-      res.json(message)
+      res.json(messages)
   }).catch (err=>{
       res.status(500).json({
           msg:"internal server error!",
           err
       })
-      })
-  })
-  //    if(!req.session.user){
-  //       return res.redirect("login")
-  //   }
-  //     res.render('messages')
-  // });
+     if(!req.session.user){
+        return res.redirect("login")
+    }
+      res.render('messages')
+})
+});
  
 
 module.exports = router;

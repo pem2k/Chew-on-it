@@ -90,23 +90,23 @@ const review = [
     },
 ]
 
-// const message = [
-//     {
-//         message_contents:"Wordsarehere",
-//         commenter_id:"1",
-//         review_id:"2",
-//     },
-//     {
-//         message_contents:"Saying Stuff thats important",
-//         commenter_id:"3",
-//         review_id:"4",
-//     },
-//     {
-//         message_contents:"Cool Cool Cool",
-//         commenter_id:"5",
-//         review_id:"6",
-//     },
-// ]
+const message = [
+    {
+        message_contents:"Wordsarehere",
+        commenter_id:"1",
+        review_id:"2",
+    },
+    {
+        message_contents:"Saying Stuff thats important",
+        commenter_id:"3",
+        review_id:"4",
+    },
+    {
+        message_contents:"Cool Cool Cool",
+        commenter_id:"5",
+        review_id:"6",
+    },
+]
 
 const follow = [
     {
