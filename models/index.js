@@ -5,7 +5,6 @@ const Message = require("./message")
 const Follow = require("./follower")
 
 User.hasMany(Review, {
-    reference:Review,
     foreignKey: "user_id"
 })
 
@@ -22,13 +21,12 @@ Follow.hasMany(User, {
 })
 
 Business.hasMany(Review, { 
-    foreignKey: "business_id"
+    foreignKey: "business_id",
     })
     
-
-Message.belongsTo(User, {
-        foreignKey: "user_id"
-})
+Review.hasMany(Message), {
+    foreignKey: "user_id"
+}
 
 module.exports = {
     User,
