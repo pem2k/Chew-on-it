@@ -39,6 +39,41 @@ router.get("/", async (req, res) => {
       res.render('messages')
 })
 });
- 
+
+router.post("/",async (req,res)=>{
+  try{
+      const newMessage = await Message.create({
+          id:req.body.id,
+          message_contents:req.body.message_contents,
+          commenter_id:req.body.commenter_id,
+          review_id:req.body.review_id,
+      })
+      res.status(201).json(newMessage)
+  }catch(err){
+      console.log(err)
+      res.status(500).json({
+          msg:"internal server error!",
+          err
+      })
+  }
+});
+
+router.delete("/:id",(req,res)=>{
+  Message.destroy({
+      where:{
+          id:req.params.id
+      }
+      }).then(message=>{
+          if(!message){
+              return res.status(404).json({msg:"No such Message Exists"})
+          }
+      res.json(message)
+  }).catch(err=>{
+      res.status(500).json({
+          msg:"internal server error",
+          err
+      })
+  })
+})
 
 module.exports = router;
