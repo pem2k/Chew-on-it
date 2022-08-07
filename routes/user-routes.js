@@ -33,7 +33,7 @@ router.get("/directory", (req, res) => {
 //			[sequelize.fn("COUNT", sequelize.col("UserId")), "friends"]
 			[sequelize.fn("COUNT", sequelize.col("follower_id")), "friends"],
 			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"],
-			[sequelize.fn("COUNT", sequelize.col("chatter1_id")), "comments"]],
+			[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
 		include: [
 			{
 				model: User,
