@@ -1,11 +1,62 @@
+:root {
+	--highlight: #FAF3DD;
+	--recessed: #C8D5B9;
+	--shadow: #8FC0A9;
+	--background: #68B0AB;
+	--float: #00000077;
+	--primary-text: #efefef;
+	--secondary-text: #555;
+}
+
 .hero {
 	background-image: url("/img/login-splash.jpg");
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: calc(100vh - 100px);
+	background-color: inherit;
 	color: white;
+	margin-bottom: 0px;
 }
+.about-splash {
+	background-image: url("/img/splash-about.jpg");
+}
+.fill-view {
+	min-height: calc(100vh - 56px);
+}
+.bg-highlight {
+	background: var(--highlight);
+	color: var(--secondary-text);
+}
+.bg-recessed {
+	background: var(--recessed);
+	color: var(--secondary-text);
+}
+.bg-shadow {
+	background: var(--shadow);
+	color: var(--primary-text);
+}
+.bg-background {
+	background: var(--background);
+
+}
+.bg-float {
+	background: var(--float);
+}
+.text-error {
+	color: #c00;
+	font-size: 0.9em;
+	font-style: oblique;
+	font-weight: bolder;
+}
+.profile {
+	width: 200px;
+	border-radius: 50%;
+}
+.profile-thumb {
+	width: 100%;
+	border-radius: 50%;
+}
+
 #login input {
 	width: 90%;
 	margin: 4px 5%;

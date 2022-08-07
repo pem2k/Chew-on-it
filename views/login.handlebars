@@ -1,29 +1,61 @@
-<div class="jumbotron jumbotron-fluid hero">
-	<div class="row">
-		<div class="col-4 offset-2">
-			<h1 class="display-4">Share Your World</h1>
-			<p>Inspirational message.</p>
+<div class="jumbotron jumbotron-fluid hero fill-view">
+	<div class="row mx-0">
+		<div class="col-10 col-md-5 offset-1 col-lg-7 text-center text-md-left">
+			<h1 class="display-4 user-select-none">Share Your World</h1>
+			<p class="user-select-none">Inspirational message.</p>
 		</div>
-		<div class="offset-0 col-5 offset-lg-2 col-xl-3">
-			<div class="card">
-				<div>
-					<!-- Tabs Titles -->
+		<div class="offset-1 col-10 offset-md-0 col-md-5 col-lg-3">
+			<div class="card bg-highlight rounded">
+				<div class="card-header bg-recessed">
 					<h3>Login</h3>
-
-					<!-- Login Form -->
+				</div>
+				<div class="card-body">
 					<form id="login">
-					<input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-					<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-					<input type="submit" class="fadeIn fourth" value="Log In">
+					<input type="text" id="loginUser" name="login" placeholder="login">
+					<input type="password" id="loginPassword" name="login" placeholder="password">
+					<input type="submit" id="loginSubmit" class="btn bg-shadow" value="Log In">
+					<span id="loginError" class="card-subtitle text-error"></span>
 					</form>
+				</div>
+				<div class="card-footer d-flex justify-content-center">
+					<button type="button" class="btn bg-shadow" data-toggle="modal" data-target="#myModal">Create new account</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal bg-float" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content bg-highlight">
 
-					<!-- Remind Passowrd -->
-					<div id="formFooter">
-						<a class="underlineHover" href="#">Forgot Password?</a>
+					<form>
+					<div class="card-header bg-recessed">
+						<h2>Sign Up</h2>
+						<p>We don't send newsletter emails!</p>
 					</div>
-
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col"><input type="text" id="signupFirst" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
+							<div class="col"><input type="text" id="signupLast" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" id="signupEmail" name="email" placeholder="Email" required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="signupPassword" name="password" placeholder="Password" required="required">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" id="signupPasswordConfirm" name="confirm_password" placeholder="Confirm Password" required="required">
+					</div>
+					<span id="signupError" class="text-error"></span>
+					</form>
+				</div>
+				<div class="card-footer">
+					<button type="submit" id="signupSubmit" class="btn bg-shadow btn-lg">Sign Up</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script src="/scr/login.js"></script>

@@ -1,12 +1,12 @@
 const express = require('express');
-const { beforeDefine } = require('../config/connection');
 const router = express.Router();
-const {Message, Post, Profile, Rest} = require('../models');
+const {Message, Follow, User, Business, Review} = require('../models');
+
 
 router.get("/",async (req,res)=>{
     try {
-        const business = await Rest.findAll({
-            include:[Message,Profile,Post],
+        const business = await Business.findAll({
+            include:[Message,User,Follow, Review, Business],
         })
         res.status(200).json(business)
     } catch (err) {
@@ -19,11 +19,10 @@ router.get("/",async (req,res)=>{
 
 router.post("/",async (req,res)=>{
     try{
-        const newBusiness = await Message.create({
-            rest_name:req.body.rest_name,
-            rest_location:body.rest_location,
-            rest_review:body.rest_review,
-            rest_details:body.rest_details,
+        const newBusiness = await Business.create({
+            business_name:req.body.business_name,
+            location:req.body.location,
+            phone_number:req.body.phone_number,
             id:req.body.id
         })
         res.status(201).json(newBusiness)
@@ -38,7 +37,7 @@ router.post("/",async (req,res)=>{
 
 
 router.get("/:id",(req,res)=>{
-    Rest.findByPk(req.params.id).then(business=>{
+    Business.findByPk(req.params.id).then(business=>{
         if(!business){
             return res.status(404).json({msg:"No Such Restaurant exists in the Database!"})
         }
@@ -51,11 +50,10 @@ router.get("/:id",(req,res)=>{
     })
 })
 router.put("/:id",(req,res)=>{
-    Rest.update({
-        rest_name:req.body.rest_name,
-        rest_location:body.rest_location,
-        rest_review:body.rest_review,
-        rest_details:body.rest_details,
+    Business.update({
+        business_name:req.body.business_name,
+        location:req.body.location,
+        phone_number:req.body.phone_number,
         id:req.body.id
     },
         {
@@ -75,7 +73,7 @@ router.put("/:id",(req,res)=>{
     })
 })
 router.delete("/:id",(req,res)=>{
-    Rest.destroy({
+    Business.destroy({
         where:{
             id:req.params.id
         }
@@ -83,7 +81,7 @@ router.delete("/:id",(req,res)=>{
             if(!business){
                 return res.status(404).json({msg:"No such Restaurants Exists in the Database"})
             }
-        res.json(busines)
+        res.json(business)
     }).catch(err=>{
         res.status(500).json({
             msg:"internal server error",

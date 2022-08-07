@@ -14,12 +14,22 @@ Message.init(
 
       message_contents:{
         type: DataTypes.TEXT,
+        allowNull:false
       },
 
-      user_id: {
+      commenter_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "user",
+            key: "id"
+        },
+        onDelete: "cascade"
+      },
+      
+      review_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "review",
             key: "id"
         },
         onDelete: "cascade"

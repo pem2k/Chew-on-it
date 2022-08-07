@@ -1,9 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Follower extends Model { }
+class Follow extends Model { }
 
-Follower.init(
+Follow.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,7 +12,15 @@ Follower.init(
         autoIncrement: true,
       },
 
-      user_id: {
+      follower_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: "user",
+            key: "id"
+        },
+        onDelete: "cascade"
+      },
+      followed_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "user",
@@ -27,4 +35,4 @@ Follower.init(
     }
 )
 
-module.exports = Follower
+module.exports = Follow

@@ -12,35 +12,27 @@ Review.init(
         autoIncrement: true,
       },
 
-      review_title:{
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-
-      review_restaraunt:{
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-
-      review_contents:{
+      content:{
         type: DataTypes.TEXT,
+
       },
 
-      review_score:{
+      business_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            isNumeric: true
-        }
+        references: {
+            model: "business",
+            key: "id"
+        },
+        // onDelete: "cascade"
       },
-
+      
       user_id: {
         type: DataTypes.INTEGER,
         references: {
             model: "user",
             key: "id"
         },
-        onDelete: "cascade"
+        // onDelete: "cascade"
       }
       
     },
