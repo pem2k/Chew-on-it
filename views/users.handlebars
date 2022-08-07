@@ -1,25 +1,26 @@
 <div class="fill-view">
-	<div class="container-fluid d-flex flex-wrap">
+	<div class="container-fluid d-flex flex-wrap" id="users">
 		{{#each users}}
 		<div class="my-1 px-2 offset-1 col-10 offset-sm-0 col-sm-6 col-lg-4">
-			<div class="card px-0">
+			<div class="card shadow px-0 bg-light">
 				<div class="row no-gutters">
 					<div class="col-md-4 d-flex align-items-center">
-						<img src="/img/default_profile.jpg" class="card-img" alt="{{first_name}} profile image.">
+						<a class="stretched-link" href="/profile/{{id}}"><img src="/img/default_profile.jpg" class="p-4 p-md-2 card-img profile-thumb" alt="{{first_name}} profile image."></a>
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<h5 class="card-title text-truncate">{{first_name}} {{last_name}}</h5>
-							<div class="d-flex justify-content-center justify-content-md-between flex-column align-items-start flex-md-row align-items-md-center">
+							<div class="d-flex flex-row justify-content-between align-items-start">
 								<div>
 									<p class="mb-0">Friends: {{friends}}</p>
 									<p class="mb-0">Reviews: {{reviews}}</p>
 									<p class="mb-0">Comments: {{comments}}</p>
-									<a class="stretched-link" href="/profile/{{id}}"></a>
 								</div>
+								{{#if ../id}}
 								<div class="row align-self-md-end">
-									<button type="button" class="btn btn-primary">Add Friend</button>
+									<button type="button" class="btn mx-3 btn-success" data-friend="{{id}}" onclick="toggleFriend(this)">Add</button>
 								</div>
+								{{/if}}
 							</div>
 						</div>
 					</div>

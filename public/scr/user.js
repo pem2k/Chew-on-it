@@ -11,3 +11,45 @@ document.querySelector("#logout").addEventListener("click", () => {
 			alert(`(${res.status}): ${res.statusText}`);
 	});
 });
+
+function toggleFriend (button) {
+	if (button.classList.contains("btn-success")) {
+		button.disabled = true;
+		fetch("/follow/", {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: {
+
+			}
+		}).then(res => {
+			button.disabled = false;
+			if (res.status !== 200) {
+				button.classList.add("btn-danger");
+				button.classList.remove("btn-success");
+				button.textContent = "Remove";
+			} else
+				alert(`(${res.status}): ${res.statusText}`);
+		});
+	} else {
+		button.disabled = true;
+		fetch("/follow/", {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: {
+
+			}
+		}).then(res => {
+			button.disabled = false;
+			if (res.status !== 200) {
+				button.classList.add("btn-success");
+				button.classList.remove("btn-danger");
+				button.textContent = "Add";
+			} else
+				alert(`(${res.status}): ${res.statusText}`);
+		});
+	}
+}

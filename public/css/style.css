@@ -20,8 +20,11 @@
 .about-splash {
 	background-image: url("/img/splash-about.jpg");
 }
+.navbar-border {
+	border-bottom: 2px solid var(--recessed);
+}
 .fill-view {
-	min-height: calc(100vh - 56px);
+	min-height: calc(100vh - 58px);
 }
 .bg-highlight {
 	background: var(--highlight);
@@ -36,7 +39,7 @@
 	color: var(--primary-text);
 }
 .bg-background {
-	background: var(--background);
+	background: #f3f3f3;
 
 }
 .bg-float {
