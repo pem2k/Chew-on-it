@@ -12,6 +12,7 @@ User.hasMany(Message, {
     foreignKey: "user_id"
 })
 
+User.belongsToMany(User, { as: "friend", through: "friends" });
 User.hasMany(Follow, {
     foreignKey: "user_id"
 })
@@ -20,10 +21,10 @@ Follow.hasMany(User, {
     foreignKey: "user_id"
 })
 
-Business.hasMany(Review, { 
+Business.hasMany(Review, {
     foreignKey: "business_id",
     })
-    
+
 Review.hasMany(Message), {
     foreignKey: "user_id"
 }
