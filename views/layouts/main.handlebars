@@ -36,6 +36,80 @@
 			<li class="nav-item">
 				<a class="nav-link" href="/profile"><img src="/img/default_profile.jpg" class="profile-thumb position-relative" style="width: 20px; top: -2px;">{{first_name}}</a>
 			</li>
+			<!-- Adding Add Review Modal -->
+			<li class="nav-item">
+				<div class="container">
+  <!-- Button to Open the Modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    Add Review
+  </button>
+
+  <!-- Review Model Popup -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header
+        <div class="modal-header">
+          <h4 class="modal-title"></h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div> -->
+
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form>
+            <div class="form-group">
+                <label for="restaurant-name" class="col-form-label">Restaurant Name:</label>
+                <input type="text" class="form-control" id="restaurantName">
+            </div>
+            <div class="form-group">
+                <label for="restaurant-address" class="col-form-label">Address:</label>
+                <input type="text" class="form-control" id="restaurantAddress">
+            </div>
+            <!-- Score -->
+            <div class="form-check form-check-inline" id="restaurantScore">
+                <label for="restaurant-score" class="col-form-label">Score: </label>
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                <label class="form-check-label" for="inlineCheckbox1">1</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                <label class="form-check-label" for="inlineCheckbox2">2</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">3</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">4</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                <label class="form-check-label" for="inlineCheckbox3">5</label>
+              </div>
+            <!-- Review -->
+              <div class="form-group">
+                <label for="restaurant-review" class="col-form-label">Review:</label>
+                <textarea class="form-control" id="restaurantReview"></textarea>
+              </div>
+            <!-- Add Photo
+              <div class="form-group">
+                <label for="restaurant-review" class="col-form-label">Add Photos:</label>
+                <textarea class="form-control" id="restaurant-review"></textarea>
+              </div> -->
+            </form>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Submit Review</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+			</li>
 			<li class="nav-item">
 				<a class="nav-link" id="logout">Logout</a>
 			</li>
