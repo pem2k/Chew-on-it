@@ -20,19 +20,19 @@ Review.init(
       business_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "business",
+            model: "Business",
             key: "id"
         },
-        // onDelete: "cascade"
+        onDelete: "cascade"
       },
       
       user_id: {
         type: DataTypes.INTEGER,
         references: {
-            model: "user",
+            model: "User",
             key: "id"
         },
-        // onDelete: "cascade"
+        onDelete: "cascade"
       }
       
     },

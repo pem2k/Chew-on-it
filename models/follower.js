@@ -12,22 +12,14 @@ Follow.init(
         autoIncrement: true,
       },
 
-      follower_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "user",
-            key: "id"
-        },
-        onDelete: "cascade"
-      },
-      followed_id: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: "user",
-            key: "id"
-        },
-        onDelete: "cascade"
-      }
+      // follower_id: {
+      //   type: DataTypes.INTEGER,
+      //   onDelete: "cascade"
+      // },
+      // followed_id: {
+      //   type: DataTypes.INTEGER,
+      //   onDelete: "cascade"
+      // }
     },
     {
       sequelize,
