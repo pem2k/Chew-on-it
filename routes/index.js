@@ -130,7 +130,7 @@ router.get('/profile/:id', async (req, res) => {
     const userProfileSer = userProfile.toJSON()
 
     res.render('profile', {
-      userProfileSer,
+    userProfileSer,
     user: req.session.user
     })
 });
