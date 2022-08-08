@@ -165,12 +165,12 @@ router.get('/feed', async (req, res) => {
             reviewArray.push(...user.Reviews)
         });
 
-        res.status(200).json(reviewArray)
+        // res.status(200).json(reviewArray)
         
-    //    res.render("feed", {
-    //         reviewArray,
-    //         user: req.session.user
-    //    })
+       res.render("feed", {
+            reviewArray,
+            user: req.session.user
+       })
 
     }catch(err){
       if(err){
