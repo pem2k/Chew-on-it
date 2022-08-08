@@ -34,13 +34,6 @@ const sess = {
 
 app.use(session(sess));
 
-app.get('/', async (req, res) =>{
-  if(req.session.user){
-      return res.render('profile', req.session.user)
-  }
-  res.render('login');
-} )
-
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 

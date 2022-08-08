@@ -10,7 +10,7 @@
 	</div>
 </div>
 <div class="content d-flex align-items-start h-100 pt-3">
-	{{> aside}}
+	{{> aside user}}
 	<div class="d-flex flex-wrap flex-fill" id="users">
 		{{#each users}}
 		<div class="my-1 px-2 offset-1 col-10 offset-sm-0 col-sm-6">
@@ -28,7 +28,7 @@
 									<p class="mb-0">Reviews: {{reviews}}</p>
 									<p class="mb-0">Comments: {{comments}}</p>
 								</div>
-								{{#if ../id}}
+								{{#if ../user.id}}
 								<div class="row align-self-md-end">
 									{{#if follow}}
 									<button type="button" class="btn mx-3 btn-danger" data-friend="{{id}}" onclick="toggleFriend(this)">Remove</button>
