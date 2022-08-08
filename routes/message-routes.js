@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     const messages = await Message.findAll({
         include:[User, Review],
     })
-    res.status(200).json(messages)
+   return res.status(200).json(messages)
 } catch (err) {
     res.status(500).json({
         msg:"internal server error!",
@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     })
 }
     if(!req.session.user){
-      return res.redirect("login")
+      return res.redirect("/")
   }
     res.render('messages')
   });
@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
           err
       })
      if(!req.session.user){
-        return res.redirect("login")
+        return res.redirect("/")
     }
       res.render('messages')
 })
