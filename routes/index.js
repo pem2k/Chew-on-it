@@ -90,7 +90,7 @@ router.get('/profile', async (req, res) => {
           }
 
           res.render('profile', {
-            userProfile,
+            userProfileSer,
             user: req.session.user
           })
     } catch (err) {
@@ -121,6 +121,9 @@ router.get('/profile/:id', async (req, res) => {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
+
+
+
     res.render('profile', {
         userProfile, 
         user: req.session.user
@@ -142,21 +145,25 @@ router.get('/feed', async (req, res) => {
       
   }
     try{
-        const allFollowedReviews = await  Review.findAll({ include: [{
+        const allFollowed = await  User.findByPk(req.session.user.id,{ include: [{
             model: User, 
-            as: "followed", 
-            through: "Follow", 
-            where:{
-                id: req.session.user.id
-            }
-       }]
+            as: "follower",
+            include: [{model: Review,
+                include: [User]
+            }]
+        }]
     })
-        res.status(200).json(allFollowedReviews)
+      const reviewArray = [];
+        allFollowed.follower.forEach(user => {
+            reviewArray.push(...user.Reviews)
+        });
+
+        // res.status(200).json(reviewArray)
         
-    //    res.render("feed", {
-    //         allFollowedReviews,
-    //         user: req.session.user
-    //    })
+       res.render("feed", {
+            reviewArray,
+            user: req.session.user
+       })
 
     }catch(err){
       if(err){
