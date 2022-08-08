@@ -5,7 +5,12 @@ class Business extends Model { }
 
 Business.init(
     {
-      
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       business_name: {
         type: DataTypes.STRING,
         allowNull: false,
