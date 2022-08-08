@@ -17,36 +17,48 @@ router.delete("/logout", (req, res) => {
 })
 
 // User directory.
-router.get("/directory", (req, res) => {
-	User.findAll({
-		attributes: ["id", "first_name", "last_name",
-//			[sequelize.fn("COUNT", sequelize.col("UserId")), "friends"]
-			[sequelize.fn("COUNT", sequelize.col("follower_id")), "friends"],
-			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"],
-			[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
-		include: [
-			{
-				model: User,
-				as: "friend",
-				required: false,
+router.get("/followed", async (req, res) => {
+    if(!req.session.user){
+      return res.redirect("/")
+      
+  }
+    try{
+        const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
+            id: req.session.user.id}
+       }]
+    })
+        
+       res.status(200).json(allFollowed)
 
-				attributes: []
-			},
-			{ model: Follow, required: false, attributes: [] },
-			{ model: Review, attributes: [] },
-			{ model: Message, attributes: [] }],
-		group: ["User.id"]
-	}).then(results => results.map(user => user.toJSON()))
-	.then(users => {
-		const data = { users };
-		for (let k in req.session.user)
-			data[k] = req.session.user[k];
-		console.log("USER1:", data.users[0])
-		console.log("USER2:", data.users[1])
-		res.render("users", data);
-	});
-});
+    }catch(err){
+      if(err){
+        res.status(500).json({msg:"ERROR",err})
+      }
+    }
+    //res.render('feed', req.session.user)
+  });
 
+  router.get("/followers", async (req, res) => {
+    if(!req.session.user){
+      return res.redirect("/")
+      
+  }
+    try{
+        const allFollowers = await  User.findAll({ include: [{model: User, as: "follower", through: "Follow", where:{
+            id: req.session.user.id,}
+       }]
+    })
+        
+       res.status(200).json(allFollowers)
+
+    }catch(err){
+      if(err){
+        res.status(500).json({msg:"ERROR",err})
+      }
+    }
+    //res.render('feed', req.session.user)
+  });
+	
 //follow route
 router.post('/follow', async (req, res) => {
     if(!req.session.user){
