@@ -45,48 +45,6 @@ router.get("/directory", (req, res) => {
 	});
 });
 
-router.get("/followed", async (req, res) => {
-    if(!req.session.user){
-      return res.redirect("/")
-
-  }
-    try{
-        const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
-            id: req.session.user.id}
-       }]
-    })
-
-       res.status(200).json(allFollowed)
-
-    }catch(err){
-      if(err){
-        res.status(500).json({msg:"ERROR",err})
-      }
-    }
-    //res.render('feed', req.session.user)
-  });
->>>>>>> dev
-
-  router.get("/followers", async (req, res) => {
-    if(!req.session.user){
-      return res.redirect("/")
-
-  }
-    try{
-        const allFollowers = await  User.findAll({ include: [{model: User, as: "follower", through: "Follow", where:{
-            id: req.session.user.id,}
-       }]
-    })
-
-       res.status(200).json(allFollowers)
-
-    }catch(err){
-      if(err){
-        res.status(500).json({msg:"ERROR",err})
-      }
-    }
-    //res.render('feed', req.session.user)
-  });
 
 //follow route
 router.post('/follow', async (req, res) => {
@@ -107,7 +65,6 @@ router.post('/follow', async (req, res) => {
         res.status(500).json({msg:"ERROR",err})
       }
     }
-    //res.render('feed', req.session.user)
   });
 
 //unfollow route
@@ -127,24 +84,6 @@ router.delete("unfollow", async (req, res) => {
 		}
 	}
 })
-
-//profile routes
-router.get('/', async (req, res) => {
-	if (!req.session.user) {
-		return res.redirect("login")
-	}
-
-	try {
-		const allUsers = await User.findAll()
-		res.json(allUsers)
-
-	} catch (err) {
-		if (err) {
-			res.status(500).json({ msg: "ERROR", err })
-		}
-	}
-
-});
 
 
 router.put('/profilePic', async (req, res) => {

@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
         email: foundUser.email
     }
     
-    return res.status(200).json(foundUser)
+    return res.status(200)
     //res.render homepage/feed
 })
 
@@ -89,7 +89,7 @@ router.get('/profile', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
           }
 
-          res.render('profile', req.session.user)
+          res.render('profile', req.session.user, userProfile )
     } catch (err) {
         if (err) {
 
@@ -112,13 +112,13 @@ router.get('/profile/:id', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
           }
       
-          res.render('profile', userProfile)
+         
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    res.render('profile', req.session.user)
+    res.render('profile', {req.session.user, userProfile})
 });
 
 router.get("/about", (req, res) => {

@@ -17,6 +17,12 @@ Review.init(
 
       },
 
+      review_pic_url:{
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+    },
+
       business_id: {
         type: DataTypes.INTEGER,
         references: {
