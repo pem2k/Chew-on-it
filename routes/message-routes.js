@@ -43,7 +43,6 @@ router.get("/", async (req, res) => {
 router.post("/",async (req,res)=>{
   try{
       const newMessage = await Message.create({
-          id:req.body.id,
           message_contents:req.body.message_contents,
           commenter_id:req.body.commenter_id,
           review_id:req.body.review_id,
