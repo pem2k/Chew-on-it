@@ -1,17 +1,15 @@
 <div class="aside-column d-none d-md-block">
-	<div class="card bg-highlight rounded-0 h-100">
+	<div class="card aside-borders bg-highlight rounded-0 h-100">
 
 		<!--Header/profile image-->
 		<div class="rounded-0 text-center">
 			<div class="mx-auto d-block position-relative aside-test">
 				<img src="/img/default_profile.jpg" class="aside-img position-relative">
 				<span class="position-relative position-absolute fixed-bottom" style="left: 188px; bottom: 4px;">
-					<a href="#" id="edit-profile"><img src="/img/icn/icon_edit.png"></a>
+					<a role="button" id="editProfile" data-toggle="modal" data-target="#profileModal"><i class="fa-solid fa-plus"></i></a>
 				</span>
 			</div>
-
 			<h2 class="card-title">{{first_name}} {{last_name}}</h2>
-			<button type ="button" id="upload_widget" class="btn btn-success">Update Profile Picture</button>
 		</div>
 
 		<!--Header/profile image-->
@@ -29,6 +27,8 @@
 						<a class="stretch-link" href="/profile/1"></a>
 					</div>
 				</div>
+
+				<!--List of followed users-->
 				{{#each friend}}
 				<div class="col-12 card text-dark d-flex flex-row justify-content-start align-items-start text-center mb-1">
 					<div style="width: 65px; margin-bottom: 4px">
@@ -41,6 +41,32 @@
 					</div>
 				</div>
 				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit profile modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content bg-highlight">
+			<form>
+				<div class="card-header bg-shadow">
+					<h2>Edit Profile</h2>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col"><input type="text" id="editFirst" class="form-control" name="first_name" placeholder="First Name" value="{{first_name}}" required="required"></div>
+							<div class="col"><input type="text" id="editLast" class="form-control" name="last_name" placeholder="Last Name" value="{{last_name}}" required="required"></div>
+						</div>
+					</div>
+					<button type ="button" id="upload_widget" class="btn btn-success">Update Profile Picture</button>
+					<span id="editError" class="text-error"></span>
+				</div>
+			</form>
+			<div class="card-footer bg-shadow">
+				<button type="submit" id="editSubmit" onclick="editProfile()" class="btn bg-success btn-lg">Update</button>
 			</div>
 		</div>
 	</div>
