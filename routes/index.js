@@ -17,6 +17,7 @@ router.use('/messages', msgRoutes);
 
 
 router.get('/signup', async (req, res) => res.render('signup'));
+
 router.post("/signup", async (req, res) => {
     try {
         const newUser = await User.create({
@@ -89,6 +90,8 @@ router.get('/profile', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
           }
 
+          const userProfileSer = userProfile.toJSON()
+
           res.render('profile', {
             userProfileSer,
             user: req.session.user
@@ -124,9 +127,11 @@ router.get('/profile/:id', async (req, res) => {
 
 
 
+    const userProfileSer = userProfile.toJSON()
+
     res.render('profile', {
-        userProfile, 
-        user: req.session.user
+      userProfileSer,
+    user: req.session.user
     })
 });
 
@@ -149,6 +154,8 @@ router.get('/feed', async (req, res) => {
             model: User, 
             as: "follower",
             include: [{model: Review,
+                limit: 10, 
+                order: [['updatedAt', 'DESC']],
                 include: [User]
             }]
         }]
@@ -158,12 +165,12 @@ router.get('/feed', async (req, res) => {
             reviewArray.push(...user.Reviews)
         });
 
-        // res.status(200).json(reviewArray)
+        res.status(200).json(reviewArray)
         
-       res.render("feed", {
-            reviewArray,
-            user: req.session.user
-       })
+    //    res.render("feed", {
+    //         reviewArray,
+    //         user: req.session.user
+    //    })
 
     }catch(err){
       if(err){
