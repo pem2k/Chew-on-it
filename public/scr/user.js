@@ -53,3 +53,23 @@ function toggleFriend (button) {
 		});
 	}
 }
+
+function editProfile(button) {
+	const editFirst = document.querySelector("#editFirst").value;
+	const editLast = document.querySelector("#editLast").value;
+	fetch("/users/", {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			first_name: editFirst,
+			last_name: editLast
+		})
+	}).then(res => {
+		if (res.status == 200)
+			location.reload();
+		else
+			alert(`(${res.status}): ${res.statusText}`);
+	});
+}
