@@ -19,7 +19,14 @@ router.delete("/logout", (req, res) => {
 // User directory.
 router.get("/directory", (req, res) => {
 	User.findAll({
-		attributes: ["id", "first_name", "last_name"],
+		attributes: ["id", "first_name", "last_name",
+	//		[sequelize.fn("COUNT", sequelize.col("followed_id")), "following"],
+			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
+	//		[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
+		include: [
+//			{ model: User, attributes: [] },
+			{ model: Review, attributes: [] }],
+	//		{ model: Message, attributes: [] }],
 		group: ["User.id"]
 	}).then(results => results.map(user => user.toJSON()))
 	.then(users => {
