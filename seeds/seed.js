@@ -90,23 +90,23 @@ const review = [
     },
 ]
 
-// const message = [
-//     {
-//         message_contents:"Wordsarehere",
-//         commenter_id:"1",
-//         review_id:"1",
-//     },
-//     {
-//         message_contents:"Saying Stuff thats important",
-//         commenter_id:"3",
-//         review_id:"4",
-//     },
-//     {
-//         message_contents:"Cool Cool Cool",
-//         commenter_id:"2",
-//         review_id:"5",
-//     },
-// ]
+const message = [
+    {
+        message_contents:"Wordsarehere",
+        commenter_id:"1",
+        review_id:"1",
+    },
+    {
+        message_contents:"Saying Stuff thats important",
+        commenter_id:"3",
+        review_id:"4",
+    },
+    {
+        message_contents:"Cool Cool Cool",
+        commenter_id:"2",
+        review_id:"5",
+    },
+]
 
 const follow = [
     {
@@ -123,9 +123,9 @@ const seedMe = async ()=>{
     await sequelize.sync({force:true});
     await User.bulkCreate(users,{individualHooks:true})
     await Business.bulkCreate(business)
-    await Follow.bulkCreate(follow)
-    // await Message.bulkCreate(message)
     await Review.bulkCreate(review)
+    await Message.bulkCreate(message)
+    await Follow.bulkCreate(follow)
     process.exit(0)
 }
 
