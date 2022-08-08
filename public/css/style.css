@@ -4,6 +4,7 @@
 	--shadow: #00000033;
 	--background: #68B0AB;
 	--float: #00000077;
+	--card-float: #00440077;
 	--primary-text: #efefef;
 	--secondary-text: #222;
 }
@@ -75,6 +76,14 @@
 }
 .bg-float {
 	background: var(--float);
+}
+.bg-card-float {
+	background: var(--card-float);
+	color: var(--primary-text);
+}
+.navbar-brand,
+.nav-link {
+	color: var(--primary-text) !important;
 }
 .text-error {
 	color: #c00;
