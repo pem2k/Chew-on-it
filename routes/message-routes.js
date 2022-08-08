@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     })
 }
     if(!req.session.user){
-      return res.redirect("/")
+      return res.redirect("login")
   }
     res.render('messages')
   });

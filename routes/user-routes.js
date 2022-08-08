@@ -68,10 +68,10 @@ router.post('/follow', async (req, res) => {
   });
 
 //unfollow route
-router.delete("unfollow", async (req, res) => {
+router.delete("/unfollow", async (req, res) => {
 	try{
 		const unfollowedUser = Follow.destroy({where:{
-		follower_id: req.session.id,
+		follower_id: req.session.user.id,
 		followed_id: req.body.followed_id
 	}
 })

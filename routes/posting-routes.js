@@ -16,7 +16,7 @@ const {Review,Follow,Message,Business,User} = require('../models');
 //     }
 // })
 
-router.post("/",async (req,res)=>{
+router.post("/", async (req,res)=>{
     try{
         const newReview = await Review.create({
             id:req.body.id,
