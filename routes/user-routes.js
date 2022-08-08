@@ -28,7 +28,7 @@ router.get("/directory", (req, res) => {
 				model: User,
 				as: "followed",
 				through: "Follow",
-			//	where: {
+		//		where: {
 		//			id: req.session.user.id
 		//		},
 				attributes: [],

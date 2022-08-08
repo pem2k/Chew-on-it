@@ -34,7 +34,7 @@ function toggleFriend (button) {
 		});
 	} else {
 		button.disabled = true;
-		fetch("/follow/", {
+		fetch("/unfollow/", {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json'
