@@ -19,30 +19,13 @@ router.delete("/logout", (req, res) => {
 // User directory.
 router.get("/directory", (req, res) => {
 	User.findAll({
-		attributes: ["id", "first_name", "last_name",
-//			[sequelize.fn("COUNT", sequelize.col("UserId")), "friends"]
-			[sequelize.fn("COUNT", sequelize.col("follower_id")), "friends"],
-			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"],
-			[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
-		include: [
-			{
-				model: User,
-				as: "friend",
-				required: false,
-
-				attributes: []
-			},
-			{ model: Follow, required: false, attributes: [] },
-			{ model: Review, attributes: [] },
-			{ model: Message, attributes: [] }],
+		attributes: ["id", "first_name", "last_name"],
 		group: ["User.id"]
 	}).then(results => results.map(user => user.toJSON()))
 	.then(users => {
 		const data = { users };
 		for (let k in req.session.user)
 			data[k] = req.session.user[k];
-		console.log("USER1:", data.users[0])
-		console.log("USER2:", data.users[1])
 		res.render("users", data);
 	});
 });
@@ -51,14 +34,14 @@ router.get("/directory", (req, res) => {
 router.post('/follow', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
-      
+
   }
     try{
         const addFollow = await Follow.create({
 			follower_id: req.session.user.id,
 			followed_id: req.body.followed_id
 		})
-        
+
        res.status(200).json(addFollow)
 
     }catch(err){
