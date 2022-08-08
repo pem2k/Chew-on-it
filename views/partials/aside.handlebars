@@ -4,10 +4,13 @@
 		<!--Header/profile image-->
 		<div class="rounded-0 text-center">
 			<div class="mx-auto d-block position-relative aside-test">
-				<img src="/img/default_profile.jpg" class="aside-img position-relative">
+				<a href="/profile/{{id}}"><img src="/img/default_profile.jpg" class="aside-img position-relative"></a>
+				{{#if otherProfile}}
+				{{else}}
 				<span class="position-relative position-absolute fixed-bottom" style="left: 188px; bottom: 4px;">
 					<a role="button" id="editProfile" data-toggle="modal" data-target="#profileModal"><i class="fa-solid fa-plus"></i></a>
 				</span>
+				{{/if}}
 			</div>
 			<h2 class="card-title">{{first_name}} {{last_name}}</h2>
 		</div>

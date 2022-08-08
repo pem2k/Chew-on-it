@@ -44,9 +44,16 @@ router.post("/signup", async (req, res) => {
 
 })
 //login
+router.get('/', async (req, res) =>{
+    if(req.session.user)
+        return res.redirect("/feed");
+
+    res.render('login');
+  } )
+
 router.post("/login", async (req, res) => {
     if(req.session.user){
-       return res.render("profile", req.session.user)
+       return res.redirect("/feed");
     }
     const foundUser = await User.findOne({
         where: {
@@ -67,7 +74,7 @@ router.post("/login", async (req, res) => {
         last_name: foundUser.last_name,
         email: foundUser.email
     }
-    
+
     return res.status(200).json(foundUser)
     //res.render homepage/feed
 })
@@ -78,31 +85,8 @@ router.post("/login", async (req, res) => {
 router.get('/profile', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/')
-    }
-
-    try {
-        console.log("here 2")
-        const userProfile = await User.findByPk(req.session.user.id, {
-            include: [Review]
-          })
-
-          if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
-          }
-
-          const userProfileSer = userProfile.toJSON()
-
-          res.render('profile', {
-            userProfileSer,
-            user: req.session.user
-          })
-    } catch (err) {
-        if (err) {
-
-            res.status(500).json({ msg: "ERROR", err })
-        }
-    }
-
+    } else
+        return res.redirect(`/profile/${req.session.user.id}`);
 });
 
 //other user profiles
@@ -117,13 +101,20 @@ router.get('/profile/:id', async (req, res) => {
           if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
           }
-      
-         
+
+          const userProfileSer = await userProfile.toJSON()
+
+          res.render('profile', {
+            userProfileSer,
+            user: req.session.user,
+			otherProfile: (req.params.id != req.session.user.id) ? true : false
+          })
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
+<<<<<<< HEAD
 
 
 
@@ -133,6 +124,8 @@ router.get('/profile/:id', async (req, res) => {
     userProfileSer,
     user: req.session.user
     })
+=======
+>>>>>>> 3cd1363a408361d18f7518ab4243c730ea07f7ee
 });
 
 router.get("/about", (req, res) => {
@@ -147,14 +140,14 @@ router.get("/about", (req, res) => {
 router.get('/feed', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
-      
+
   }
     try{
         const allFollowed = await  User.findByPk(req.session.user.id,{ include: [{
-            model: User, 
+            model: User,
             as: "follower",
             include: [{model: Review,
-                limit: 10, 
+                limit: 10,
                 order: [['updatedAt', 'DESC']],
                 include: [User]
             }]
@@ -166,7 +159,7 @@ router.get('/feed', async (req, res) => {
         });
 
         // res.status(200).json(reviewArray)
-        
+
        res.render("feed", {
             reviewArray,
             user: req.session.user
