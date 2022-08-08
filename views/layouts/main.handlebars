@@ -13,7 +13,7 @@
 	<title></title>
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-recessed navbar-border shadow">
+	<nav class="navbar navbar-expand-lg navbar-light bg-recessed navbar-border shadow navbar-border">
 		{{#if first_name}}
 		<a class="navbar-brand" href="/feed">Project 2</a>
 		{{else}}
@@ -113,7 +113,7 @@
   </div>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" id="logout">Logout</a>
+				<a role="button" class="nav-link" id="logout">Logout</a>
 			</li>
 			{{else}}
 			<li class="nav-item">
@@ -124,7 +124,7 @@
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 			<input id="userSearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-			<button class="btn my-2 my-sm-0 bg-shadow" type="submit">Search</button>
+			<button class="btn my-2 my-sm-0 bg-card-float" type="submit">Search</button>
 			</form>
 		</div>
 	</nav>
