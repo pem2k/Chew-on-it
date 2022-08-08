@@ -45,7 +45,7 @@ router.post("/signup", async (req, res) => {
 //login
 router.post("/login", async (req, res) => {
     if(req.session.user){
-       return res.redirect("profile")
+       return res.render("profile", req.session.user)
     }
     const foundUser = await User.findOne({
         where: {
@@ -89,7 +89,10 @@ router.get('/profile', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
           }
 
-          res.render('profile', req.session.user)
+          res.render('profile', {
+            userProfile,
+            user: req.session.user
+          })
     } catch (err) {
         if (err) {
 
@@ -112,13 +115,16 @@ router.get('/profile/:id', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
           }
       
-          res.render('profile', userProfile)
+         
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    res.render('profile', req.session.user)
+    res.render('profile', {
+        userProfile, 
+        user: req.session.user
+    })
 });
 
 router.get("/about", (req, res) => {
@@ -136,19 +142,27 @@ router.get('/feed', async (req, res) => {
       
   }
     try{
-        const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
-            id: req.session.user.id,}
-       }, {model: Review}]
+        const allFollowedReviews = await  Review.findAll({ include: [{
+            model: User, 
+            as: "followed", 
+            through: "Follow", 
+            where:{
+                id: req.session.user.id
+            }
+       }]
     })
+        res.status(200).json(allFollowedReviews)
         
-       res.status(200).json(allFollowed)
+    //    res.render("feed", {
+    //         allFollowedReviews,
+    //         user: req.session.user
+    //    })
 
     }catch(err){
       if(err){
         res.status(500).json({msg:"ERROR",err})
       }
     }
-    //res.render('feed', req.session.user)
   });
 
 //
