@@ -10,7 +10,7 @@ const sequelize = require('../config/connection');
 //logout
 router.delete("/logout", (req, res) => {
 	if (!req.session.user) {
-		return res.redirect("login")
+		return res.redirect("/")
 	}
 	req.session.destroy();
 	res.json({ msg: "logged out!" })
@@ -18,9 +18,12 @@ router.delete("/logout", (req, res) => {
 
 // User directory.
 router.get("/directory", (req, res) => {
+	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
+
 	User.findAll({
 		attributes: ["id", "first_name", "last_name",
-			[sequelize.fn("COUNT", sequelize.col("followed_id")), "friends"],
+			[sequelize.fn("COUNT", sequelize.col("follower_id")), "following"],
+			[sequelize.literal(`CASE WHEN follower_id = ${follower} THEN 1 ELSE 0 END`), "follow"],
 			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
 	//		[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
 		include: [
@@ -28,9 +31,6 @@ router.get("/directory", (req, res) => {
 				model: User,
 				as: "followed",
 				through: "Follow",
-		//		where: {
-		//			id: req.session.user.id
-		//		},
 				attributes: [],
 			},
 			{ model: Review, attributes: [] }],
@@ -38,9 +38,7 @@ router.get("/directory", (req, res) => {
 		group: ["User.id"]
 	}).then(results => results.map(user => user.toJSON()))
 	.then(users => {
-		const data = { users };
-		for (let k in req.session.user)
-			data[k] = req.session.user[k];
+		const data = { users, user: req.session.user };
 		res.render("users", data);
 	});
 });
@@ -88,7 +86,7 @@ router.delete("/unfollow", async (req, res) => {
 
 router.put('/profilePic', async (req, res) => {
     if (!req.session.user) {
-		return res.redirect("login")
+		return res.redirect("/")
 	}
     try {
 
