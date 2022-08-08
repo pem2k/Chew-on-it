@@ -1,7 +1,7 @@
 :root {
-	--highlight: #D4E7C0;
+	--highlight: #E4F7E9;
 	--recessed: #4AAB5C;
-	--shadow: #5C9971;
+	--shadow: #00000033;
 	--background: #68B0AB;
 	--float: #00000077;
 	--primary-text: #efefef;
@@ -31,18 +31,25 @@
 	border-bottom: 1px solid #bbb;
 }
 .aside-column {
-	width: 250px;
+	width: 280px;
 	position: relative;
 	margin-top: 30px;
+	padding: 0 15px;
 	height: calc(100vh - 355px);
 }
 .aside-test {
 	margin-top: -128px;
 }
+.aside-borders {
+	border-left: 1px solid #68B0AB33;
+	border-right: 1px solid #68B0AB33;
+	box-shadow: -1px -2px 4px #66996688, 1px -2px 4px #66996688;
+}
 .aside-img {
-	box-shadow: 0 0 3px #000;
+	box-shadow: 0 0 3px #33333388, -3px -2px 5px #33333388, 3px -2px 5px #33333388;
 	border-radius: 50%;
-	width: 248px;
+	width: 250px;
+	left: -1px;
 }
 .navbar-border {
 	border-bottom: 2px solid var(--recessed);
@@ -61,7 +68,6 @@
 }
 .bg-shadow {
 	background: var(--shadow);
-	color: var(--primary-text);
 }
 .bg-background {
 	background: #f3f3f3;
@@ -77,11 +83,17 @@
 	font-weight: bolder;
 }
 .content {
-	max-width: 990px;
+	max-width: 1020px;
 	width: 100%;
 	padding: 0 15px;
 	margin: 0 auto;
 	min-height: 100%;
+}
+.content-border {
+	border-left: 1px solid #99999933;
+	border-right: 1px solid #99999933;
+	box-shadow: -1px 0 3px #dddddd22, 1px 0 3px #dddddd22;
+	background: #dddddd22;
 }
 .profile {
 	width: 250px;
