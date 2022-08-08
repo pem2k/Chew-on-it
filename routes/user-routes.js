@@ -17,17 +17,45 @@ router.delete("/logout", (req, res) => {
 })
 
 // User directory.
+router.get("/directory", (req, res) => {
+	User.findAll({
+		attributes: ["id", "first_name", "last_name",
+			[sequelize.fn("COUNT", sequelize.col("followed_id")), "friends"],
+			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
+	//		[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
+		include: [
+			{
+				model: User,
+				as: "followed",
+				through: "Follow",
+		//		where: {
+		//			id: req.session.user.id
+		//		},
+				attributes: [],
+			},
+			{ model: Review, attributes: [] }],
+	//		{ model: Message, attributes: [] }],
+		group: ["User.id"]
+	}).then(results => results.map(user => user.toJSON()))
+	.then(users => {
+		const data = { users };
+		for (let k in req.session.user)
+			data[k] = req.session.user[k];
+		res.render("users", data);
+	});
+});
+
 router.get("/followed", async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
-      
+
   }
     try{
         const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
             id: req.session.user.id}
        }]
     })
-        
+
        res.status(200).json(allFollowed)
 
     }catch(err){
@@ -37,18 +65,19 @@ router.get("/followed", async (req, res) => {
     }
     //res.render('feed', req.session.user)
   });
+>>>>>>> dev
 
   router.get("/followers", async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
-      
+
   }
     try{
         const allFollowers = await  User.findAll({ include: [{model: User, as: "follower", through: "Follow", where:{
             id: req.session.user.id,}
        }]
     })
-        
+
        res.status(200).json(allFollowers)
 
     }catch(err){
@@ -58,19 +87,19 @@ router.get("/followed", async (req, res) => {
     }
     //res.render('feed', req.session.user)
   });
-	
+
 //follow route
 router.post('/follow', async (req, res) => {
     if(!req.session.user){
       return res.redirect("/")
-      
+
   }
     try{
         const addFollow = await Follow.create({
 			follower_id: req.session.user.id,
 			followed_id: req.body.followed_id
 		})
-        
+
        res.status(200).json(addFollow)
 
     }catch(err){
