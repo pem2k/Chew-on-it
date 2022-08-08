@@ -1,11 +1,11 @@
 :root {
-	--highlight: #FAF3DD;
-	--recessed: #C8D5B9;
-	--shadow: #8FC0A9;
+	--highlight: #D4E7C0;
+	--recessed: #4AAB5C;
+	--shadow: #5C9971;
 	--background: #68B0AB;
 	--float: #00000077;
 	--primary-text: #efefef;
-	--secondary-text: #555;
+	--secondary-text: #222;
 }
 
 .hero {
@@ -20,11 +20,36 @@
 .about-splash {
 	background-image: url("/img/splash-about.jpg");
 }
+.jumbo-banner {
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 250px;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	border-bottom: 1px solid #bbb;
+}
+.aside-column {
+	width: 250px;
+	position: relative;
+	margin-top: 30px;
+	height: calc(100vh - 355px);
+}
+.aside-test {
+	margin-top: -128px;
+}
+.aside-img {
+	box-shadow: 0 0 3px #000;
+	border-radius: 50%;
+	width: 248px;
+}
 .navbar-border {
 	border-bottom: 2px solid var(--recessed);
 }
 .fill-view {
-	min-height: calc(100vh - 58px);
+	min-height: calc(100vh - 59px);
+	height: 100%;
 }
 .bg-highlight {
 	background: var(--highlight);
@@ -51,9 +76,15 @@
 	font-style: oblique;
 	font-weight: bolder;
 }
+.content {
+	max-width: 990px;
+	width: 100%;
+	padding: 0 15px;
+	margin: 0 auto;
+	min-height: 100%;
+}
 .profile {
-	width: 200px;
-	border-radius: 50%;
+	width: 250px;
 }
 .profile-thumb {
 	width: 100%;
