@@ -3,7 +3,7 @@ const router = express.Router();
 const {Message, Follow, User, Business, Review} = require('../models');
 
 
-router.get("/",async (req,res)=>{
+// router.get("/",async (req,res)=>{
     // try {
     //     const business = await Business.findAll({
     //         include:[Message,User,Follow, Review],
@@ -19,21 +19,29 @@ router.get("/",async (req,res)=>{
     //     })
     // }
 
-    Business.findAll({
-        include:[Message,User,Follow, Review],
-    }).then(business=>{
-        if(!business){
-            return res.status(404).json({msg:"No Such Restaurant exists in the Database!"})
-        }
-        res.render("businesses",json(business))
+    // Business.findAll({
+    //     include:[{
+    //         model:Review,
+    //     }],
+    // }).then(results => results.map(business => business.toJSON()))
+    // .then(businesses => {
+    //     const data = { users, user: req.session.user };
+    //     res.render("users", data);
+    // });
+//     }).then(business=>{
+//         if(!business){
+//             return res.status(404).json({msg:"No Such Restaurant exists in the Database!"})
+//         }
+//         res.render("businesses",(business.toJSON()))
         
-    }).catch(err=>{
-        res.status(500).json({
-            msg:"internal server error",
-            err
-        })
-    })
-})
+//     }).catch(err=>{
+//         console.log(err)
+//         res.status(500).json({
+//             msg:"internal server error",
+//             err
+//         })
+//     })
+// })
 
 router.post("/",async (req,res)=>{
     try{
@@ -106,6 +114,6 @@ router.delete("/:id",(req,res)=>{
             err
         })
     })
-})
+});
 
 module.exports = router;
