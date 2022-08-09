@@ -28,7 +28,7 @@ router.get('/profile/:full_name', async (req, res) => {
             include: [Review]
         })
         if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
+           return res.render("404", req.session.user)
         }
 
         const userProfileSer = await userProfile.toJSON()
@@ -141,6 +141,7 @@ router.put('/profilePic', async (req, res) => {
 				id: req.session.user.id
 			}
 		})
+
 		const newPic = await foundUser.update({
 			profile_pic_url: req.body.profile_pic_url
 		})
@@ -151,6 +152,9 @@ router.put('/profilePic', async (req, res) => {
 		}
 	}
 })
+
+
+
 
 module.exports = router;
 //other user profiles
