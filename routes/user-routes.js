@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const bcrypt = require("bcrypt");
-const { User, Review, Message, Follow } = require('../models');
+const { User, Review, Message, Follow, Business } = require('../models');
 const path = require("path");
 const sequelize = require('../config/connection');
 //const { Sequelize } = require('sequelize/types');
@@ -22,19 +22,26 @@ router.get('/profile/:full_name', async (req, res) => {
     }
     try {
         const userProfile = await User.findOne({
-            where:{
-                full_name: req.params.full_name
-            },
-            include: [Review]
+			include: [{
+				model: Review,
+				include: [{
+					model: User,
+					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+				},
+				{
+					model: Business,
+					attributes: ["id", "business_name", "location", "phone_number"]
+				}]
+			}]
         })
         if (!userProfile) {
-           return res.render("404", req.session.user)
+            return res.render("404", req.session.user)
         }
 
-        const userProfileSer = await userProfile.toJSON()
+
 
         res.render('profile', {
-			profile: userProfileSer,
+            profile : userProfile.toJSON(),
             user: req.session.user,
             otherProfile: (req.params.id != req.session.user.id) ? true : false
         })

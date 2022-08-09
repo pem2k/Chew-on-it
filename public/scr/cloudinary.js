@@ -40,7 +40,7 @@ var myWidget1 = cloudinary.createUploadWidget({
     if (!error && result && result.event === "success") {
         console.log('Done! Here is the image info: ', result.info);
 
-        let cldUrl = result.info.url
+        let cldUrl1 = result.info.url
         console.log(cldUrl)
 
         fetch('/reviews/reviewPic', {
@@ -49,7 +49,7 @@ var myWidget1 = cloudinary.createUploadWidget({
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                profile_pic_url: cldUrl
+                profile_pic_url: cldUrl1
             }),
         })
             .then((response) => response.json())
@@ -64,6 +64,9 @@ var myWidget1 = cloudinary.createUploadWidget({
 }
 )
 
-document.getElementById("upload_widget1").addEventListener("click", function () {
-    myWidget1.open();
-}, false);
+
+document.onclick = function(event) {
+    let target = event.target
+    if(target.id != "upload_widget1"){return}
+    myWidget1.open()
+}

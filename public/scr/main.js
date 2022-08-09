@@ -6,17 +6,19 @@ reviewButton.addEventListener("click", addReview);
 function addReview(event) {
     event.preventDefault();
 
+
+	const reviewPhoto = cldUrl1
 	const restaurantName = document.querySelector("#restaurantName").value;
 	const restaurantAddress = document.querySelector("#restaurantAddress").value;
-    let restaurantScore = [];
-        $('.calculate').click(_ => {
-        restaurantScore = [];
-        $("#restaurantScore input[type='checkbox']:checked").each((_, {value}) => {
-            restaurantScore.push(value);
-        });
+    // let restaurantScore = [];
+    //     $('.calculate').click(_ => {
+    //     restaurantScore = [];
+    //     $("#restaurantScore input[type='checkbox']:checked").each((_, {value}) => {
+    //         restaurantScore.push(value);
+    //     });
         
-        console.log(restaurantScore);
-        });
+    //     console.log(restaurantScore);
+    //     });
 	const restaurantReview = document.querySelector("#restaurantReview").value;
 
 	fetch("/reviews", {
@@ -27,8 +29,9 @@ function addReview(event) {
 		body: JSON.stringify({
 			restaurant_name: restaurantName,
 			restaurant_address: restaurantAddress,
-			restaurant_score: restaurantScore,
+			// restaurant_score: restaurantScore,
 			restaurant_review: restaurantReview,
+			review_pic_url: reviewPhoto
 		})
 	}).then(res => {
 		if (res.status == 200)
