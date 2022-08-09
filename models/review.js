@@ -23,6 +23,16 @@ Review.init(
         defaultValue: null
     },
 
+    restaurant_name:{
+      type: DataTypes.STRING,
+      allowNull: true,
+  },
+
+    restaurant_address:{
+      type: DataTypes.STRING,
+      allowNull: true,
+  },
+
       business_id: {
         type: DataTypes.INTEGER,
         references: {
