@@ -99,7 +99,7 @@ router.post('/follow', async (req, res) => {
 		// Pull your data again to update following list.
 		const foundUser = await User.findOne({
 			where: {
-				email: req.session.user.id
+				id: req.session.user.id
 			},
 			include: [{
 				model: User,
@@ -156,7 +156,7 @@ router.delete("/unfollow", async (req, res) => {
 		// Pull your data again to update following list.
 		const foundUser = await User.findOne({
 			where: {
-				email: req.session.user.id
+				id: req.session.user.id
 			},
 			include: [{
 				model: User,
