@@ -6,8 +6,9 @@
 
 
 
-$("#submitReview").on("click", function(event) {
+$(document).on("click", "#submitReview",function(event) {
 	event.preventDefault()
+	
 	console.log("working!")
     // let target = event.target
     // if(target.id != $("#submitReview")){return}
@@ -17,15 +18,20 @@ $("#submitReview").on("click", function(event) {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
+			
 			restaurant_name: $("#restaurantName").val(),
 			restaurant_address: $("#restaurantAddress").val(),
 			// restaurant_score: restaurantScore,
 			content: $("#restaurantReview").val(),
-			
+			// review_pic_url: result.info.url
 		})
 	}).then(res => {
-		if (res.status == 200){
+		if (res.status == 201){
+			
 			location.reload();
+		}
+		else{
+			alert(`(${res.status}): Oops${res.statusText}`);
 		}
 	});
 })
