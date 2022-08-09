@@ -6,10 +6,9 @@
 
 
 
-$(document).on("click", function(event, session) {
+$(document).on("click", "#submitReview",function(event) {
 	event.preventDefault()
-	const target = event.target
-	if(target.id != "submitReview"){return}
+	
 	console.log("working!")
     // let target = event.target
     // if(target.id != $("#submitReview")){return}
@@ -19,17 +18,17 @@ $(document).on("click", function(event, session) {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
-			user_id: session,
+			
 			restaurant_name: $("#restaurantName").val(),
 			restaurant_address: $("#restaurantAddress").val(),
 			// restaurant_score: restaurantScore,
 			content: $("#restaurantReview").val(),
-			review_pic_url: result.info.url
+			// review_pic_url: result.info.url
 		})
 	}).then(res => {
-		if (res.status == 200){
-			console.log("itworked")
-			//location.reload();
+		if (res.status == 201){
+			
+			location.reload();
 		}
 		else{
 			alert(`(${res.status}): Oops${res.statusText}`);

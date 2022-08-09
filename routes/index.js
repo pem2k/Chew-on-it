@@ -168,6 +168,7 @@ router.get('/feed', async (req, res) => {
   }
 
 	Review.findAll({
+		order: [['createdAt', 'DESC']],
 		include: [{
 			model: Business,
 			attributes: ["id", "business_name", "location", "phone_number"]

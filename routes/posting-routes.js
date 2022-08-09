@@ -24,7 +24,7 @@ router.post("/", async (req,res)=>{
             restaurant_name: req.body.restaurant_name,
             restaurant_address: req.body.restaurant_address,
             business_id:req.body.business_id,
-            user_id:req.body.user_id,
+            user_id: req.session.user.id,
             review_pic_url: req.body.review_pic_url
         })
         res.status(201).json(newReview)
