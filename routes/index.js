@@ -5,7 +5,7 @@ const msgRoutes = require('./message-routes')
 const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
-const { User, Review, Follow, } = require('../models');
+const { User, Review, Follow, Business, } = require('../models');
 const path = require("path");
 
 
@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
         const newUser = await User.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            full_name: req.body.first_name + " " + req.body.last_name, 
+            full_name: req.body.first_name + " " + req.body.last_name,
             email: req.body.email,
             password: req.body.password
         })
@@ -105,7 +105,7 @@ router.get('/profile/:id', async (req, res) => {
             return res.status(404).json({ msg: "User not found" })
         }
 
-        
+
 
         res.render('profile', {
             userProfile,
@@ -132,37 +132,37 @@ router.get('/feed', async (req, res) => {
     if (!req.session.user) {
         return res.redirect("/")
 
-    }
-    try {
-        const allFollowed = await User.findByPk(req.session.user.id, {
-            include: [{
-                model: User,
-                as: "follower",
-                include: [{
-                    model: Review,
-                    limit: 10,
-                    order: [['updatedAt', 'DESC']],
-                    include: [User]
-                }]
-            }]
-        })
-        const reviewArray = [];
-        allFollowed.follower.forEach(user => {
-            reviewArray.push(...user.Reviews)
-        });
+  }
 
-        // res.status(200).json(reviewArray)
-
-        res.render("feed", {
-            reviewArray,
-            user: req.session.user
-        })
-
-    } catch (err) {
-        if (err) {
-            res.status(500).json({ msg: "ERROR", err })
-        }
-    }
+	Review.findAll({
+		include: [{
+			model: Business,
+			attributes: ["id", "business_name", "location", "phone_number"]
+		}, {
+			model: User,
+			attributes: ["id", "first_name", "last_name", "profile_pic_url"],
+			include: [
+				{
+					model: User,
+					as: "followed",
+					through: "Follow",
+					attributes: [],
+					where: {
+						id: req.session.user.id
+					}
+				}]
+		}]
+	}).then(raw => raw.map(r => r.toJSON()))
+	.then(results => {
+		res.render("feed", {
+			reviews: results,
+			user: req.session.user
+		})
+	}).catch(err => {
+		if (err) {
+			res.status(500).json({ msg: "ERROR", err });
+		}
+	})
 });
 
 //

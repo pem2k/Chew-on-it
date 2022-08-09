@@ -22,8 +22,11 @@ Review.belongsTo(User, {
 Business.hasMany(Review, {
     foreignKey: "business_id",
     })
+Review.belongsTo(Business, {
+	foreignKey: "business_id"
+})
 
-    
+
 Review.hasMany(Message), {
     foreignKey: "user_id"
 }
