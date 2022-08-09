@@ -51,7 +51,7 @@ router.get("/directory", (req, res) => {
 	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
 
 	User.findAll({
-		attributes: ["id", "first_name", "last_name",
+		attributes: ["id", "first_name", "last_name", "profile_pic_url",
 			[sequelize.fn("COUNT", sequelize.col("follower_id")), "following"],
 			[sequelize.literal(`CASE WHEN follower_id = ${follower} THEN 1 ELSE 0 END`), "follow"],
 			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
