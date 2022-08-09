@@ -99,7 +99,17 @@ router.get('/profile/:id', async (req, res) => {
     }
     try {
         const userProfile = await User.findByPk(req.params.id, {
-            include: [Review]
+            include: [{
+				model: Review,
+				include: [{
+					model: User,
+					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+				},
+				{
+					model: Business,
+					attributes: ["id", "business_name", "location", "phone_number"]
+				}]
+			}]
         })
         if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
@@ -108,7 +118,7 @@ router.get('/profile/:id', async (req, res) => {
 
 
         res.render('profile', {
-            userProfile,
+            profile : userProfile.toJSON(),
             user: req.session.user,
             otherProfile: (req.params.id != req.session.user.id) ? true : false
         })
