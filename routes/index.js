@@ -140,8 +140,6 @@ router.get('/profile/:id', async (req, res) => {
             return res.render("404", req.session.user)
         }
 
-
-
         res.render('profile', {
             profile : userProfile.toJSON(),
             user: req.session.user,

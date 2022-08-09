@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
   router.get('/:id', async (req, res) => {
     Message.findByPk(req.params.id).then(messages  =>{
      if(!messages){
-      return res.status(404).json({msg: "No such Message exits!"})
+      return res.status(404).json({msg: "No such Message exists!"})
      }
       res.json(messages)
   }).catch (err=>{
