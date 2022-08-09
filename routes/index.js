@@ -5,7 +5,7 @@ const msgRoutes = require('./message-routes')
 const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
-const { User, Review, Follow, } = require('../models');
+const { User, Review, Follow, Business, } = require('../models');
 const path = require("path");
 
 
@@ -131,27 +131,37 @@ router.get('/feed', async (req, res) => {
 
   }
     try{
-        const allFollowed = await  User.findByPk(req.session.user.id,{ include: [{
-            model: User,
-            as: "follower",
-            include: [{model: Review,
-                limit: 10,
-                order: [['updatedAt', 'DESC']],
-                include: [User]
-            }]
-        }]
-    })
-      const reviewArray = [];
-        allFollowed.follower.forEach(user => {
-            reviewArray.push(...user.Reviews)
-        });
+		Review.findAll({
+			include: [{
+				model: Business,
+				attributes: ["id", "business_name", "location", "phone_number"]
+			}, {
+				model: User,
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"],
+				include: [
+					{
+						model: User,
+						as: "followed",
+						through: "Follow",
+						attributes: [],
+						where: {
+							id: req.session.user.id
+						}
+					}],
+				where: {
 
+				}
+			}]
+		}).then(raw => raw.map(r => r.toJSON()))
+		.then(results => {
+			res.render("feed", {
+				reviews: results,
+				user: req.session.user
+		   })
+		})
+		//const allReviews = rawReviews.map(r => r.toJSON())
         // res.status(200).json(reviewArray)
 
-       res.render("feed", {
-            reviewArray,
-            user: req.session.user
-       })
 
     }catch(err){
       if(err){
