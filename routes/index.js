@@ -23,6 +23,7 @@ router.post("/signup", async (req, res) => {
         const newUser = await User.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
+            full_name: req.body.first_name + " " + req.body.last_name, 
             email: req.body.email,
             password: req.body.password
         })
@@ -31,10 +32,11 @@ router.post("/signup", async (req, res) => {
             id: newUser.id,
             first_name: newUser.first_name,
             last_name: newUser.last_name,
+            full_name: newUser.full_name,
             email: newUser.email
         }
 
-       return res.redirect("profile")
+        return res.redirect("profile")
 
     } catch (err) {
         if (err) {
@@ -44,16 +46,16 @@ router.post("/signup", async (req, res) => {
 
 })
 //login
-router.get('/', async (req, res) =>{
-    if(req.session.user)
+router.get('/', async (req, res) => {
+    if (req.session.user)
         return res.redirect("/feed");
 
     res.render('login');
-  } )
+})
 
 router.post("/login", async (req, res) => {
-    if(req.session.user){
-       return res.redirect("/feed");
+    if (req.session.user) {
+        return res.redirect("/feed");
     }
     const foundUser = await User.findOne({
         where: {
@@ -89,6 +91,7 @@ router.get('/profile', async (req, res) => {
         return res.redirect(`/profile/${req.session.user.id}`);
 });
 
+
 //other user profiles
 router.get('/profile/:id', async (req, res) => {
     if (!req.session.user) {
@@ -97,18 +100,18 @@ router.get('/profile/:id', async (req, res) => {
     try {
         const userProfile = await User.findByPk(req.params.id, {
             include: [Review]
-          })
-          if (!userProfile) {
+        })
+        if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
-          }
+        }
 
-          const userProfileSer = await userProfile.toJSON()
+        
 
-          res.render('profile', {
-            userProfileSer,
+        res.render('profile', {
+            userProfile,
             user: req.session.user,
-			otherProfile: (req.params.id != req.session.user.id) ? true : false
-          })
+            otherProfile: (req.params.id != req.session.user.id) ? true : false
+        })
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
@@ -117,8 +120,8 @@ router.get('/profile/:id', async (req, res) => {
 });
 
 router.get("/about", (req, res) => {
-    if(!req.session.user){
-       return res.render("about")
+    if (!req.session.user) {
+        return res.render("about")
     }
 
     res.render('about', req.session.user)
@@ -126,39 +129,41 @@ router.get("/about", (req, res) => {
 
 //all reviews from following
 router.get('/feed', async (req, res) => {
-    if(!req.session.user){
-      return res.redirect("/")
+    if (!req.session.user) {
+        return res.redirect("/")
 
-  }
-    try{
-        const allFollowed = await  User.findByPk(req.session.user.id,{ include: [{
-            model: User,
-            as: "follower",
-            include: [{model: Review,
-                limit: 10,
-                order: [['updatedAt', 'DESC']],
-                include: [User]
+    }
+    try {
+        const allFollowed = await User.findByPk(req.session.user.id, {
+            include: [{
+                model: User,
+                as: "follower",
+                include: [{
+                    model: Review,
+                    limit: 10,
+                    order: [['updatedAt', 'DESC']],
+                    include: [User]
+                }]
             }]
-        }]
-    })
-      const reviewArray = [];
+        })
+        const reviewArray = [];
         allFollowed.follower.forEach(user => {
             reviewArray.push(...user.Reviews)
         });
 
         // res.status(200).json(reviewArray)
 
-       res.render("feed", {
+        res.render("feed", {
             reviewArray,
             user: req.session.user
-       })
+        })
 
-    }catch(err){
-      if(err){
-        res.status(500).json({msg:"ERROR",err})
-      }
+    } catch (err) {
+        if (err) {
+            res.status(500).json({ msg: "ERROR", err })
+        }
     }
-  });
+});
 
 //
 
