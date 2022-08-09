@@ -6,7 +6,7 @@
 	--shadow: #00000033;
 	--background: #68B0AB;
 	--float: #00000077;
-	--card-float: #00440077;
+	--card-float: #00550055;
 	--primary-text: #efefef;
 	--secondary-text: #222;
 }
@@ -36,13 +36,15 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 0;
 	margin: 0;
 	border-bottom: 1px solid #bbb;
+	z-index: -1000;
 }
 .aside-column {
 	width: 280px;
 	position: relative;
 	margin-top: 30px;
 	padding: 0 15px;
-	height: calc(100vh - 355px);
+	min-height: calc(100vh - 355px) !important;
+	height: 100% !important;
 }
 .aside-test {
 	margin-top: -128px;
@@ -59,7 +61,7 @@ h1, h2, h3, h4, h5, h6 {
 	left: -1px;
 }
 .navbar-border {
-	border-bottom: 2px solid var(--recessed);
+	border-bottom: 2px solid var(--float);
 }
 .fill-view {
 	min-height: calc(100vh - 59px);
