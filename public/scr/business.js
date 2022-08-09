@@ -46,6 +46,7 @@ function initialize() {
             }
         }
         const displayResults = () => {
+            places.innerHTML += `<h2> Nearby Restaurants </h2>`
             console.log(results)
             results.filter(result => result.rating)
                     .sort((a, b) => a.rating > b.rating ? -1 : 1)
