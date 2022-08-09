@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- Font Awesome -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Restaurants</title>
+    </head>
+    <body>
+        <div class="container">
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal">
+              Add Review
+            </button>
+          
+            <!-- Review Model Popup -->
+            <div class="modal" id="reviewModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+          
+                  <!-- Modal Header
+                  <div class="modal-header">
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div> -->
+          
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                      <form>
+                      <div class="form-group">
+                          <label for="restaurant-name" class="col-form-label">Restaurant Name:</label>
+                          <input type="text" class="form-control" id="restaurantName">
+                      </div>
+                      <div class="form-group">
+                          <label for="restaurant-address" class="col-form-label">Address:</label>
+                          <input type="text" class="form-control" id="restaurantAddress">
+                      </div>
+                      <!-- Score -->
+                      <div class="form-check form-check-inline" id="restaurantScore">
+                          <label for="restaurant-score" class="col-form-label">Score: </label>
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                          <label class="form-check-label" for="inlineCheckbox1">1</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                          <label class="form-check-label" for="inlineCheckbox2">2</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                          <label class="form-check-label" for="inlineCheckbox3">3</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                          <label class="form-check-label" for="inlineCheckbox3">4</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                          <label class="form-check-label" for="inlineCheckbox3">5</label>
+                        </div>
+                      <!-- Review -->
+                        <div class="form-group">
+                          <label for="restaurant-review" class="col-form-label">Review:</label>
+                          <textarea class="form-control" id="restaurantReview"></textarea>
+                        </div>
+                      <!-- Add Photo
+                        <div class="form-group">
+                          <label for="restaurant-review" class="col-form-label">Add Photos:</label>
+                          <textarea class="form-control" id="restaurant-review"></textarea>
+                        </div> -->
+                      </form>
+                  </div>
+          
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick ="addReview()" data-dismiss="modal" >Submit Review</button>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+        <ol id="places"></ol>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVeiXPohR3WJKh94VpZEIbNr4wjAqPfoQ&libraries=places"></script>
+        <script src="results.js"></script>
+    </body>
+</html>
+
