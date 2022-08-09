@@ -1,34 +1,36 @@
 <div class="jumbotron jumbotron-fluid hero fill-view">
 	<div class="row mx-0">
-		<div class="col-10 col-md-5 offset-1 col-lg-7 text-center text-md-left">
-			<h1 class="display-4 user-select-none">Share Your World</h1>
-			<p class="user-select-none">Inspirational message.</p>
+		<div class="col-10 col-md-5 offset-1 col-lg-4 text-center text-md-left">
+			<div class="bg-float py-1 px-5">
+				<h1 class="display-4 user-select-none">Share Your World</h1>
+				<p class="user-select-none">Find the best places to eat, and let your friends know</p>
+			</div>
 		</div>
-		<div class="offset-1 col-10 offset-md-0 col-md-5 col-lg-3">
+		<div class="offset-1 col-10 offset-md-0 col-md-5 offset-lg-3 col-lg-3">
 			<div class="card bg-highlight rounded">
-				<div class="card-header bg-recessed">
+				<div class="card-header bg-card-float">
 					<h3>Login</h3>
 				</div>
 				<div class="card-body">
 					<form id="login">
 					<input type="text" id="loginUser" name="login" placeholder="login">
 					<input type="password" id="loginPassword" name="login" placeholder="password">
-					<input type="submit" id="loginSubmit" class="btn bg-shadow" value="Log In">
+					<input type="submit" id="loginSubmit" class="btn bg-card-float" value="Log In">
 					<span id="loginError" class="card-subtitle text-error"></span>
 					</form>
 				</div>
 				<div class="card-footer d-flex justify-content-center">
-					<button type="button" class="btn bg-shadow" data-toggle="modal" data-target="#myModal">Create new account</button>
+					<button type="button" class="btn bg-card-float" data-toggle="modal" data-target="#signupModal">Create new account</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="modal bg-float" id="myModal">
+	<div class="modal fade" id="signupModal">
 		<div class="modal-dialog">
 			<div class="modal-content bg-highlight">
 
 					<form>
-					<div class="card-header bg-recessed">
+					<div class="card-header bg-card-float">
 						<h2>Sign Up</h2>
 						<p>We don't send newsletter emails!</p>
 					</div>
@@ -52,7 +54,7 @@
 					</form>
 				</div>
 				<div class="card-footer">
-					<button type="submit" id="signupSubmit" class="btn bg-shadow btn-lg">Sign Up</button>
+					<button type="submit" id="signupSubmit" class="btn bg-card-float btn-lg">Sign Up</button>
 				</div>
 			</div>
 		</div>

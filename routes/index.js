@@ -5,7 +5,7 @@ const msgRoutes = require('./message-routes')
 const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
-const { User, Review, Follow, } = require('../models');
+const { User, Review, Follow, Business, } = require('../models');
 const path = require("path");
 
 
@@ -17,11 +17,13 @@ router.use('/messages', msgRoutes);
 
 
 router.get('/signup', async (req, res) => res.render('signup'));
+
 router.post("/signup", async (req, res) => {
     try {
         const newUser = await User.create({
             first_name: req.body.first_name,
             last_name: req.body.last_name,
+            full_name: req.body.first_name + " " + req.body.last_name,
             email: req.body.email,
             password: req.body.password
         })
@@ -30,10 +32,11 @@ router.post("/signup", async (req, res) => {
             id: newUser.id,
             first_name: newUser.first_name,
             last_name: newUser.last_name,
+            full_name: newUser.full_name,
             email: newUser.email
         }
 
-       return res.redirect("profile")
+        return res.redirect("profile")
 
     } catch (err) {
         if (err) {
@@ -43,9 +46,16 @@ router.post("/signup", async (req, res) => {
 
 })
 //login
+router.get('/', async (req, res) => {
+    if (req.session.user)
+        return res.redirect("/feed");
+
+    res.render('login');
+})
+
 router.post("/login", async (req, res) => {
-    if(req.session.user){
-       return res.redirect("profile")
+    if (req.session.user) {
+        return res.redirect("/feed");
     }
     const foundUser = await User.findOne({
         where: {
@@ -66,7 +76,7 @@ router.post("/login", async (req, res) => {
         last_name: foundUser.last_name,
         email: foundUser.email
     }
-    
+
     return res.status(200).json(foundUser)
     //res.render homepage/feed
 })
@@ -77,27 +87,10 @@ router.post("/login", async (req, res) => {
 router.get('/profile', async (req, res) => {
     if (!req.session.user) {
         return res.redirect('/')
-    }
-
-    try {
-        console.log("here 2")
-        const userProfile = await User.findByPk(req.session.user.id, {
-            include: [Review]
-          })
-
-          if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
-          }
-
-          res.render('profile', req.session.user)
-    } catch (err) {
-        if (err) {
-
-            res.status(500).json({ msg: "ERROR", err })
-        }
-    }
-
+    } else
+        return res.redirect(`/profile/${req.session.user.id}`);
 });
+
 
 //other user profiles
 router.get('/profile/:id', async (req, res) => {
@@ -107,23 +100,28 @@ router.get('/profile/:id', async (req, res) => {
     try {
         const userProfile = await User.findByPk(req.params.id, {
             include: [Review]
-          })
-          if (!userProfile) {
+        })
+        if (!userProfile) {
             return res.status(404).json({ msg: "User not found" })
-          }
-      
-          res.render('profile', userProfile)
+        }
+
+
+
+        res.render('profile', {
+            userProfile,
+            user: req.session.user,
+            otherProfile: (req.params.id != req.session.user.id) ? true : false
+        })
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })
         }
     }
-    res.render('profile', req.session.user)
 });
 
 router.get("/about", (req, res) => {
-    if(!req.session.user){
-       return res.render("about")
+    if (!req.session.user) {
+        return res.render("about")
     }
 
     res.render('about', req.session.user)
@@ -131,25 +129,41 @@ router.get("/about", (req, res) => {
 
 //all reviews from following
 router.get('/feed', async (req, res) => {
-    if(!req.session.user){
-      return res.redirect("/")
-      
-  }
-    try{
-        const allFollowed = await  User.findAll({ include: [{model: User, as: "followed", through: "Follow", where:{
-            id: req.session.user.id,}
-       }, {model: Review}]
-    })
-        
-       res.status(200).json(allFollowed)
+    if (!req.session.user) {
+        return res.redirect("/")
 
-    }catch(err){
-      if(err){
-        res.status(500).json({msg:"ERROR",err})
-      }
-    }
-    //res.render('feed', req.session.user)
-  });
+  }
+
+	Review.findAll({
+		include: [{
+			model: Business,
+			attributes: ["id", "business_name", "location", "phone_number"]
+		}, {
+			model: User,
+			attributes: ["id", "first_name", "last_name", "profile_pic_url"],
+			include: [
+				{
+					model: User,
+					as: "followed",
+					through: "Follow",
+					attributes: [],
+					where: {
+						id: req.session.user.id
+					}
+				}]
+		}]
+	}).then(raw => raw.map(r => r.toJSON()))
+	.then(results => {
+		res.render("feed", {
+			reviews: results,
+			user: req.session.user
+		})
+	}).catch(err => {
+		if (err) {
+			res.status(500).json({ msg: "ERROR", err });
+		}
+	})
+});
 
 //
 

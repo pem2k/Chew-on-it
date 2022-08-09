@@ -16,7 +16,7 @@ User.init({
     profile_pic_url:{
         type: DataTypes.STRING,
         allowNull: true,
-        defaultValue: null
+        defaultValue: "/img/default_profile.jpg"
     },
 
     first_name: {
@@ -25,6 +25,11 @@ User.init({
     },
 
     last_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+
+    full_name: {
         type: DataTypes.STRING,
         allowNull: false,
     },

@@ -6,24 +6,28 @@ const users = [
     {
         first_name:"Ravi",
         last_name:"Nagi",
+        full_name: "Ravi Nagi",
         email:"ravi@ravi.ravi",
         password:"password"
     },
     {
         first_name:"Axel",
         last_name:"Kern",
+        full_name: "Axel Kern",
         email:"axel@axel.axel",
         password:"password"
     },
     {
         first_name:"Parker",
         last_name:"McKillop",
+        full_name: "Parker McKillop",
         email:"parker@parker.parker",
         password:"password"
     },
     {
         first_name:"Chris",
         last_name:"Le",
+        full_name: "Chris Le",
         email:"chris@chris.chris",
         password:"password"
     }
