@@ -86,6 +86,29 @@ router.post('/follow', async (req, res) => {
 			followed_id: req.body.followed_id
 		})
 
+		// Pull your data again to update following list.
+		const foundUser = await User.findOne({
+			where: {
+				email: req.session.user.id
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
+
 		res.status(200).json(addFollow)
 
 	} catch (err) {
@@ -120,6 +143,29 @@ router.delete("/unfollow", async (req, res) => {
 			}
 		})
 
+		// Pull your data again to update following list.
+		const foundUser = await User.findOne({
+			where: {
+				email: req.session.user.id
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
+
 		res.status(200).json(unfollowedUser)
 
 	} catch (err) {
@@ -139,11 +185,28 @@ router.put('/profilePic', async (req, res) => {
 		const foundUser = await User.findOne({
 			where: {
 				id: req.session.user.id
-			}
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
 		})
 		const newPic = await foundUser.update({
 			profile_pic_url: req.body.profile_pic_url
 		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
+
 		return res.status(200).json(newPic)
 	} catch (err) {
 		if (err) {
