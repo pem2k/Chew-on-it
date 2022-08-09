@@ -160,7 +160,8 @@ router.get('/feed', async (req, res) => {
 					where: {
 						id: req.session.user.id
 					}
-				}]
+				}],
+			where: { }
 		}]
 	}).then(raw => raw.map(r => r.toJSON()))
 	.then(results => {
