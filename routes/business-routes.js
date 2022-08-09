@@ -4,36 +4,8 @@ const {Message, Follow, User, Business, Review} = require('../models');
 
 
 router.get("/",async (req,res)=>{
-    // try {
-    //     const business = await Business.findAll({
-    //         include:[Message,User,Follow, Review],
-    //     })
-    //     // res.status(200).json(business)
-    //     res.render("businesses",{})
-        
-
-    // } catch (err) {
-    //     res.status(500).json({
-    //         msg:"internal server error!",
-    //         err
-    //     })
-    // }
-
-    Business.findAll({
-        include:[Message,User,Follow, Review],
-    }).then(business=>{
-        if(!business){
-            return res.status(404).json({msg:"No Such Restaurant exists in the Database!"})
-        }
-        res.render("businesses",json(business))
-        
-    }).catch(err=>{
-        res.status(500).json({
-            msg:"internal server error",
-            err
-        })
-    })
-})
+    res.render("businesses", req.session.User)
+ })
 
 router.post("/",async (req,res)=>{
     try{
