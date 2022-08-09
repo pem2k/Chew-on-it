@@ -22,7 +22,10 @@ router.get('/profile/:full_name', async (req, res) => {
     }
     try {
         const userProfile = await User.findOne({
-			include: [{
+            where:{
+                full_name: req.params.full_name
+            },
+            include: [{
 				model: Review,
 				include: [{
 					model: User,
