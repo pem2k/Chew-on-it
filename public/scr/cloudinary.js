@@ -41,16 +41,13 @@ var myWidget1 = cloudinary.createUploadWidget({
         console.log('Done! Here is the image info: ', result.info);
 
         let cldUrl1 = result.info.url
-        console.log(cldUrl)
+        console.log(cldUrl1)
 
         fetch('/reviews/reviewPic', {
             method: 'PUT', 
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                profile_pic_url: cldUrl1
-            }),
         })
             .then((response) => response.json())
             .then((data) => {
