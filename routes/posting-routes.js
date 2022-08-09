@@ -21,6 +21,8 @@ router.post("/", async (req,res)=>{
         const newReview = await Review.create({
             id:req.body.id,
             content:req.body.content,
+            restaurant_name: req.body.restaurant_name,
+            restaurant_address: req.body.restaurant_address,
             business_id:req.body.business_id,
             user_id:req.body.user_id,
             review_pic_url: req.body.review_pic_url
