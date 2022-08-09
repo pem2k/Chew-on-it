@@ -8,6 +8,21 @@ function initialize() {
           document.getElementById('cityLng').value = place.geometry.location.lng();
           console.log(place)
 
+          businessPage.innerHTML +=`
+          <div class="card rounded-0" style="min-height: 80vh">
+          <div class="card-header rounded-0 bg-recessed text-center">
+              <h2 class="card-title">${place.name}</h2>
+          </div>
+          <div class="card-body bg-highlight">  
+            <h5> Address: ${place.vicinity}</h5>
+            <h5> Phone Number: <a href= "${place.international_phone_number}">${place.international_phone_number}</a> </h5>
+            <h5> Recent Review: </h5>
+            <p>${place.reviews[0].text}</p>
+            <h5><a href= "${place.website}">Visit their Website!</a></h5>
+          </div>
+        </div>
+          `
+
         const request = {
             location: new google.maps.LatLng(document.getElementById('cityLat').value, document.getElementById('cityLng').value),
             radius: 5000,
