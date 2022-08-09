@@ -39,6 +39,9 @@ app.set('view engine', 'handlebars');
 
 app.use("/", routes);
 
+app.all('*', (req, res) => {
+  return res.render("404", req.session.user);
+});
 
 // sync sequelize models to the database, then turn on the server
 sequelize.sync({force:false}).then(() => {
