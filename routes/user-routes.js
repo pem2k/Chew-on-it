@@ -34,7 +34,7 @@ router.get('/profile/:full_name', async (req, res) => {
         const userProfileSer = await userProfile.toJSON()
 
         res.render('profile', {
-            userProfileSer,
+			profile: userProfileSer,
             user: req.session.user,
             otherProfile: (req.params.id != req.session.user.id) ? true : false
         })
