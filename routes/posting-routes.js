@@ -39,7 +39,7 @@ router.post("/", async (req,res)=>{
 router.get("/:id",(req,res)=>{
     Review.findByPk(req.params.id).then(review=>{
         if(!review){
-            return res.status(404).json({msg:"No Such Review exists in the Database!"})
+            return res.render("404", req.session.user)
         }
         res.json(review)
     }).catch(err=>{
@@ -83,7 +83,7 @@ router.delete("/:id",(req,res)=>{
         }
         }).then(review=>{
             if(!review){
-                return res.status(404).json({msg:"No such Review Exists"})
+                return res.render("404", req.session.user)
             }
         res.json(review)
     }).catch(err=>{

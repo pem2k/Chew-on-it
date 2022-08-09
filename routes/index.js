@@ -28,13 +28,28 @@ router.post("/signup", async (req, res) => {
             password: req.body.password
         })
 
-        req.session.user = {
-            id: newUser.id,
-            first_name: newUser.first_name,
-            last_name: newUser.last_name,
-            full_name: newUser.full_name,
-            email: newUser.email
-        }
+		// Pull created user's full data.
+		const foundUser = await User.findOne({
+			where: {
+				email: req.body.email
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
 
         return res.redirect("profile")
 
@@ -60,7 +75,13 @@ router.post("/login", async (req, res) => {
     const foundUser = await User.findOne({
         where: {
             email: req.body.email
-        }
+        },
+		include: [{
+			model: User,
+			as: "follower",
+			through: "Follow",
+			attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+		}]
     }
     )
     if (!foundUser) {
@@ -70,12 +91,16 @@ router.post("/login", async (req, res) => {
     if (!bcrypt.compareSync(req.body.password, foundUser.password)) {
         return res.status(401).json({ msg: "invalid login credentials" })
     }
-    req.session.user = {
-        id: foundUser.id,
-        first_name: foundUser.first_name,
-        last_name: foundUser.last_name,
-        email: foundUser.email
-    }
+
+	req.session.user = {
+		id: foundUser.id,
+		first_name: foundUser.first_name,
+		last_name: foundUser.last_name,
+		full_name: foundUser.full_name,
+		email: foundUser.email,
+		profile_pic_url: foundUser.profile_pic_url,
+		friend: foundUser.follower.map(u => u.toJSON())
+	}
 
     return res.status(200).json(foundUser)
     //res.render homepage/feed
@@ -99,16 +124,26 @@ router.get('/profile/:id', async (req, res) => {
     }
     try {
         const userProfile = await User.findByPk(req.params.id, {
-            include: [Review]
+            include: [{
+				model: Review,
+				include: [{
+					model: User,
+					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+				},
+				{
+					model: Business,
+					attributes: ["id", "business_name", "location", "phone_number"]
+				}]
+			}]
         })
         if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
+            return res.render("404", req.session.user)
         }
 
 
 
         res.render('profile', {
-            userProfile,
+            profile : userProfile.toJSON(),
             user: req.session.user,
             otherProfile: (req.params.id != req.session.user.id) ? true : false
         })
@@ -165,6 +200,8 @@ router.get('/feed', async (req, res) => {
 		}
 	})
 });
+
+
 
 //
 

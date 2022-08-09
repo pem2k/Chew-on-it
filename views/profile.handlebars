@@ -1,23 +1,19 @@
-<div class="jumbo-banner about-splash">
-	<div class="content d-flex h-100">
-		<div class="aside-column d-none d-md-block">
-		</div>
-		<div class="text-center d-flex flex-column justify-content-center align-items-center text-light flex-fill h-100">
-			<div class="bg-float py-1 px-5">
-			<h1 class="display-4">{{userProfileSer.first_name}}'s Take</h2>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="content content-border d-flex align-items-start h-100 pt-3">
+{{>banner message=profile.first_name message2="'s Hot Take"}}
+<div class="content content-border flex-fill d-flex align-items-start h-100 pt-3">
 	{{#if user}}
 	{{#if otherProfile}}
-	{{> aside userProfileSer otherProfile=true}}
+	{{> aside profile otherProfile=true}}
 	{{else}}
 	{{> aside user}}
 	{{/if}}
 	{{/if}}
-	<div class="d-flex flex-wrap flex-fill" id="users">
-		<h1>User's reviews go here.</h1>
+	<div class="d-flex flex-wrap flex-fill align-items-start justify-content-center" id="users">
+			{{#if profile.Reviews}}
+			{{#each profile.Reviews}}
+			{{>review}}
+			{{/each}}
+			{{else}}
+			<h2 class="text-center mt-5 text-secondary">[User hasn't made any reviews yet]</h2>
+			{{/if}}
 	</div>
 </div>

@@ -42,6 +42,10 @@ const {Message, Follow, User, Business, Review} = require('../models');
 //         })
 //     })
 // })
+// router.get("/",async (req,res)=>{
+//     res.render("businesses", req.session.User)
+//  })
+
 
 router.post("/",async (req,res)=>{
     try{

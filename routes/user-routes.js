@@ -28,13 +28,13 @@ router.get('/profile/:full_name', async (req, res) => {
             include: [Review]
         })
         if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
+           return res.render("404", req.session.user)
         }
 
         const userProfileSer = await userProfile.toJSON()
 
         res.render('profile', {
-            userProfileSer,
+			profile: userProfileSer,
             user: req.session.user,
             otherProfile: (req.params.id != req.session.user.id) ? true : false
         })
@@ -51,7 +51,7 @@ router.get("/directory", (req, res) => {
 	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
 
 	User.findAll({
-		attributes: ["id", "first_name", "last_name",
+		attributes: ["id", "first_name", "last_name", "profile_pic_url",
 			[sequelize.fn("COUNT", sequelize.col("follower_id")), "following"],
 			[sequelize.literal(`CASE WHEN follower_id = ${follower} THEN 1 ELSE 0 END`), "follow"],
 			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
@@ -85,6 +85,29 @@ router.post('/follow', async (req, res) => {
 			follower_id: req.session.user.id,
 			followed_id: req.body.followed_id
 		})
+
+		// Pull your data again to update following list.
+		const foundUser = await User.findOne({
+			where: {
+				email: req.session.user.id
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
 
 		res.status(200).json(addFollow)
 
@@ -120,6 +143,29 @@ router.delete("/unfollow", async (req, res) => {
 			}
 		})
 
+		// Pull your data again to update following list.
+		const foundUser = await User.findOne({
+			where: {
+				email: req.session.user.id
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
+
 		res.status(200).json(unfollowedUser)
 
 	} catch (err) {
@@ -139,11 +185,29 @@ router.put('/profilePic', async (req, res) => {
 		const foundUser = await User.findOne({
 			where: {
 				id: req.session.user.id
-			}
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
 		})
+
 		const newPic = await foundUser.update({
 			profile_pic_url: req.body.profile_pic_url
 		})
+
+		req.session.user = {
+			id: foundUser.id,
+			first_name: foundUser.first_name,
+			last_name: foundUser.last_name,
+			full_name: foundUser.full_name,
+			email: foundUser.email,
+			profile_pic_url: foundUser.profile_pic_url,
+			friend: foundUser.follower.map(u => u.toJSON())
+		}
+
 		return res.status(200).json(newPic)
 	} catch (err) {
 		if (err) {
@@ -151,6 +215,9 @@ router.put('/profilePic', async (req, res) => {
 		}
 	}
 })
+
+
+
 
 module.exports = router;
 //other user profiles

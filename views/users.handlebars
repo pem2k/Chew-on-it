@@ -1,14 +1,4 @@
-<div class="jumbo-banner about-splash">
-	<div class="content d-flex h-100">
-		<div class="aside-column d-none d-md-block">
-		</div>
-		<div class="text-center d-flex flex-column justify-content-center align-items-center text-light flex-fill h-100">
-			<div class="bg-float py-1 px-5">
-			<h2 class="">User Directory</h2>
-			</div>
-		</div>
-	</div>
-</div>
+{{>banner message="User Directory"}}
 <div class="content content-border d-flex align-items-start h-100 pt-3">
 	{{> aside user}}
 	<div class="d-flex flex-wrap flex-fill" id="users">
@@ -17,7 +7,7 @@
 			<div class="card shadow px-0 bg-light">
 				<div class="row no-gutters">
 					<div class="col-md-4 d-flex align-items-center">
-						<a class="stretched-link" href="/profile/{{id}}"><img src="/img/default_profile.jpg" class="p-4 p-md-2 card-img profile-thumb" alt="{{first_name}} profile image."></a>
+						<a class="stretched-link" href="/profile/{{id}}"><img src="{{profile_pic_url}}" class="p-4 p-md-2 card-img profile-thumb" alt="{{first_name}} profile image."></a>
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
