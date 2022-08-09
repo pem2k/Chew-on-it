@@ -112,7 +112,7 @@ router.get('/profile/:id', async (req, res) => {
 			}]
         })
         if (!userProfile) {
-            return res.status(404).json({ msg: "User not found" })
+            return res.render("404", req.session.user)
         }
 
 
@@ -175,6 +175,8 @@ router.get('/feed', async (req, res) => {
 		}
 	})
 });
+
+
 
 //
 
