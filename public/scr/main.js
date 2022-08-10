@@ -32,7 +32,8 @@ $(document).on("click", "#submitReview",function(event) {
 	}).then(res => {
 		if (res.status == 201){
 			console.log("success")
-			// location.reload();
+			localStorage.clear()
+			location.reload();
 		}
 		else{
 			alert(`(${res.status}): Oops${res.statusText}`);
