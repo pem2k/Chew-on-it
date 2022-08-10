@@ -24,34 +24,14 @@ router.get('/profile/:full_name', async (req, res) => {
         const userProfile = await User.findOne({
             where:{
                 full_name: req.params.full_name
-            },
-            include: [{
-				model: Review,
-				include: [{
-					model: User,
-					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
-				},
-				{
-					model: Business,
-					attributes: ["id", "business_name", "location", "phone_number"]
-				}]
-			}],
-			order: [
-				[Review, 'createdAt', 'DESC'],
-				[Review, User, 'createdAt', 'DESC']
-			]
-        })
-        if (!userProfile) {
+            }
+		})
+
+		if (!userProfile) {
             return res.render("404", { user: req.session.user })
         }
 
-
-
-        res.render('profile', {
-            profile : userProfile.toJSON(),
-            user: req.session.user,
-            otherProfile: (req.params.id != req.session.user.id) ? true : false
-        })
+		res.redirect(`/profile/${userProfile.id}`)
     } catch (err) {
         if (err) {
             res.status(500).json({ msg: "ERROR", err })

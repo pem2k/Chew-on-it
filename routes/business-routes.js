@@ -4,6 +4,9 @@ const {Message, Follow, User, Business, Review} = require('../models');
 
 
 router.get("/",async (req,res)=>{
+    if (!req.session.user) {
+        return res.redirect("/")
+    }
     try {
         // const business = await Business.findAll({
         //     include:[Message,User,Follow, Review],
