@@ -10,7 +10,7 @@ router.get("/",async (req,res)=>{
         // })
         // res.status(200).json(business)
         res.render("businesses", {user:req.session.user})
-        
+        //git
 
     } catch (err) {
         res.status(500).json({
