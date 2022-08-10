@@ -16,11 +16,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-recessed navbar-border shadow navbar-border">
-		{{#if user}}
-		<a class="navbar-brand" href="/feed">Chew on It</a>
-		{{else}}
-		<a class="navbar-brand" href="/">Chew on It</a>
-		{{/if}}
+		<a class="navbar-brand" href="/{{#if user}}feed{{/if}}">Chew on <img src="/favicon.png" style="width:30px"></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -29,7 +25,7 @@
 			<ul class="navbar-nav mr-auto">
       <li class="nav-item">
       <!-- Button to Open the Modal -->
-        <a id="modalClickHandler" class="nav-link" data-toggle="modal" data-target="#myModal"> Add Review </a>
+        <a id="modalClickHandler" role="button" class="nav-link" data-toggle="modal" data-target="#myModal">Add Review</a>
       </li>
 			<li class="nav-item">
 				<a class="nav-link" href="/businesses">Businesses</a>
@@ -42,7 +38,7 @@
 			</li>
 			{{#if user}}
 			<li class="nav-item">
-				<a class="nav-link" href="/profile"><img src="{{user.profile_pic_url}}" class="profile-thumb position-relative" style="width: 20px; top: -2px;">{{user.first_name}}</a>
+				<a class="nav-link" href="/profile"><img src="{{user.profile_pic_url}}" class="profile-thumb position-relative" style="width: 20px; top: -2px;margin-right: 4px">{{user.first_name}}</a>
 			</li>
 
   <!-- Review Model Popup -->
