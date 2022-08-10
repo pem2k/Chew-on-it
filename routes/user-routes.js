@@ -35,7 +35,11 @@ router.get('/profile/:full_name', async (req, res) => {
 					model: Business,
 					attributes: ["id", "business_name", "location", "phone_number"]
 				}]
-			}]
+			}],
+			order: [
+				[Review, 'createdAt', 'DESC'],
+				[Review, User, 'createdAt', 'DESC']
+			]
         })
         if (!userProfile) {
             return res.render("404", req.session.user)
