@@ -16,7 +16,6 @@ router.use('/messages', msgRoutes);
 
 
 
-router.get('/signup', async (req, res) => res.render('signup'));
 
 router.post("/signup", async (req, res) => {
     try {
@@ -141,7 +140,7 @@ router.get('/profile/:id', async (req, res) => {
 			]
         })
         if (!userProfile) {
-            return res.render("404", req.session.user)
+            return res.render("404", { user: req.session.user })
         }
 
         res.render('profile', {
@@ -157,11 +156,7 @@ router.get('/profile/:id', async (req, res) => {
 });
 
 router.get("/about", (req, res) => {
-    if (!req.session.user) {
-        return res.render("about")
-    }
-
-    res.render('about', req.session.user)
+    res.render('about', { user: req.session.user })
 });
 
 //all reviews from following
