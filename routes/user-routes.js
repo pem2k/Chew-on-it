@@ -42,7 +42,7 @@ router.get('/profile/:full_name', async (req, res) => {
 			]
         })
         if (!userProfile) {
-            return res.render("404", req.session.user)
+            return res.render("404", { user: req.session.user })
         }
 
 
@@ -62,6 +62,9 @@ router.get('/profile/:full_name', async (req, res) => {
 
 // User directory.
 router.get("/directory", (req, res) => {
+	if (!req.session.user)
+		return res.redirect("/");
+
 	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
 
 	User.findAll({
@@ -76,15 +79,13 @@ router.get("/directory", (req, res) => {
 				as: "followed",
 				through: "Follow",
 				attributes: [],
+				where: { }
 			},
 			{ model: Review, attributes: [] }],
 		//		{ model: Message, attributes: [] }],
 		group: ["User.id"]
 	}).then(results => results.map(user => user.toJSON()))
-		.then(users => {
-			const data = { users, user: req.session.user };
-			res.render("users", data);
-		});
+		.then(users => res.render("users", { users, user: req.session.user }));
 });
 
 
@@ -123,7 +124,7 @@ router.post('/follow', async (req, res) => {
 			friend: foundUser.follower.map(u => u.toJSON())
 		}
 
-		res.status(200).json(addFollow)
+		res.status(200).json(addFollow);
 
 	} catch (err) {
 		if (err) {
@@ -136,7 +137,6 @@ router.post('/follow', async (req, res) => {
 router.get("/", async (req, res) => {
 	try {
 		const allUsers = await User.findAll({ attributes: ["full_name"] })
-		console.log(Object.values(allUsers))
 		res.status(200).json(Object.values(allUsers))
 
 	} catch (err) {
@@ -146,6 +146,48 @@ router.get("/", async (req, res) => {
 	}
 })
 
+router.put("/", async (req, res) => {
+	try {
+		const user = await User.update(
+			{
+				first_name: req.body.first_name,
+				last_name: req.body.last_name
+			},
+			{ where: {
+				id: req.session.user.id
+			}});
+
+		if (!user)
+			return res.render("404", { user: req.session.user });
+
+		const newUser = await User.findOne({
+			where: {
+				id: req.session.user.id
+			},
+			include: [{
+				model: User,
+				as: "follower",
+				through: "Follow",
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
+		});
+
+		req.session.user = {
+			id: newUser.id,
+			first_name: newUser.first_name,
+			last_name: newUser.last_name,
+			full_name: newUser.full_name,
+			email: newUser.email,
+			profile_pic_url: newUser.profile_pic_url,
+			friend: newUser.follower.map(u => u.toJSON())
+		}
+		return res.status(200).json({ msg: "Updated." });
+	} catch (err) {
+		if (err) {
+			res.status(500).json({ msg: "ERROR", err })
+		}
+	}
+});
 
 //unfollow route
 router.delete("/unfollow", async (req, res) => {
@@ -180,7 +222,7 @@ router.delete("/unfollow", async (req, res) => {
 			friend: foundUser.follower.map(u => u.toJSON())
 		}
 
-		res.status(200).json(unfollowedUser)
+		res.status(200).json(unfollowedUser);
 
 	} catch (err) {
 		if (err) {

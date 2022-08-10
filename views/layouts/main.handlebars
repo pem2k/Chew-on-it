@@ -42,7 +42,7 @@
 			</li>
 			{{#if user}}
 			<li class="nav-item">
-				<a class="nav-link" href="/profile"><img src="{{profile_pic_url}}" class="profile-thumb position-relative" style="width: 20px; top: -2px;">{{user.first_name}}</a>
+				<a class="nav-link" href="/profile"><img src="{{user.profile_pic_url}}" class="profile-thumb position-relative" style="width: 20px; top: -2px;">{{user.first_name}}</a>
 			</li>
 
   <!-- Review Model Popup -->
@@ -104,7 +104,7 @@
 
         <!-- Modal footer -->
         <div class="modal-footer">
-          
+
           <button type="button" id="upload_widget1" class="btn btn-primary">Upload Photo</button>
           <button type="button" id = "submitReview" class="btn btn-danger" >Submit Review</button>
         </div>
