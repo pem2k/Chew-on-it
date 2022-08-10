@@ -5,7 +5,7 @@ const msgRoutes = require('./message-routes')
 const userRoutes = require("./user-routes")
 const express = require('express');
 const bcrypt = require("bcrypt");
-const { User, Review, Follow, Business, } = require('../models');
+const { User, Review, Follow, Business, Message, } = require('../models');
 const path = require("path");
 
 
@@ -132,7 +132,11 @@ router.get('/profile/:id', async (req, res) => {
 				{
 					model: Business,
 					attributes: ["id", "business_name", "location", "phone_number"]
-				}]
+				},
+				{
+					model: Message
+				}
+			]
 			}],
 			order: [
 				[Review, 'createdAt', 'DESC'],
@@ -185,7 +189,11 @@ router.get('/feed', async (req, res) => {
 					}
 				}],
 			where: { }
-		}]
+		},
+		{
+			model: Message
+		}
+	]
 	}).then(raw => raw.map(r => r.toJSON()))
 	.then(results => {
 		res.render("feed", {

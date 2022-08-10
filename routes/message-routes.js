@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
      if(!req.session.user){
         return res.redirect("/")
     }
-      res.render('messages')
+      
 })
 });
 
@@ -44,7 +44,7 @@ router.post("/",async (req,res)=>{
   try{
       const newMessage = await Message.create({
           message_contents:req.body.message_contents,
-          commenter_id:req.body.commenter_id,
+          commenter_id:req.session.user.id,
           review_id:req.body.review_id,
       })
       res.status(201).json(newMessage)
