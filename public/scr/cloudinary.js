@@ -41,22 +41,8 @@ var myWidget1 = cloudinary.createUploadWidget({
         console.log('Done! Here is the image info: ', result.info);
 
         let cldUrl1 = result.info.url
-        console.log(cldUrl1)
-
-        fetch('/reviews/reviewPic', {
-            method: 'PUT', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log('Success:', data);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-            
+        localStorage.clear()
+        localStorage.setItem("review_pic_url", JSON.stringify(cldUrl1))
     }
 }
 )
