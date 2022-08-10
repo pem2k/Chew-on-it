@@ -1,13 +1,18 @@
+// Places API
 function initialize() {
+// Autocomplete Variables
     var input = document.getElementById('searchTextField');
-    var autocomplete = new google.maps.places.Autocomplete(input);
+    var options = {
+      types: ['restaurant', 'bar', 'cafe' , 'meal_delivery', 'meal_takeaway']
+    } 
+// Autocomplete API
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
       google.maps.event.addListener(autocomplete, 'place_changed', function () {
           var place = autocomplete.getPlace();
           document.getElementById('city2').value = place.name;
           document.getElementById('cityLat').value = place.geometry.location.lat();
           document.getElementById('cityLng').value = place.geometry.location.lng();
-          console.log(place)
-
+//Render Business Input on Page
           businessPage.innerHTML +=`
         <div class="card rounded-0" style="min-height: 80vh">
           <div class="card-header rounded-0 bg-recessed text-center">
@@ -25,6 +30,7 @@ function initialize() {
           </div>
         </div>
           `
+//Place API Request to find nearby restaurants
         const request = {
             location: new google.maps.LatLng(document.getElementById('cityLat').value, document.getElementById('cityLng').value),
             radius: 5000,
@@ -57,6 +63,7 @@ function initialize() {
                 displayResults();
             }
         }
+//Rendering Nearby Restaurants sorted by score and placing markers on map
         const displayResults = () => {
             places.innerHTML += `<h2> Nearby Restaurants </h2>`
             console.log(results)
