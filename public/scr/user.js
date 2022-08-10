@@ -53,6 +53,8 @@ function toggleFriend (button) {
 }
 
 function editProfile(button) {
+	console.log("Editing...")
+	button.disabled = true;
 	const editFirst = document.querySelector("#editFirst").value;
 	const editLast = document.querySelector("#editLast").value;
 	fetch("/users/", {
@@ -65,6 +67,7 @@ function editProfile(button) {
 			last_name: editLast
 		})
 	}).then(res => {
+		button.disabled = false;
 		if (res.status == 200)
 			location.reload();
 		else
