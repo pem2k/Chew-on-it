@@ -635,39 +635,6 @@ const message = [
 
 const follow = [
     {
-        follower_id:2,
-        follower_id:3,
-        follower_id:4,
-        followed_id:1,
-        followed_id:2,
-        followed_id:3,
-        followed_id:4,
-        followed_id:5,
-        followed_id:6,
-        followed_id:7,
-        followed_id:8,
-        followed_id:9,
-        followed_id:10,
-        followed_id:11,
-        followed_id:12,
-        followed_id:13,
-        followed_id:14,
-        followed_id:15,
-        followed_id:16,
-        followed_id:17,
-        followed_id:18,
-        followed_id:19,
-        followed_id:20,
-        followed_id:21,
-        followed_id:22,
-        followed_id:23,
-        followed_id:24,
-        followed_id:25,
-        followed_id:26,
-        followed_id:27,
-        followed_id:28,
-    },
-    {
         follower_id:6,
         followed_id:12,
     },
@@ -689,6 +656,34 @@ const follow = [
     },
     {
         follower_id:3,
+        followed_id:1,
+    },
+    {
+        follower_id:11,
+        followed_id:1,
+    },
+    {
+        follower_id:10,
+        followed_id:1,
+    },
+    {
+        follower_id:9,
+        followed_id:1,
+    },
+    {
+        follower_id:8,
+        followed_id:1,
+    },
+    {
+        follower_id:7,
+        followed_id:1,
+    },
+    {
+        follower_id:6,
+        followed_id:1,
+    },
+    {
+        follower_id:4,
         followed_id:1,
     },
 ]
