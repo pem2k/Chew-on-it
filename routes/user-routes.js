@@ -13,7 +13,7 @@ router.delete("/logout", (req, res) => {
 		return res.redirect("/")
 	}
 	req.session.destroy();
-	res.json({ msg: "logged out!" })
+	return res.redirect("/")
 })
 
 router.get('/profile/:full_name', async (req, res) => {
@@ -62,9 +62,9 @@ router.get('/profile/:full_name', async (req, res) => {
 
 // User directory.
 router.get("/directory", (req, res) => {
-	if (!req.session.user)
-		return res.redirect("/");
-
+	if (!req.session.user) {
+        return res.redirect("/")
+    }
 	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
 
 	User.findAll({

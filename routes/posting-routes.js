@@ -19,12 +19,12 @@ const {Review,Follow,Message,Business,User} = require('../models');
 router.post("/", async (req,res)=>{
     try{
         const newReview = await Review.create({
-            content:req.body.content,
+            user_id:req.session.user.id,
             restaurant_name: req.body.restaurant_name,
             restaurant_address: req.body.restaurant_address,
+            content:req.body.content,
             // business_id:req.body.business_id,
-            user_id:req.session.user.id,
-            // review_pic_url: req.body.review_pic_url
+            review_pic_url: req.body.review_pic_url
         })
         res.status(201).json(newReview)
     }catch(err){
