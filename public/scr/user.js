@@ -74,3 +74,20 @@ function editProfile(button) {
 			alert(`(${res.status}): ${res.statusText}`);
 	});
 }
+
+async function addComment(event, id) {
+    event.preventDefault();
+    const textArea = document.querySelector(`#comment-${id}`);
+    console.log(textArea.value);
+try{
+    const post = await fetch("/messages", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ review_id: id, message_contents: textArea.value})
+    })
+}catch(err){if(err){console.log(err)}}
+
+
+}
