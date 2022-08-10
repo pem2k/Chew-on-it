@@ -78,8 +78,7 @@ router.get("/directory", (req, res) => {
 				model: User,
 				as: "followed",
 				through: "Follow",
-				attributes: [],
-				where: { }
+				attributes: []
 			},
 			{ model: Review, attributes: [] }],
 		//		{ model: Message, attributes: [] }],
