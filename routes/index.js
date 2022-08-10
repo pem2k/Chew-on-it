@@ -134,7 +134,11 @@ router.get('/profile/:id', async (req, res) => {
 					model: Business,
 					attributes: ["id", "business_name", "location", "phone_number"]
 				}]
-			}]
+			}],
+			order: [
+				[Review, 'createdAt', 'DESC'],
+				[Review, User, 'createdAt', 'DESC']
+			]
         })
         if (!userProfile) {
             return res.render("404", req.session.user)
@@ -168,6 +172,7 @@ router.get('/feed', async (req, res) => {
   }
 
 	Review.findAll({
+		order: [['createdAt', 'DESC']],
 		include: [{
 			model: Business,
 			attributes: ["id", "business_name", "location", "phone_number"]

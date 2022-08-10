@@ -3,21 +3,22 @@ const router = express.Router();
 const {Message, Follow, User, Business, Review} = require('../models');
 
 
-// router.get("/",async (req,res)=>{
-    // try {
-    //     const business = await Business.findAll({
-    //         include:[Message,User,Follow, Review],
-    //     })
-    //     // res.status(200).json(business)
-    //     res.render("businesses",{})
+router.get("/",async (req,res)=>{
+    try {
+        // const business = await Business.findAll({
+        //     include:[Message,User,Follow, Review],
+        // })
+        // res.status(200).json(business)
+        res.render("businesses", req.session.user)
         
 
-    // } catch (err) {
-    //     res.status(500).json({
-    //         msg:"internal server error!",
-    //         err
-    //     })
-    // }
+    } catch (err) {
+        res.status(500).json({
+            msg:"internal server error!",
+            err
+        })
+    }
+})
 
     // Business.findAll({
     //     include:[{

@@ -35,7 +35,11 @@ router.get('/profile/:full_name', async (req, res) => {
 					model: Business,
 					attributes: ["id", "business_name", "location", "phone_number"]
 				}]
-			}]
+			}],
+			order: [
+				[Review, 'createdAt', 'DESC'],
+				[Review, User, 'createdAt', 'DESC']
+			]
         })
         if (!userProfile) {
             return res.render("404", req.session.user)
@@ -99,7 +103,7 @@ router.post('/follow', async (req, res) => {
 		// Pull your data again to update following list.
 		const foundUser = await User.findOne({
 			where: {
-				email: req.session.user.id
+				id: req.session.user.id
 			},
 			include: [{
 				model: User,
@@ -156,7 +160,7 @@ router.delete("/unfollow", async (req, res) => {
 		// Pull your data again to update following list.
 		const foundUser = await User.findOne({
 			where: {
-				email: req.session.user.id
+				id: req.session.user.id
 			},
 			include: [{
 				model: User,
