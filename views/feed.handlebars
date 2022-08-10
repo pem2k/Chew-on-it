@@ -1,0 +1,15 @@
+{{>banner message="Chew on This"}}
+<div class="content content-border d-flex align-items-start h-100 pt-3">
+	{{#if user}}
+	{{#if otherProfile}}
+	{{> aside userProfileSer otherProfile=true}}
+	{{else}}
+	{{> aside user}}
+	{{/if}}
+	{{/if}}
+	<div class="d-flex flex-wrap flex-fill col-12" id="feed">
+		{{#each reviews}}
+		{{>review}}
+		{{/each}}
+	</div>
+</div>

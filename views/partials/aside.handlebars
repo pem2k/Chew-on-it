@@ -1,0 +1,66 @@
+<div class="aside-column d-none d-md-block h-100">
+	<div class="card aside-borders bg-highlight rounded-0 h-100">
+
+		<!--Header/profile image-->
+		<div class="rounded-0 text-center">
+			<div class="mx-auto d-block position-relative aside-test">
+				<a href="/profile/{{id}}"><img src="{{profile_pic_url}}" class="aside-img position-relative" style="height:250px;"></a>
+				{{#if otherProfile}}
+				{{else}}
+				<span class="position-relative position-absolute fixed-bottom" style="left: 188px; bottom: 4px;">
+					<a role="button" id="editProfile" data-toggle="modal" data-target="#profileModal"><i class="fa solid fa-plus"></i></a>
+				</span>
+				{{/if}}
+			</div>
+			<h2 class="card-title">{{first_name}} {{last_name}}</h2>
+		</div>
+
+		<!--Header/profile image-->
+		<div class="card-body pt-0 pb-2 h-100">
+			<hr />
+			<h6 class="card-subtitle text-center mb-2">Following</h6>
+
+			<!--List of followed users-->
+			<div class="h-100">
+				{{#each friend}}
+				<div class="col-12 card text-dark d-flex flex-row justify-content-start align-items-start text-center mb-2 shadow">
+					<div style="width: 65px; margin-bottom: 4px">
+						<img src="{{profile_pic_url}}" class="mx-auto py-1 profile-thumb">
+					</div>
+					<div class="position-static pl-3 text-left">
+						<p class="mb-0 text-truncate">{{first_name}}</p>
+						<p class="text-truncate">{{last_name}}</p>
+						<a class="stretched-link" href="/profile/{{id}}"></a>
+					</div>
+				</div>
+				{{/each}}
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit profile modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content bg-highlight">
+			<form>
+				<div class="card-header bg-card-float">
+					<h2>Edit Profile</h2>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<div class="row">
+							<div class="col"><input type="text" id="editFirst" class="form-control" name="first_name" placeholder="First Name" value="{{first_name}}" required="required"></div>
+							<div class="col"><input type="text" id="editLast" class="form-control" name="last_name" placeholder="Last Name" value="{{last_name}}" required="required"></div>
+						</div>
+					</div>
+					<button type ="button" id="upload_widget" class="btn bg-card-float">Update Profile Picture</button>
+					<span id="editError" class="text-error"></span>
+				</div>
+			</form>
+			<div class="card-footer">
+				<button type="submit" id="editSubmit" onclick="editProfile(this)" class="btn bg-card-float btn-lg">Update</button>
+			</div>
+		</div>
+	</div>
+</div>

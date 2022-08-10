@@ -1,0 +1,38 @@
+{{>banner message="User Directory"}}
+<div class="content content-border d-flex align-items-start h-100 pt-3">
+	{{> aside user}}
+	<div class="d-flex flex-wrap flex-fill" id="users">
+		{{#each users}}
+		<div class="my-1 px-2 offset-1 col-10 offset-sm-0 col-sm-6">
+			<div class="card shadow px-0 bg-light">
+				<div class="row no-gutters">
+					<div class="col-md-4 d-flex align-items-center">
+						<a class="stretched-link" href="/profile/{{id}}"><img src="{{profile_pic_url}}" class="p-4 p-md-2 card-img profile-thumb" alt="{{first_name}} profile image."></a>
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-truncate">{{first_name}} {{last_name}}</h5>
+							<div class="d-flex flex-row justify-content-between align-items-start">
+								<div>
+									<p class="mb-0">Following: {{following}}</p>
+									<p class="mb-0">Reviews: {{reviews}}</p>
+									<p class="mb-0">Comments: {{comments}}</p>
+								</div>
+								{{#if ../user.id}}
+								<div class="row align-self-md-end">
+									{{#if follow}}
+									<button type="button" class="btn mx-3 btn-danger" data-friend="{{id}}" onclick="toggleFriend(this)">Remove</button>
+									{{else}}
+									<button type="button" class="btn mx-3 btn-success" data-friend="{{id}}" onclick="toggleFriend(this)">Add</button>
+									{{/if}}
+								</div>
+								{{/if}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+</div>

@@ -1,0 +1,19 @@
+{{>banner message=profile.first_name message2="'s Hot Take"}}
+<div class="content content-border flex-fill d-flex align-items-start h-100 pt-3">
+	{{#if user}}
+	{{#if otherProfile}}
+	{{> aside profile otherProfile=true}}
+	{{else}}
+	{{> aside user}}
+	{{/if}}
+	{{/if}}
+	<div class="d-flex flex-wrap flex-fill col-12" id="reviews">
+			{{#if profile.Reviews}}
+			{{#each profile.Reviews}}
+			{{>review}}
+			{{/each}}
+			{{else}}
+			<h2 class="text-center mt-5 text-secondary">[User hasn't made any reviews yet]</h2>
+			{{/if}}
+	</div>
+</div>
