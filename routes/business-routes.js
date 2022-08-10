@@ -9,8 +9,8 @@ router.get("/",async (req,res)=>{
         //     include:[Message,User,Follow, Review],
         // })
         // res.status(200).json(business)
-        res.render("businesses", req.session.user)
-        
+        res.render("businesses", {user:req.session.user})
+        //git
 
     } catch (err) {
         res.status(500).json({
