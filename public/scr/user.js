@@ -72,6 +72,10 @@ async function addComment(event, id) {
     event.preventDefault();
 	event.target.disabled = true;
     const textArea = document.querySelector(`#comment-${id}`);
+	if (textArea.value == "") {
+		event.target.disabled = false;
+		return;
+	}
 try{
     const post = await fetch("/messages", {
         method: 'POST',

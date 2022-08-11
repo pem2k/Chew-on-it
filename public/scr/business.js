@@ -84,9 +84,6 @@ google.maps.event.addListener(autocomplete, 'place_changed', function () {
                             icon: {url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}
                         });
 
-						console.log("====================")
-						console.log(`nearbyName_${index}`)
-						console.log(result)
 						document.getElementById(`nearbyName_${index}`).textContent = result.name;
 						document.getElementById(`nearbyAddress_${index}`).textContent = result.vicinity;
 						document.getElementById(`nearbyWebsite_${index}`).href = result.website;

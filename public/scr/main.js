@@ -11,12 +11,14 @@
 
 
 
-$(document).on("click", "#submitReview",function(event) {
+$(document).on("click", "#submitReview", async (event) => {
 	event.preventDefault()
 	console.log("working!")
     // let target = event.target
     // if(target.id != $("#submitReview")){return}
-    fetch("/reviews", {
+	if ($("#restaurantReview").val() == "")
+		return
+    await fetch("/reviews", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
