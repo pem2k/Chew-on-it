@@ -11,12 +11,12 @@ Review.belongsTo(User, {
     foreignKey: "user_id"
 })
 
-// User.hasMany(Message, {
-//     foreignKey: "user_id"
-// })
-//Message.belongsTo(User, {
-//     foreignKey: "user_id"
-// })
+User.hasMany(Message, {
+     foreignKey: "commenter_id"
+})
+Message.belongsTo(User, {
+     foreignKey: "commenter_id"
+})
 
 
 Business.hasMany(Review, {
@@ -27,9 +27,12 @@ Review.belongsTo(Business, {
 })
 
 
-Review.hasMany(Message), {
-    foreignKey: "user_id"
-}
+Review.hasMany(Message, {
+    foreignKey: "review_id"
+})
+Message.belongsTo(Review, {
+	foreignKey: "review_id"
+})
 
 //followers
 User.belongsToMany(User, { as: 'follower', foreignKey: 'follower_id', through: 'Follow' });

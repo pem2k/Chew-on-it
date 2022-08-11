@@ -7,6 +7,7 @@ const express = require('express');
 const bcrypt = require("bcrypt");
 const { User, Review, Follow, Business, Message, } = require('../models');
 const path = require("path");
+const sequelize = require("sequelize");
 
 
 router.use('/users', userRoutes);
@@ -123,8 +124,11 @@ router.get('/profile/:id', async (req, res) => {
     }
     try {
         const userProfile = await User.findByPk(req.params.id, {
+			attributes: ["id", "first_name", "last_name", "profile_pic_url"],
             include: [{
 				model: Review,
+				subQuery: false,
+				attributes: ["id", "content", "review_pic_url", "restaurant_name", "restaurant_address"],
 				include: [{
 					model: User,
 					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
@@ -134,7 +138,12 @@ router.get('/profile/:id', async (req, res) => {
 					attributes: ["id", "business_name", "location", "phone_number"]
 				},
 				{
-					model: Message
+					model: Message,
+					attributes: ["id", "message_contents", "updatedAt"],
+					include: [{
+						model: User,
+						attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+					}]
 				}
 			]
 			}],
@@ -191,7 +200,12 @@ router.get('/feed', async (req, res) => {
 			where: { }
 		},
 		{
-			model: Message
+			model: Message,
+			attributes: ["id", "message_contents", "updatedAt"],
+			include: [{
+				model: User,
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
 		}
 	]
 	}).then(raw => raw.map(r => r.toJSON()))
