@@ -14,17 +14,17 @@
 			<div class="card-header mb-0" style="transform: rotate(0);">
 				 <h3 id="restName" class="card-title">Nearby Restaurant</h4>
 				 <div class="d-flex flex-row">
-					<div class="flex-grow-1">
+					<div class="flex-grow-1" style="transform: rotate(0);">
 						<p id="restAddress" class="card-subtitle"></p>
 						<a id="restWebsite" class="stretched-link" target="_blank"></a>
 					</div>
-					<div>
-						<button class="btn btn-primary">Add Review</button>
+					<div class="position-relative" style="transform: rotate(0);">
+						<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="addReview(event)">Add Review</button>
 					</div>
 				</div>
 			</div>
 			<div id="businessPage" class="card-body h-100 p-0">
-				<div id="map" class="w-100 mb-0" style="min-height:350px">[Location required]</div>
+				<div id="map" class="d-flex w-100 justify-content-center align-items-center mb-0" style="min-height:350px"><p class="text-muted user-select-none">[Location required]</p></div>
 			</div>
 
 			<!--Search card-->
