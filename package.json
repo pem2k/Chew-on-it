@@ -1,7 +1,8 @@
 {
-  "name": "project-2",
+  "name": "chew-on-it",
   "version": "1.0.0",
-  "description": "",
+  "description": "A social media created to hear the tea and to chew on it.",
+  "homepage": "https://chew-on-it.herokuapp.com",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,11 +11,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pem2k/project-2.git"
+    "url": "git+https://github.com:pem2k/Chew-on-it.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Parker McKillop mckilpar000@hotmail.com",
+  "contributors": [{
+	"name": "Axel Kern",
+	"email": "axeljkern@yahoo.com",
+	"url": "https://github.com/Axeljk"
+  },
+  {
+	"name": "Chris Le",
+	"email": "chrisdmle@gmail.com",
+	"url": "https://github.com/chrisdmle"
+  },
+  {
+	"name": "Ravi Nagi",
+	"email": "mailto:rasvindra@hotmail.com",
+	"url": "https://github.com/rasvindra"
+  }],
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pem2k/project-2/issues"
   },

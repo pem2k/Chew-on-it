@@ -12,48 +12,41 @@ document.querySelector("#logout").addEventListener("click", () => {
 	});
 });
 
-function toggleFriend (button) {
-	if (button.classList.contains("btn-success")) {
-		button.disabled = true;
-		fetch("/users/follow", {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body:JSON.stringify({ followed_id: button.dataset.friend })
-		}).then(res => {
-			button.disabled = false;
-			if (res.status == 200) {
-				button.classList.add("btn-danger");
-				button.classList.remove("btn-success");
-				button.textContent = "Remove";
-				location.reload();
-			} else
-				alert(`(${res.status}): ${res.statusText}`);
-		});
-	} else {
-		button.disabled = true;
-		fetch("/users/unfollow", {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ followed_id: button.dataset.friend })
-		}).then(res => {
-			button.disabled = false;
-			if (res.status == 200) {
-				button.classList.add("btn-success");
-				button.classList.remove("btn-danger");
-				button.textContent = "Add";
-				location.reload();
-			} else
-				alert(`(${res.status}): ${res.statusText}`);
-		});
-	}
+function addFriend (button) {
+	button.disabled = true;
+	fetch("/users/follow", {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body:JSON.stringify({ followed_id: button.dataset.friend })
+	}).then(res => {
+		button.disabled = false;
+		if (res.status == 200) {
+			location.reload();
+		} else
+			alert(`(${res.status}): ${res.statusText}`);
+	});
+}
+
+function removeFriend (button) {
+	button.disabled = true;
+	fetch("/users/unfollow", {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ followed_id: button.dataset.friend })
+	}).then(res => {
+		button.disabled = false;
+		if (res.status == 200) {
+			location.reload();
+		} else
+			alert(`(${res.status}): ${res.statusText}`);
+	});
 }
 
 function editProfile(button) {
-	console.log("Editing...")
 	button.disabled = true;
 	const editFirst = document.querySelector("#editFirst").value;
 	const editLast = document.querySelector("#editLast").value;
@@ -79,7 +72,10 @@ async function addComment(event, id) {
     event.preventDefault();
 	event.target.disabled = true;
     const textArea = document.querySelector(`#comment-${id}`);
-    console.log(textArea.value);
+	if (textArea.value == "") {
+		event.target.disabled = false;
+		return;
+	}
 try{
     const post = await fetch("/messages", {
         method: 'POST',
