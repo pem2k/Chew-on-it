@@ -2,7 +2,11 @@
 <div class="content content-border flex-fill d-flex align-items-start h-100 pt-3">
 	{{#if user}}
 	{{#if otherProfile}}
+	{{#if profile.followed.follow}}
+	{{> aside profile otherProfile=true follow=true}}
+	{{else}}
 	{{> aside profile otherProfile=true}}
+	{{/if}}
 	{{else}}
 	{{> aside user}}
 	{{/if}}
@@ -15,5 +19,6 @@
 			{{else}}
 			<h2 class="text-center mt-5 text-secondary">[User hasn't made any reviews yet]</h2>
 			{{/if}}
+			{{log profile}}
 	</div>
 </div>
