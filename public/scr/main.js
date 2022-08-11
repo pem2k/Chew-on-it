@@ -62,3 +62,11 @@ $(document).on("click", "#submitReview", async (event) => {
 // 	const restaurantReview = $("#restaurantReview").val();
 
 
+function addReview(event) {
+	event.preventDefault();
+
+	if (document.getElementById("restName").textContent != "" && document.getElementById("restName").textContent != "Nearby Restaurant")
+		document.getElementById("restaurantName").value = document.getElementById("restName").textContent;
+	if (document.getElementById("restAddress").textContent != "")
+		document.getElementById("restaurantAddress").value = document.getElementById("restAddress").textContent;
+}
