@@ -61,20 +61,21 @@ google.maps.event.addListener(autocomplete, 'place_changed', function () {
             }
 
             if (pagination.hasNextPage) {
-                setTimeout(() => pagination.nextPage(), 2000);
+                setTimeout(() => pagination.nextPage(), 200);
             } else {
+				document.getElementById("restOther").style.display = "block";
                 displayResults();
             }
         }
 //Rendering Nearby Restaurants sorted by score and placing markers on map
         const displayResults = () => {
-            places.innerHTML += `<h2> Nearby Restaurants </h2>`
+           // places.innerHTML += `<h2> Nearby Restaurants </h2>`
             console.log(results)
             console.log(results[i].geometry.location.lat())
             results.filter(result => result.rating)
                     .sort((a, b) => a.rating > b.rating ? -1 : 1)
                     .slice(0,3)
-                    .forEach(result => {
+                    .forEach((result, index) => {
 
                         const nearbyLocation = { lat: result.geometry.location.lat(), lng: result.geometry.location.lng() }
                         new google.maps.Marker({
@@ -83,7 +84,13 @@ google.maps.event.addListener(autocomplete, 'place_changed', function () {
                             icon: {url: "http://maps.google.com/mapfiles/ms/icons/pink-dot.png"}
                         });
 
-                        places.innerHTML +=
+						console.log("====================")
+						console.log(`nearbyName_${index}`)
+						console.log(result)
+						document.getElementById(`nearbyName_${index}`).textContent = result.name;
+						document.getElementById(`nearbyAddress_${index}`).textContent = result.vicinity;
+						document.getElementById(`nearbyWebsite_${index}`).href = result.website;
+                  /*      places.innerHTML +=
                         `<div class="card rounded-0" style="min-height: 25vh">
                             <div class="card-header rounded-0 bg-recessed text-center">
                                 <h3 class="card-title" id="restaurantName1"> ${result.name} </h3>
@@ -92,7 +99,7 @@ google.maps.event.addListener(autocomplete, 'place_changed', function () {
                                 <h5 id="restaurantAddress1"> ${result.vicinity} </h5>
                             </div>
                         </div>
-                        `
+                        `*/
 
                     });
 

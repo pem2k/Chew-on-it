@@ -12,8 +12,8 @@
 		<!-- Main Restaurant-->
 		<div class="card w-100 px-0 pb-3 d-flex flex-column rounded shadow" style="min-height: 500;">
 			<div class="card-header mb-0" style="transform: rotate(0);">
-				 <h3 id="restName" class="card-title">Nearby Restaurant</h4>
-				 <div class="d-flex flex-row">
+				<h3 id="restName" class="card-title pl-3">Nearby Restaurant</h3>
+				<div class="d-flex flex-row">
 					<div class="flex-grow-1" style="transform: rotate(0);">
 						<p id="restAddress" class="card-subtitle"></p>
 						<a id="restWebsite" class="stretched-link" target="_blank"></a>
@@ -28,30 +28,37 @@
 			</div>
 
 			<!--Search card-->
-			<h4 class="card-header border-top my-0">Restaurant Search</h4>
+			<h4 class="card-header border-top my-0 pl-5">Restaurant Search</h4>
 			<div class="card-body">
 				<input id="searchTextField" class="my-lg-0 w-100" type="text" placeholder="Find a Restaurant" autocomplete="on" runat="server" />
 			</div>
 		</div>
+
+		<!--Nearby Resaurants-->
+		<div id="restOther" class="card w-100 px-0 my-4 pb-3 flex-column rounded shadow" style="display: none">
+			<h3 id="restName" class="card-title card-header pl-5">Other Nearby Restaurants</h3>
+			<div class="card-body list-group px-3">
+				<a id="nearbyWebsite_0" class="list-group-item list-group-item-action py-3" target="_blank">
+					<h5 id="nearbyName_0" class="card-title"></h5>
+					<p id="nearbyAddress_0" class="card-subtitle text-muted"></p>
+				</a>
+				<a id="nearbyWebsite_1" class="list-group-item list-group-item-action py-3" target="_blank">
+					<h5 id="nearbyName_1" class="card-title"></h5>
+					<p id="nearbyAddress_1" class="card-subtitle text-muted"></p>
+				</a>
+				<a id="nearbyWebsite_2" class="list-group-item list-group-item-action py-3" target="_blank">
+					<h5 id="nearbyName_2" class="card-title"></h5>
+					<p id="nearbyAddress_2" class="card-subtitle text-muted"></p>
+				</a>
+			</div>
+		</div>
 	</div>
 </div>
-<div class="fill-view">
 
+	<div id="places"></div>
     <input type="hidden" id="city2" name="city2" />
     <input type="hidden" id="cityLat" name="cityLat" />
     <input type="hidden" id="cityLng" name="cityLng" />
- <!--   <div class="row w-100 mx-0 px-0">
-
-
-<!-- Nearby Restaurants- ->
-        <div class="col-12 col-md-5">
-
-            <div id="places" ></div>
-        </div>
-<!-- Aside Profile- ->
-    </div>-->
-</div>
-
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVeiXPohR3WJKh94VpZEIbNr4wjAqPfoQ&libraries=places"></script>
 <script src="/scr/business.js"></script>
