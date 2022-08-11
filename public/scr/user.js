@@ -77,6 +77,7 @@ function editProfile(button) {
 
 async function addComment(event, id) {
     event.preventDefault();
+	event.target.disabled = true;
     const textArea = document.querySelector(`#comment-${id}`);
     console.log(textArea.value);
 try{
@@ -87,7 +88,8 @@ try{
         },
         body: JSON.stringify({ review_id: id, message_contents: textArea.value})
     })
+	location.reload();
 }catch(err){if(err){console.log(err)}}
 
-
+event.target.disabled = false;
 }
