@@ -11,18 +11,20 @@
 
 
 
-$(document).on("click", "#submitReview",function(event) {
+$(document).on("click", "#submitReview", async (event) => {
 	event.preventDefault()
 	console.log("working!")
     // let target = event.target
     // if(target.id != $("#submitReview")){return}
-    fetch("/reviews", {
+	if ($("#restaurantReview").val() == "")
+		return
+    await fetch("/reviews", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
 		},
 		body: JSON.stringify({
-			
+
 			restaurant_name: $("#restaurantName").val(),
 			restaurant_address: $("#restaurantAddress").val(),
 			// restaurant_score: restaurantScore,
@@ -54,9 +56,9 @@ $(document).on("click", "#submitReview",function(event) {
 //     //     $("#restaurantScore input[type='checkbox']:checked").each((_, {value}) => {
 //     //         restaurantScore.push(value);
 //     //     });
-        
+
 //     //     console.log(restaurantScore);
 //     //     });
 // 	const restaurantReview = $("#restaurantReview").val();
 
-	
+
