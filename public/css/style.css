@@ -5,10 +5,15 @@
 	--recessed: #4AAB5C;
 	--shadow: #00000033;
 	--background: #68B0AB;
+	--aside: #B3F9BF;
 	--float: #00000077;
 	--card-float: #00550055;
 	--primary-text: #efefef;
 	--secondary-text: #222;
+	min-height: 100%;
+}
+html, body {
+	min-height: 100%;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Abril Fatface', cursive !important;
@@ -65,7 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 .fill-view {
 	min-height: calc(100vh - 59px);
-	height: 100%;
+	min-height: 100%;
 }
 .bg-highlight {
 	background: var(--highlight);
@@ -88,6 +93,9 @@ h1, h2, h3, h4, h5, h6 {
 .bg-card-float {
 	background: var(--card-float);
 	color: var(--primary-text);
+}
+.bg-aside {
+	background: var(--aside);
 }
 .navbar-brand,
 .nav-link {
@@ -123,4 +131,18 @@ h1, h2, h3, h4, h5, h6 {
 #login input {
 	width: 90%;
 	margin: 4px 5%;
+}
+
+.display-3 {
+	font-size: 3rem;
+}
+@media (min-width: 768px) {
+	.display-3 {
+		font-size: 3.5rem;
+	}
+}
+@media (min-width: 992px) {
+	.display-3 {
+		font-size: 4.5rem;
+	}
 }

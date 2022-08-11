@@ -45,26 +45,47 @@ router.get("/directory", (req, res) => {
 	if (!req.session.user) {
         return res.redirect("/")
     }
-	const follower = (req.session.user != undefined) ? req.session.user.id : 0;
 
 	User.findAll({
 		attributes: ["id", "first_name", "last_name", "profile_pic_url",
-			[sequelize.fn("COUNT", sequelize.col("follower_id")), "following"],
-			[sequelize.literal(`CASE WHEN follower_id = ${follower} THEN 1 ELSE 0 END`), "follow"],
-			[sequelize.fn("COUNT", sequelize.col("business_id")), "reviews"]],
-		//		[sequelize.fn("COUNT", sequelize.col("commenter_id")), "comments"]],
+
+			[sequelize.literal(`CASE WHEN follower_id = ${req.session.user.id} THEN 1 ELSE 0 END`), "follow"]
+			],
 		include: [
 			{
 				model: User,
 				as: "followed",
 				through: "Follow",
-				attributes: []
+				attributes: [],
+				required: false,
+				where: {
+					id: req.session.user.id
+				}
 			},
-			{ model: Review, attributes: [] }],
-		//		{ model: Message, attributes: [] }],
-		group: ["User.id"]
+			{
+				model: Review,
+				attributes: [
+					[sequelize.literal("(SELECT COUNT(*) FROM review WHERE user_id = user.id)"), "review_count"]
+				]
+			},
+			{
+				model: Message,
+				attributes: [
+					[sequelize.literal("(SELECT COUNT(*) FROM message WHERE user_id = user.id)"), "message_count"]
+				]
+			},
+//			{
+//				model: User,
+//				as: "follower",
+//				through: "Follow",
+//				attributes: [
+//					[sequelize.literal("(SELECT COUNT(*) FROM follow AS poop WHERE poop.follower_id = user.id)"), "following_count"]
+//				]
+//			}
+			],
+			group: ["User.id"]
 	}).then(results => results.map(user => user.toJSON()))
-		.then(users => res.render("users", { users, user: req.session.user }));
+	.then(users => res.render("users", { users, user: req.session.user }));
 });
 
 
@@ -130,7 +151,8 @@ router.put("/", async (req, res) => {
 		const user = await User.update(
 			{
 				first_name: req.body.first_name,
-				last_name: req.body.last_name
+				last_name: req.body.last_name,
+				full_name: req.body.first_name + " " + req.body.first_name
 			},
 			{ where: {
 				id: req.session.user.id
@@ -170,8 +192,11 @@ router.put("/", async (req, res) => {
 
 //unfollow route
 router.delete("/unfollow", async (req, res) => {
+	if (!req.session.user)
+		return res.redirect("/");
+
 	try {
-		const unfollowedUser = Follow.destroy({
+		const removeFollow = await Follow.destroy({
 			where: {
 				follower_id: req.session.user.id,
 				followed_id: req.body.followed_id
@@ -201,7 +226,7 @@ router.delete("/unfollow", async (req, res) => {
 			friend: foundUser.follower.map(u => u.toJSON())
 		}
 
-		res.status(200).json(unfollowedUser);
+		res.status(200).json(removeFollow);
 
 	} catch (err) {
 		if (err) {

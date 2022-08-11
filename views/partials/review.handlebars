@@ -8,8 +8,11 @@
 			<div class="position-relative d-flex flex-column justify-content-end w-100">
 				<div class="position-static d-flex flex-row align-items-start feed-text pt-2 px-2">
 					<img class="rounded-circle" src="{{User.profile_pic_url}}" width="45">
-					<p class="card-title flex-grow-1 mb-0 px-3 ">{{User.first_name}} {{User.last_name}}</p>
-					<a class="stretched-link" href="/profile/{{User.id}}"></a>
+					<div class="flex-grow-1 mb-0 px-3 ">
+						<p class="card-title mb-1">{{User.first_name}} {{User.last_name}}</p>
+						<p class="font-italic text-secondary mb-0" style="font-size: 0.725rem">Created: {{creation}}</p>
+						<a class="stretched-link"  href="/profile/{{User.id}}"></a>
+					</div>
 					<div class="feed-icon px-2 pt-2">
 						<i class="fa fa-ellipsis-v text-black-50"></i>
 					</div>
