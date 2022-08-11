@@ -53,7 +53,6 @@ function toggleFriend (button) {
 }
 
 function editProfile(button) {
-	console.log("Editing...")
 	button.disabled = true;
 	const editFirst = document.querySelector("#editFirst").value;
 	const editLast = document.querySelector("#editLast").value;
@@ -79,7 +78,6 @@ async function addComment(event, id) {
     event.preventDefault();
 	event.target.disabled = true;
     const textArea = document.querySelector(`#comment-${id}`);
-    console.log(textArea.value);
 try{
     const post = await fetch("/messages", {
         method: 'POST',
