@@ -152,7 +152,7 @@ router.put("/", async (req, res) => {
 			{
 				first_name: req.body.first_name,
 				last_name: req.body.last_name,
-				full_name: req.body.first_name + " " + req.body.first_name
+				full_name: req.body.first_name + " " + req.body.last_name
 			},
 			{ where: {
 				id: req.session.user.id
