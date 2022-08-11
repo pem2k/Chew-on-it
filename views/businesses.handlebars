@@ -16,6 +16,9 @@
     width: 100%;
     /* The width is the width of the web page */
     }
+    #aside {
+        padding-top: 80px;
+    }
     </style>
 </head>
 <body>
@@ -36,7 +39,9 @@
             <div id="places" ></div>
         </div>
 <!-- Aside Profile-->
-       {{>aside user}}
+        <div class="col-12 col-md-2" id="aside">
+            {{>aside user}}
+       </div>
     </div>
 </div>
 
