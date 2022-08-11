@@ -1,0 +1,8 @@
+<div class="position-relative mx-4 py-2 d-flex flex-row align-items-start border-bottom">
+	<img class="my-1 rounded-circle position-static" src="{{User.profile_pic_url}}" width="45"><a class="stretched-link" href="/profile/{{User.id}}"></a>
+	<div class="position-static d-flex flex-column px-3 pb-0 align-items-start w-100">
+		<p class="mb-0 border-bottom">{{User.first_name}} {{User.last_name}}</p>
+		<p class="card-text text-muted mb-0">{{message_contents}}</p>
+		<p class="card-text font-italic w-100 text-right text-secondary" style="font-size: 0.725rem">Last updated {{updatedAt}}</p>
+	</div>
+</div>

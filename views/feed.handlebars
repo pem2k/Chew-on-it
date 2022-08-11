@@ -8,8 +8,12 @@
 	{{/if}}
 	{{/if}}
 	<div class="d-flex flex-wrap flex-fill col-12" id="feed">
+		{{#if reviews}}
 		{{#each reviews}}
 		{{>review}}
 		{{/each}}
+		{{else}}
+		<a class="reset-text" href="/users/directory"><h2 class="text-center mt-5 text-secondary">[Follow others to see their recommendations]</h2></a>
+		{{/if}}
 	</div>
 </div>

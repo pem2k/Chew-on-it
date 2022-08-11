@@ -7,6 +7,7 @@ const express = require('express');
 const bcrypt = require("bcrypt");
 const { User, Review, Follow, Business, Message, } = require('../models');
 const path = require("path");
+const sequelize = require("sequelize");
 
 
 router.use('/users', userRoutes);
@@ -123,8 +124,12 @@ router.get('/profile/:id', async (req, res) => {
     }
     try {
         const userProfile = await User.findByPk(req.params.id, {
+			attributes: ["id", "first_name", "last_name", "profile_pic_url",
+			[sequelize.literal(`CASE WHEN follower_id = ${req.session.user.id} THEN 1 ELSE 0 END`), "follow"]],
             include: [{
 				model: Review,
+				subQuery: false,
+				attributes: ["id", "content", "review_pic_url", "restaurant_name", "restaurant_address", ["createdAt", "creation"]],
 				include: [{
 					model: User,
 					attributes: ["id", "first_name", "last_name", "profile_pic_url"]
@@ -134,9 +139,23 @@ router.get('/profile/:id', async (req, res) => {
 					attributes: ["id", "business_name", "location", "phone_number"]
 				},
 				{
-					model: Message
-				}
-			]
+					model: Message,
+					attributes: ["id", "message_contents", "updatedAt"],
+					include: [{
+						model: User,
+						attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+					}]
+				}]
+			},
+			{
+				model: User,
+				as: "followed",
+				through: "Follow",
+				attributes: [],
+				where: {
+					id: req.session.user.id
+				},
+				required: false
 			}],
 			order: [
 				[Review, 'createdAt', 'DESC'],
@@ -172,6 +191,7 @@ router.get('/feed', async (req, res) => {
 
 	Review.findAll({
 		order: [['createdAt', 'DESC']],
+		attributes: ["id", "content", "review_pic_url", "restaurant_name", "restaurant_address", ["createdAt", "creation"]],
 		include: [{
 			model: Business,
 			attributes: ["id", "business_name", "location", "phone_number"]
@@ -191,7 +211,12 @@ router.get('/feed', async (req, res) => {
 			where: { }
 		},
 		{
-			model: Message
+			model: Message,
+			attributes: ["id", "message_contents", "updatedAt"],
+			include: [{
+				model: User,
+				attributes: ["id", "first_name", "last_name", "profile_pic_url"]
+			}]
 		}
 	]
 	}).then(raw => raw.map(r => r.toJSON()))

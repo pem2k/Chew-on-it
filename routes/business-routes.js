@@ -4,13 +4,16 @@ const {Message, Follow, User, Business, Review} = require('../models');
 
 
 router.get("/",async (req,res)=>{
+    if (!req.session.user) {
+        return res.redirect("/")
+    }
     try {
         // const business = await Business.findAll({
         //     include:[Message,User,Follow, Review],
         // })
         // res.status(200).json(business)
-        res.render("businesses", req.session.user)
-        
+        res.render("businesses", {user:req.session.user})
+        //git
 
     } catch (err) {
         res.status(500).json({
