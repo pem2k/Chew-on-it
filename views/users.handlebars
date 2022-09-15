@@ -2,8 +2,21 @@
 <div class="content content-border d-flex align-items-start h-100 pt-3">
 	{{> aside user}}
 	<div class="d-flex flex-wrap flex-fill" id="users">
+		<div class="card col-6 offset-3 px-0 mb-3 text-center rounded shadow">
+			<h5 class="card-header py-2">Pages</h5>
+			<div class="card-body p-2">
+				<p class="card-title mb-0">
+					{{#each pages}}
+					{{#if current}}
+					<strong>{{page}}{{extra}}</strong>
+					{{else}}
+					<a href="/users/directory/{{page}}">{{page}}{{extra}}</a>
+					{{/if}}
+					{{/each}}
+				</p>
+			</div>
+		</div>
 		{{#each users}}
-		{{log this}}
 		<div class="my-1 px-2 offset-1 col-10 offset-sm-0 col-sm-6">
 			<div class="card shadow px-0 bg-light">
 				<div class="row no-gutters">
@@ -40,5 +53,19 @@
 			</div>
 		</div>
 		{{/each}}
+		<div class="card col-6 offset-3 px-0 mb-3 text-center rounded shadow">
+			<h5 class="card-header py-2">Pages</h5>
+			<div class="card-body p-2">
+				<p class="card-title mb-0">
+					{{#each pages}}
+					{{#if current}}
+					<strong>{{page}}</strong>
+					{{else}}
+					<a href="/users/directory/{{page}}">{{page}}</a>
+					{{/if}}
+					{{/each}}
+				</p>
+			</div>
+		</div>
 	</div>
 </div>

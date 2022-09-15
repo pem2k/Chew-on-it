@@ -45,8 +45,13 @@ router.get("/directory", (req, res) => {
 	if (!req.session.user) {
         return res.redirect("/")
     }
+	res.redirect("/users/directory/1");
+});
+router.get("/directory/:page", (req, res) => {
+	if (!req.session.user)
+		return res.redirect("/");
 
-	User.findAll({
+	User.findAndCountAll({
 		attributes: ["id", "first_name", "last_name", "profile_pic_url",
 
 			[sequelize.literal(`CASE WHEN follower_id = ${req.session.user.id} THEN 1 ELSE 0 END`), "follow"]
@@ -83,9 +88,45 @@ router.get("/directory", (req, res) => {
 //				]
 //			}
 			],
-			group: ["User.id"]
-	}).then(results => results.map(user => user.toJSON()))
-	.then(users => res.render("users", { users, user: req.session.user }));
+		subQuery: false,
+		limit: 20,
+		offset: 20 * (req.params.page - 1),
+		group: ["User.id"]
+	}).then(results => {
+		const users = results.rows.map(user => user.toJSON());
+		const pages = () => {
+			let pageCount = results.count.length / 20;
+			let pages = [];
+
+//			if (results.count.length % 20)
+//				pageCount++;
+			for (let i = 0; i < pageCount; i++) {
+				pages.push({
+					page: i + 1,
+					extra: "",
+					current: (i + 1 == req.params.page)
+				})
+			}
+			if (req.params.page > 6)
+				pages.splice(3, req.params.page - 4, { page: "...", current: true })
+			if (req.params.page + 5 < pageCount)
+				pages.splice(req.params.page + 2, pageCount - 4, { page: "...", current: true })
+
+			for (let i = 0; i < pages.length; i++) {
+				if (i + 1 < pages.length) {
+				 	if (pages[i].page != "..." && pages[i + 1].page != "...")
+						pages[i].extra = ", ";
+				}
+			}
+
+			return pages;
+		}
+		return {
+			users,
+			pages: pages()
+		}
+	})
+	.then(results => { res.render("users", { users: results.users, user: req.session.user, pages: results.pages })});
 });
 
 
